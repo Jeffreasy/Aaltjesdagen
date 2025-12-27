@@ -1,0 +1,30 @@
+---
+import { getAllStories } from '../services/storyblok'
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+export async function getStaticPaths() {
+  const stories = await getAllStories()
+
+  return stories.map((story: any) => {
+    return {
+      params: {
+        slug: story.full_slug === 'home' ? undefined : story.full_slug,
+      },
+      props: {
+        story,
+      },
+    }
+  })
+}
+
+interface Props {
+  story: any
+}
+
+const { story } = Astro.props
+---
+
+<BaseLayout title={story.name}>
+  <StoryblokComponent blok={story.content} />
+</BaseLayout>

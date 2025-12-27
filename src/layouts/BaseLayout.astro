@@ -1,0 +1,58 @@
+---
+import '../styles/global.css'
+import Navigation from '../components/layout/Navigation.astro'
+
+interface Props {
+  title?: string
+}
+
+const { title = 'Aaltjesdagen' } = Astro.props
+---
+
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <header class="bg-white text-primary py-4 shadow-sm border-b border-gray-100">
+      <div class="container-custom flex flex-col md:flex-row justify-between items-center gap-4">
+        <a href="/" class="flex items-center gap-3">
+          <img src="/assets/logo.png" alt="Aaltjesdagen Logo" width="180" height="60" class="h-12 w-auto" />
+        </a>
+        <Navigation />
+      </div>
+    </header>
+
+    <main class="flex-grow">
+      <slot />
+    </main>
+
+    <footer class="bg-gray-900 text-gray-300 py-12">
+      <div class="container-custom">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div>
+            <img src="/assets/logo.png" alt="Aaltjesdagen Logo" width="150" height="50" class="h-10 w-auto mb-6 brightness-0 invert" />
+            <p class="text-sm leading-relaxed">
+              Het grootste evenement van Harderwijk! Kom en geniet van muziek, cultuur en gezelligheid.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-white font-bold text-lg mb-6">Snelle Links</h3>
+            <Navigation />
+          </div>
+          <div>
+            <h3 class="text-white font-bold text-lg mb-6">Contact</h3>
+            <p class="text-sm">Email: info@aaltjesdagen.nl</p>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 mt-12 pt-8 text-center text-xs">
+          <p>&copy; {new Date().getFullYear()} Aaltjesdagen. Alle rechten voorbehouden.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

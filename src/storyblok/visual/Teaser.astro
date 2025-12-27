@@ -1,0 +1,41 @@
+---
+import { storyblokEditable } from '@storyblok/astro'
+
+const { blok } = Astro.props
+
+// Dynamische afhandeling van de tekst uit Storyblok
+const fullText = blok.headline || ''
+const hasMultipleSentences = fullText.includes('.')
+
+let displayHeadline = fullText
+let displayBody = blok.text || ''
+
+// Als er veel tekst in de headline staat en geen aparte body is, splitsen we het voor een professionele look
+if (!displayBody && fullText.length > 50 && hasMultipleSentences) {
+  const firstDotIndex = fullText.indexOf('.')
+  displayHeadline = fullText.substring(0, firstDotIndex + 1)
+  displayBody = fullText.substring(firstDotIndex + 1).trim()
+}
+---
+
+<section {...storyblokEditable(blok)} class="py-16 md:py-24 px-6 bg-white">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-3xl md:text-5xl font-extrabold text-[#50b0ae] mb-8 tracking-tight leading-tight">
+      {displayHeadline}
+    </h2>
+    
+    {displayBody && (
+      <div class="space-y-6">
+        <p class="text-lg md:text-2xl text-gray-700 leading-relaxed font-medium max-w-3xl mx-auto">
+          {displayBody}
+        </p>
+      </div>
+    )}
+
+    <div class="mt-12 flex justify-center items-center gap-4">
+      <div class="h-px w-12 bg-gray-200"></div>
+      <div class="w-2 h-2 rounded-full bg-[#50b0ae] opacity-40"></div>
+      <div class="h-px w-12 bg-gray-200"></div>
+    </div>
+  </div>
+</section>

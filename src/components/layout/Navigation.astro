@@ -1,0 +1,25 @@
+---
+const navItems = [
+  { name: 'Home', href: '/' },
+  { name: 'Bereikbaarheid', href: '/bereikbaarheid' },
+  { name: 'ADF Muziekfestival', href: '/adf-muziekfestival' },
+  { name: 'Braderie', href: '/braderie' },
+  { name: 'Salsa', href: '/salsa' },
+  { name: 'Sponsoring', href: '/sponsoring' },
+  { name: 'Vacatures', href: '/vacatures' },
+  { name: 'Contact', href: '/contact' },
+]
+---
+
+<nav class="flex flex-wrap gap-6">
+  {
+    navItems.map((item) => (
+      <a
+        href={item.href}
+        class="text-sm font-medium hover:text-secondary transition-colors"
+      >
+        {item.name}
+      </a>
+    ))
+  }
+</nav>

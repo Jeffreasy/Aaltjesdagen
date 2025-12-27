@@ -1,0 +1,88 @@
+---
+import { storyblokEditable } from '@storyblok/astro'
+
+const { blok } = Astro.props
+
+// Haal afbeeldingen op uit Storyblok (Multi-Asset veld 'Heroview')
+const storyblokImages = blok.Heroview?.map((img: any) => img.filename) || []
+
+// Fallback naar lokale afbeeldingen als er niets in Storyblok staat
+const localImages = [
+  '/assets/hero/1.jpeg',
+  '/assets/hero/2.jpg',
+  '/assets/hero/3.png',
+  '/assets/hero/4.png',
+  '/assets/hero/5.jpg',
+  '/assets/hero/6.jpg',
+  '/assets/hero/7.jpg',
+  '/assets/hero/8.jpg',
+  '/assets/hero/9.jpg',
+  '/assets/hero/10.jpg',
+  '/assets/hero/11.jpg',
+  '/assets/hero/12.jpg',
+  '/assets/hero/13.jpg',
+  '/assets/hero/14.jpg',
+]
+
+const images = storyblokImages.length > 0 ? storyblokImages : localImages
+const isStoryblok = storyblokImages.length > 0
+---
+
+<section {...storyblokEditable(blok)} class="relative h-[70vh] overflow-hidden">
+  <div class="swiper mySwiper h-full w-full">
+    <div class="swiper-wrapper">
+      {
+        images.map((imgUrl: string) => (
+          <div class="swiper-slide relative">
+            <img
+              src={isStoryblok ? `${imgUrl}/m/1600x900/filters:quality(80):format(webp)` : imgUrl}
+              alt={blok.title || "Aaltjesdagen Header"}
+              class="h-full w-full object-cover"
+              loading="eager"
+            />
+            <div class="absolute inset-0 bg-black/40" />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="absolute inset-0 z-10 flex items-center justify-center text-center px-4 pointer-events-none">
+    <div class="max-w-4xl">
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white drop-shadow-2xl leading-tight">
+        {blok.title || 'Aaltjesdagen 13, 14 en 15 juni 2025'}
+      </h1>
+      {blok.subtitle && (
+        <p class="mt-6 text-xl md:text-2xl text-white/90 font-medium drop-shadow-lg">
+          {blok.subtitle}
+        </p>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+
+<script>
+  import Swiper from 'swiper';
+  import { Autoplay, EffectFade } from 'swiper/modules';
+  import 'swiper/css';
+  import 'swiper/css/effect-fade';
+
+  new Swiper('.mySwiper', {
+    modules: [Autoplay, EffectFade],
+    effect: 'fade',
+    loop: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+    },
+    speed: 1000,
+  });
+</script>
