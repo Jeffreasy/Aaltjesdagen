@@ -11,11 +11,11 @@ const hasFilters = locations.length > 0
 
 <section
   {...storyblokEditable(blok)}
-  class="py-24 bg-gray-50/50"
+  class="section-spacing bg-gradient-modern dot-pattern"
   x-data="{ activeFilter: 'all' }"
 >
   <div class="container-custom">
-    <div class="text-center max-w-4xl mx-auto mb-16">
+    <div class="text-center max-w-4xl mx-auto mb-20">
       {blok.TitelProgramma && (
         <div class="inline-flex items-center gap-3 bg-white border border-gray-200 px-5 py-2 rounded-full shadow-sm mb-8">
           <span class="relative flex h-2 w-2">
@@ -29,7 +29,7 @@ const hasFilters = locations.length > 0
       )}
       
       {(blok.Subheadline || blok.subheadline) && (
-        <h2 class="text-4xl md:text-7xl font-black text-gray-900 mb-8 tracking-tighter leading-none">
+        <h2 class="text-4xl md:text-7xl font-black text-gray-900 dark:text-gray-100 mb-8 tracking-tighter leading-none">
           {new Date(blok.Subheadline || blok.subheadline).toLocaleDateString('nl-NL', {
             weekday: 'long',
             day: 'numeric',
@@ -45,28 +45,28 @@ const hasFilters = locations.length > 0
       </div>
 
       {blok.headline && blok.headline !== blok.TitelProgramma && (
-        <p class="text-xl md:text-2xl text-gray-500 font-medium max-w-2xl mx-auto leading-relaxed">
+        <p class="text-xl md:text-2xl text-gray-500 dark:text-gray-400 font-medium max-w-2xl mx-auto leading-relaxed">
           {blok.headline}
         </p>
       )}
     </div>
 
-    {/* Filter Bar */}
+    {/* Filter Bar with Glassmorphism */}
     {hasFilters && (
-      <div class="sticky top-4 z-30 mb-16 flex justify-center">
-        <div class="bg-white/80 backdrop-blur-md p-2 rounded-full shadow-xl border border-white/20 flex flex-wrap justify-center gap-2 max-w-full overflow-x-auto no-scrollbar">
+      <div class="sticky top-20 z-30 mb-20 flex justify-center">
+        <div class="glass p-3 rounded-2xl shadow-2xl flex flex-wrap justify-center gap-2 max-w-full overflow-x-auto no-scrollbar">
           <button
             @click="activeFilter = 'all'"
-            :class="activeFilter === 'all' ? 'bg-primary text-white shadow-md' : 'text-gray-600 hover:bg-gray-100'"
-            class="px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap"
+            :class="activeFilter === 'all' ? 'bg-gradient-to-r from-primary to-blue-700 text-white shadow-lg scale-105' : 'text-gray-700 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-gray-700/70 hover:scale-105'"
+            class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap"
           >
             Alles
           </button>
           {locations.map((loc: any) => (
             <button
               @click={`activeFilter = '${loc}'`}
-              :class={`activeFilter === '${loc}' ? 'bg-primary text-white shadow-md' : 'text-gray-600 hover:bg-gray-100'`}
-              class="px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap"
+              :class={`activeFilter === '${loc}' ? 'bg-gradient-to-r from-primary to-blue-700 text-white shadow-lg scale-105' : 'text-gray-700 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-gray-700/70 hover:scale-105'`}
+              class="px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap"
             >
               {loc}
             </button>
@@ -95,15 +95,3 @@ const hasFilters = locations.length > 0
     </div>
   </div>
 </section>
-
-<script src="https://unpkg.com/alpinejs" defer></script>
-
-<style>
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-</style>

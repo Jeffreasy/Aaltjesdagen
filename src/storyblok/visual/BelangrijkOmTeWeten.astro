@@ -1,0 +1,420 @@
+---
+import { storyblokEditable, renderRichText } from "@storyblok/astro";
+
+const { blok } = Astro.props;
+
+// Storyblok field mapping: title (text), text (richtext)
+const title = blok.title || "";
+const tekst = blok.tekst; // Richtext field
+
+// Render richtext content to HTML
+const renderedText = tekst ? renderRichText(tekst) : "";
+---
+
+<section
+  {...storyblokEditable(blok)}
+  class="important-section bg-transparent relative overflow-hidden"
+  style="background: transparent !important;"
+>
+  <div class="relative container-custom section-spacing-sm content-layer">
+    <!-- Highlighted prominent card -->
+    <div class="max-w-5xl mx-auto">
+      <div class="important-card">
+        <!-- Warning stripe pattern -->
+        <div class="warning-stripes"></div>
+
+        <div class="card-inner">
+          {
+            title && (
+              <div class="important-header">
+                <div class="attention-box">
+                  <span class="attention-icon">⚠️</span>
+                </div>
+                <div class="header-content">
+                  <div class="label-badge">Let op</div>
+                  <h2 class="important-title">{title}</h2>
+                </div>
+              </div>
+            )
+          }
+
+          {
+            renderedText && (
+              <div class="important-content prose-important">
+                <Fragment set:html={renderedText} />
+              </div>
+            )
+          }
+        </div>
+
+        <!-- Corner accent marks -->
+        <div class="corner-accent top-right"></div>
+        <div class="corner-accent bottom-left"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .important-section {
+    position: relative;
+    /* Background handled by utility class */
+  }
+
+  .important-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Gradient overlay layer */
+  .gradient-overlay {
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Content layer sits above background */
+  .content-layer {
+    z-index: 1;
+  }
+
+  .gradient-emphasis {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at center,
+      color-mix(in srgb, var(--color-secondary), transparent 97%) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  .important-card {
+    position: relative;
+    background: color-mix(in srgb, var(--bg-elevated), transparent 10%);
+    backdrop-filter: blur(12px);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    border: 2px solid var(--color-secondary);
+    box-shadow:
+      0 20px 25px -5px
+        color-mix(in srgb, var(--color-secondary), transparent 85%),
+      0 10px 10px -5px
+        color-mix(in srgb, var(--color-secondary), transparent 90%),
+      0 0 0 1px color-mix(in srgb, var(--color-secondary), transparent 90%);
+    transition: all var(--transition-slow);
+  }
+
+  .important-card:hover {
+    border-color: var(--color-secondary);
+    box-shadow:
+      0 25px 50px -12px
+        color-mix(in srgb, var(--color-secondary), transparent 70%),
+      0 0 0 1px var(--color-secondary);
+    transform: translateY(-4px);
+  }
+
+  /* Warning stripe pattern at top */
+  .warning-stripes {
+    height: 0.75rem;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--color-secondary),
+      var(--color-secondary) 1rem,
+      var(--color-warning) 1rem,
+      var(--color-warning) 2rem
+    );
+    position: relative;
+  }
+
+  .warning-stripes::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in srgb, var(--text-inverse), transparent 90%) 50%,
+      transparent 100%
+    );
+    z-index: 0;
+  }
+
+  .card-inner {
+    padding: 3rem 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .card-inner {
+      padding: 4rem 3.5rem;
+    }
+  }
+
+  /* Header with attention box */
+  .important-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px dashed
+      color-mix(in srgb, var(--color-secondary), transparent 70%);
+  }
+
+  @media (max-width: 767px) {
+    .important-header {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.5rem;
+    }
+  }
+
+  .attention-box {
+    flex-shrink: 0;
+    width: 5.5rem;
+    height: 5.5rem;
+    background: linear-gradient(
+      135deg,
+      var(--color-secondary) 0%,
+      var(--color-warning) 100%
+    );
+    border-radius: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+      0 10px 20px -5px
+        color-mix(in srgb, var(--color-secondary), transparent 50%),
+      inset 0 2px 0 0 color-mix(in srgb, var(--text-inverse), transparent 80%);
+    animation: attention-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes attention-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      box-shadow:
+        0 10px 20px -5px
+          color-mix(in srgb, var(--color-secondary), transparent 50%),
+        inset 0 2px 0 0 color-mix(in srgb, var(--text-inverse), transparent 80%);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow:
+        0 15px 30px -5px
+          color-mix(in srgb, var(--color-secondary), transparent 40%),
+        inset 0 2px 0 0 color-mix(in srgb, var(--text-inverse), transparent 70%);
+    }
+  }
+
+  .attention-icon {
+    font-size: 3rem;
+    filter: drop-shadow(0 2px 4px var(--shadow-sm));
+  }
+
+  .header-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .label-badge {
+    display: inline-block;
+    padding: 0.375rem 1rem;
+    background: color-mix(in srgb, var(--color-secondary), transparent 90%);
+    border: 1px solid
+      color-mix(in srgb, var(--color-secondary), transparent 70%);
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  .important-title {
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1.2;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  @media (min-width: 768px) {
+    .important-title {
+      font-size: 2.75rem;
+    }
+  }
+
+  /* Corner accent marks */
+  .corner-accent {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .corner-accent::before,
+  .corner-accent::after {
+    content: "";
+    position: absolute;
+    background: var(--color-secondary);
+    z-index: 0;
+  }
+
+  .corner-accent.top-right {
+    top: 1.5rem;
+    right: 1.5rem;
+  }
+
+  .corner-accent.top-right::before {
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 0 0 0 3px;
+  }
+
+  .corner-accent.top-right::after {
+    top: 0;
+    right: 0;
+    width: 3px;
+    height: 100%;
+    border-radius: 0 0 0 3px;
+  }
+
+  .corner-accent.bottom-left {
+    bottom: 1.5rem;
+    left: 1.5rem;
+  }
+
+  .corner-accent.bottom-left::before {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 0 3px 0 0;
+  }
+
+  .corner-accent.bottom-left::after {
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    border-radius: 0 3px 0 0;
+  }
+
+  /* Content styling */
+  .important-content {
+    position: relative;
+  }
+
+  /* Custom prose styling */
+  .prose-important :global(p) {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .prose-important :global(p) {
+      font-size: 1.125rem;
+    }
+  }
+
+  .prose-important :global(p:first-of-type) {
+    font-size: 1.1875rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .prose-important :global(strong) {
+    font-weight: 700;
+    color: var(--color-secondary);
+  }
+
+  .prose-important :global(ul),
+  .prose-important :global(ol) {
+    margin: 2rem 0;
+    padding-left: 2rem;
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .prose-important :global(li) {
+    color: var(--text-secondary);
+    position: relative;
+    padding: 0.75rem;
+    padding-left: 1.5rem;
+    background: color-mix(in srgb, var(--color-secondary), transparent 97%);
+    border-left: 4px solid var(--color-secondary);
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+
+  .prose-important :global(ul li)::marker {
+    color: var(--color-secondary);
+    font-size: 1.25em;
+    font-weight: 900;
+  }
+
+  .prose-important :global(a) {
+    color: var(--color-secondary);
+    text-decoration: none;
+    font-weight: 700;
+    transition: all var(--transition-base);
+    border-bottom: 2px solid var(--color-secondary);
+  }
+
+  .prose-important :global(a:hover) {
+    color: var(--color-warning);
+    border-bottom-color: var(--color-warning);
+    background: color-mix(in srgb, var(--color-secondary), transparent 95%);
+    padding: 0 0.25rem;
+  }
+
+  .prose-important :global(h1),
+  .prose-important :global(h2),
+  .prose-important :global(h3),
+  .prose-important :global(h4),
+  .prose-important :global(h5),
+  .prose-important :global(h6) {
+    color: var(--text-primary);
+    font-weight: 800;
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.3;
+  }
+
+  .prose-important :global(h3) {
+    font-size: 1.375rem;
+    color: var(--color-secondary);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: color-mix(in srgb, var(--color-secondary), transparent 95%);
+    border-left: 5px solid var(--color-secondary);
+    border-radius: 0 0.75rem 0.75rem 0;
+  }
+
+  @media (min-width: 768px) {
+    .prose-important :global(h3) {
+      font-size: 1.625rem;
+    }
+  }
+
+  .prose-important :global(h3::before) {
+    content: "●";
+    color: var(--color-secondary);
+    font-size: 1.5em;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+</style>

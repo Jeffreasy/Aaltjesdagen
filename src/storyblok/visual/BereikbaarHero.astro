@@ -1,0 +1,175 @@
+---
+import { storyblokEditable, renderRichText } from "@storyblok/astro";
+
+const { blok } = Astro.props;
+
+// Storyblok field mapping: title (text), text (textarea), foto (multi-assets)
+const title = blok.title || "";
+const text = blok.text || ""; // Plain textarea field (not richtext)
+const foto = blok.foto;
+---
+
+<section
+  {...storyblokEditable(blok)}
+  class="hero-section relative overflow-hidden bg-transparent"
+  style="background-color: transparent !important;"
+>
+  <!-- Content -->
+  <div class="relative container-custom section-spacing-sm content-layer">
+    <div class="max-w-5xl mx-auto">
+      <!-- Hero card with prominent styling -->
+      <div class="hero-card">
+        <!-- Accent bar -->
+        <div class="accent-bar"></div>
+
+        {title && <h1 class="hero-title">{title}</h1>}
+
+        {text && <p class="hero-text">{text}</p>}
+
+        <!-- Decorative element -->
+        <div class="hero-decoration"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Background pattern layer */
+  .pattern-background {
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Gradient overlay layer */
+  .gradient-overlay {
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Content layer sits above backgrounds */
+  .content-layer {
+    z-index: 1;
+  }
+
+  .hero-card {
+    position: relative;
+    background: color-mix(in srgb, var(--bg-elevated), transparent 20%);
+    border: 2px solid var(--border-primary);
+    border-radius: 1.5rem;
+    padding: 3rem 2rem;
+    box-shadow:
+      0 20px 25px -5px color-mix(in srgb, var(--color-primary), transparent 90%),
+      0 10px 10px -5px color-mix(in srgb, var(--color-primary), transparent 96%),
+      0 0 0 1px color-mix(in srgb, var(--color-primary), transparent 95%);
+    backdrop-filter: blur(12px);
+    overflow: hidden;
+    transition: all var(--transition-slow);
+  }
+
+  @media (min-width: 768px) {
+    .hero-card {
+      padding: 4rem 4rem;
+    }
+  }
+
+  .hero-card:hover {
+    border-color: var(--color-primary);
+    box-shadow:
+      0 25px 50px -12px
+        color-mix(in srgb, var(--color-primary), transparent 75%),
+      0 0 0 1px var(--color-primary);
+    transform: translateY(-4px);
+  }
+
+  /* Accent bar at the top */
+  .accent-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(
+      90deg,
+      var(--color-primary) 0%,
+      var(--color-accent) 50%,
+      var(--color-secondary) 100%
+    );
+  }
+
+  /* Hero title styling */
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    background: linear-gradient(
+      135deg,
+      var(--color-primary) 0%,
+      var(--color-accent) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @media (min-width: 768px) {
+    .hero-title {
+      font-size: 3.75rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-title {
+      font-size: 4.5rem;
+    }
+  }
+
+  /* Hero text styling */
+  .hero-text {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    max-width: 48rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero-text {
+      font-size: 1.25rem;
+      line-height: 1.8;
+    }
+  }
+
+  /* Decorative element - bottom right corner accent */
+  .hero-decoration {
+    position: absolute;
+    bottom: -2rem;
+    right: -2rem;
+    width: 12rem;
+    height: 12rem;
+    background: radial-gradient(
+      circle at center,
+      var(--color-accent),
+      transparent 70%
+    );
+    opacity: 0.08;
+    pointer-events: none;
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  @media (min-width: 768px) {
+    .hero-decoration {
+      width: 16rem;
+      height: 16rem;
+    }
+  }
+</style>

@@ -1,0 +1,51 @@
+---
+import { storyblokEditable } from '@storyblok/astro'
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
+
+const { blok } = Astro.props
+---
+
+<div {...storyblokEditable(blok)} class="bereikbaarheid-grid-wrapper">
+  {
+    blok.sections?.map((section: any) => {
+      return <StoryblokComponent blok={section} />
+    })
+  }
+</div>
+
+<style>
+  .bereikbaarheid-grid-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  /* On larger screens, create side-by-side layout for matching sections */
+  @media (min-width: 1024px) {
+    .bereikbaarheid-grid-wrapper {
+      display: contents; /* Allow children to participate in parent grid */
+    }
+
+    /* The individual sections maintain their full-width by default */
+    .bereikbaarheid-grid-wrapper :global(section) {
+      width: 100%;
+    }
+  }
+
+  /* Alternative: Use CSS Grid at container level */
+  @media (minwidth: 1280px) {
+    .bereikbaarheid-grid-wrapper {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Force certain sections to span full width */
+    .bereikbaarheid-grid-wrapper :global(section:first-child) {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

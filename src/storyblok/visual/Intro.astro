@@ -1,0 +1,107 @@
+---
+import { storyblokEditable } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import { renderRichText } from "@storyblok/astro";
+
+const { blok } = Astro.props;
+const richTextContent = blok.text ? renderRichText(blok.text) : "";
+---
+
+<section
+    {...storyblokEditable(blok)}
+    class="relative py-16 md:py-24 overflow-hidden bg-transparent"
+>
+    {/* Background decoration */}
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div
+            class="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-[var(--color-primary)]/5 to-transparent rounded-bl-[100px]"
+        >
+        </div>
+        <div
+            class="absolute bottom-0 left-0 w-1/4 h-1/4 bg-[var(--color-secondary)]/5 rounded-tr-[80px]"
+        >
+        </div>
+    </div>
+
+    <div class="container-custom relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            {/* Kolom 1: Tekst Content */}
+            <div class="space-y-8">
+                {
+                    blok.title && (
+                        <h2 class="text-3xl md:text-5xl font-bold font-heading text-[var(--text-primary)] leading-tight">
+                            {blok.title}
+                        </h2>
+                    )
+                }
+
+                {
+                    blok.Text && (
+                        <p class="text-xl md:text-2xl text-[var(--text-secondary)] font-medium leading-relaxed">
+                            {blok.Text}
+                        </p>
+                    )
+                }
+
+                {
+                    richTextContent && (
+                        <div
+                            class="prose prose-lg prose-primary max-w-none dark:prose-invert"
+                            set:html={richTextContent}
+                        />
+                    )
+                }
+
+                {
+                    /* Eerste afbeelding set (afbeelding) - als klein grid of enkele foto */
+                }
+                {
+                    blok.afbeelding && blok.afbeelding.length > 0 && (
+                        <div
+                            class={`grid gap-4 mt-8 ${blok.afbeelding.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}
+                        >
+                            {blok.afbeelding.map((img: any) => (
+                                <div class="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                    <img
+                                        src={`${img.filename}/m/600x400/filters:quality(80):format(webp)`}
+                                        alt={img.alt || blok.title}
+                                        class="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
+                                        width="600"
+                                        height="400"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    )
+                }
+            </div>
+
+            {/* Kolom 2: Visuals (afbeelding2) - Grotere sfeerbeelden */}
+            <div class="lg:sticky lg:top-24">
+                {
+                    blok.afbeelding2 && blok.afbeelding2.length > 0 ? (
+                        <div class="grid gap-6">
+                            {blok.afbeelding2.map((img: any, index: number) => (
+                                <div
+                                    class={`rounded-3xl overflow-hidden shadow-2xl ${index % 2 !== 0 ? "ml-8" : "mr-8"} transform hover:-translate-y-2 transition-transform duration-500`}
+                                >
+                                    <img
+                                        src={`${img.filename}/m/800x600/filters:quality(80):format(webp)`}
+                                        alt={img.alt || blok.title}
+                                        class="w-full h-auto object-cover"
+                                        width="800"
+                                        height="600"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div class="bg-[var(--bg-elevated)] border border-[var(--border-secondary)] rounded-3xl p-12 text-center text-[var(--text-tertiary)] italic">
+                            Geen extra afbeeldingen geselecteerd
+                        </div>
+                    )
+                }
+            </div>
+        </div>
+    </div>
+</section>

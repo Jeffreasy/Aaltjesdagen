@@ -1,12 +1,15 @@
 ---
-import '../styles/global.css'
-import Navigation from '../components/layout/Navigation.astro'
+import "../styles/global.css";
+import Navigation from "../components/layout/Navigation.astro";
+import Footer from "../components/layout/Footer.astro";
+import BackToTop from "../components/layout/BackToTop.astro";
 
 interface Props {
-  title?: string
+  title?: string;
 }
 
-const { title = 'Aaltjesdagen' } = Astro.props
+const { title = "Aaltjesdagen" } = Astro.props;
+const isStoryblokEnabled = import.meta.env.DEV;
 ---
 
 <html lang="nl">
@@ -16,43 +19,81 @@ const { title = 'Aaltjesdagen' } = Astro.props
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+
+    <!-- Theme Detection Script (no-flash) -->
+    <script is:inline>
+      // Apply theme before body renders to prevent flash
+      (function () {
+        const theme =
+          localStorage.getItem("theme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
   </head>
   <body class="flex flex-col min-h-screen">
-    <header class="bg-white text-primary py-4 shadow-sm border-b border-gray-100">
-      <div class="container-custom flex flex-col md:flex-row justify-between items-center gap-4">
-        <a href="/" class="flex items-center gap-3">
-          <img src="/assets/logo.png" alt="Aaltjesdagen Logo" width="180" height="60" class="h-12 w-auto" />
+    <!-- Animated Background -->
+    <div class="fixed inset-0 z-[-1] bg-animated" aria-hidden="true">
+      <div
+        class="orb"
+        style="
+        width: 500px;
+        height: 500px;
+        bottom: 10%;
+        left: 50%;
+        background: var(--bg-gradient-animated-3);
+        animation: float-3 30s ease-in-out infinite;
+      "
+      >
+      </div>
+    </div>
+    <header
+      class="glass sticky top-0 py-4 shadow-lg border-b border-white/30 dark:border-gray-700/30"
+      style="z-index: var(--z-fixed);"
+    >
+      <div
+        class="container-custom flex flex-row justify-between items-center gap-4"
+      >
+        <a href="/" class="flex items-center gap-3 group">
+          <img
+            src="/assets/logo.png"
+            alt="Aaltjesdagen Logo"
+            width="180"
+            height="60"
+            class="h-12 w-auto transition-all duration-300 group-hover:scale-105 brightness-0 dark:invert"
+          />
         </a>
         <Navigation />
       </div>
     </header>
 
-    <main class="flex-grow">
+    <main class="flex-grow relative">
       <slot />
     </main>
 
-    <footer class="bg-gray-900 text-gray-300 py-12">
-      <div class="container-custom">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-          <div>
-            <img src="/assets/logo.png" alt="Aaltjesdagen Logo" width="150" height="50" class="h-10 w-auto mb-6 brightness-0 invert" />
-            <p class="text-sm leading-relaxed">
-              Het grootste evenement van Harderwijk! Kom en geniet van muziek, cultuur en gezelligheid.
-            </p>
-          </div>
-          <div>
-            <h3 class="text-white font-bold text-lg mb-6">Snelle Links</h3>
-            <Navigation />
-          </div>
-          <div>
-            <h3 class="text-white font-bold text-lg mb-6">Contact</h3>
-            <p class="text-sm">Email: info@aaltjesdagen.nl</p>
-          </div>
-        </div>
-        <div class="border-t border-gray-800 mt-12 pt-8 text-center text-xs">
-          <p>&copy; {new Date().getFullYear()} Aaltjesdagen. Alle rechten voorbehouden.</p>
-        </div>
-      </div>
-    </footer>
+    <BackToTop />
+    <Footer />
+
+    {
+      isStoryblokEnabled && (
+        <script
+          is:inline
+          src="https://app.storyblok.com/f/storyblok-v2-latest.js"
+        />
+      )
+    }
+
+    <!-- Alpine.js - Bundled -->
+    <script>
+      import Alpine from "alpinejs";
+
+      window.Alpine = Alpine;
+      Alpine.start();
+    </script>
   </body>
 </html>

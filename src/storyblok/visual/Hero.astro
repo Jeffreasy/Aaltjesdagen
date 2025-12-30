@@ -1,31 +1,31 @@
 ---
-import { storyblokEditable } from '@storyblok/astro'
+import { storyblokEditable } from "@storyblok/astro";
 
-const { blok } = Astro.props
+const { blok } = Astro.props;
 
 // Haal afbeeldingen op uit Storyblok (Multi-Asset veld 'Heroview')
-const storyblokImages = blok.Heroview?.map((img: any) => img.filename) || []
+const storyblokImages = blok.Heroview?.map((img: any) => img.filename) || [];
 
 // Fallback naar lokale afbeeldingen als er niets in Storyblok staat
 const localImages = [
-  '/assets/hero/1.jpeg',
-  '/assets/hero/2.jpg',
-  '/assets/hero/3.png',
-  '/assets/hero/4.png',
-  '/assets/hero/5.jpg',
-  '/assets/hero/6.jpg',
-  '/assets/hero/7.jpg',
-  '/assets/hero/8.jpg',
-  '/assets/hero/9.jpg',
-  '/assets/hero/10.jpg',
-  '/assets/hero/11.jpg',
-  '/assets/hero/12.jpg',
-  '/assets/hero/13.jpg',
-  '/assets/hero/14.jpg',
-]
+  "/assets/hero/1.jpeg",
+  "/assets/hero/2.jpg",
+  "/assets/hero/3.png",
+  "/assets/hero/4.png",
+  "/assets/hero/5.jpg",
+  "/assets/hero/6.jpg",
+  "/assets/hero/7.jpg",
+  "/assets/hero/8.jpg",
+  "/assets/hero/9.jpg",
+  "/assets/hero/10.jpg",
+  "/assets/hero/11.jpg",
+  "/assets/hero/12.jpg",
+  "/assets/hero/13.jpg",
+  "/assets/hero/14.jpg",
+];
 
-const images = storyblokImages.length > 0 ? storyblokImages : localImages
-const isStoryblok = storyblokImages.length > 0
+const images = storyblokImages.length > 0 ? storyblokImages : localImages;
+const isStoryblok = storyblokImages.length > 0;
 ---
 
 <section {...storyblokEditable(blok)} class="relative h-[70vh] overflow-hidden">
@@ -33,31 +33,58 @@ const isStoryblok = storyblokImages.length > 0
     <div class="swiper-wrapper">
       {
         images.map((imgUrl: string) => (
-          <div class="swiper-slide relative">
+          <div class="swiper-slide relative overflow-hidden">
             <img
-              src={isStoryblok ? `${imgUrl}/m/1600x900/filters:quality(80):format(webp)` : imgUrl}
+              src={
+                isStoryblok
+                  ? `${imgUrl}/m/1600x900/filters:quality(80):format(webp)`
+                  : imgUrl
+              }
               alt={blok.title || "Aaltjesdagen Header"}
-              class="h-full w-full object-cover"
+              class="h-full w-full object-cover transform scale-100 transition-transform duration-[10000ms] ease-out-sine ken-burns"
               loading="eager"
             />
-            <div class="absolute inset-0 bg-black/40" />
+            {/* Premium Gradient Overlay - Stronger Center for Text Visibility */}
+            <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/80 z-10" />
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-black/40 via-transparent to-transparent z-10" />
           </div>
         ))
       }
     </div>
   </div>
 
-  <div class="absolute inset-0 z-10 flex items-center justify-center text-center px-4 pointer-events-none">
-    <div class="max-w-4xl">
-      <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white drop-shadow-2xl leading-tight">
-        {blok.title || 'Aaltjesdagen 13, 14 en 15 juni 2025'}
+  <div
+    class="absolute inset-0 z-20 flex items-center justify-center text-center px-4 pointer-events-none"
+  >
+    <div class="max-w-5xl space-y-8" x-data="{ showed: false }" x-init="setTimeout(() => showed = true, 500)">
+      <h1
+        class="text-4xl md:text-6xl lg:text-7xl font-bold font-heading text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)] leading-tight opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+        :class="{ 'opacity-100 translate-y-0': showed }"
+      >
+        {blok.title}
       </h1>
-      {blok.subtitle && (
-        <p class="mt-6 text-xl md:text-2xl text-white/90 font-medium drop-shadow-lg">
-          {blok.subtitle}
-        </p>
-      )}
+      
+      {
+        blok.subtitle && (
+          <div 
+            class="relative inline-block opacity-0 translate-y-8 transition-all duration-1000 delay-300 ease-out"
+            :class="{ 'opacity-100 translate-y-0': showed }"
+          >
+              <p class="text-xl md:text-2xl text-white/90 font-medium font-body drop-shadow-md max-w-2xl mx-auto backdrop-blur-sm bg-white/10 px-6 py-3 rounded-full border border-white/20">
+                {blok.subtitle}
+              </p>
+          </div>
+        )
+      }
     </div>
+  </div>
+
+  {/* Animated Scroll Indicator */}
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 animate-bounce-slow pointer-events-auto cursor-pointer" onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})">
+    <span class="text-white/80 text-sm font-medium tracking-widest uppercase text-shadow-sm">Ontdek</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
   </div>
 </section>
 
@@ -67,17 +94,38 @@ const isStoryblok = storyblokImages.length > 0
     justify-content: center;
     align-items: center;
   }
+
+  /* Ken Burns Effect: Active Slide zooms in */
+  .swiper-slide-active .ken-burns {
+    transform: scale(1.1);
+  }
+
+  .animate-bounce-slow {
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(-25%) translateX(-50%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+      transform: translateY(0) translateX(-50%);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
 </style>
 
 <script>
-  import Swiper from 'swiper';
-  import { Autoplay, EffectFade } from 'swiper/modules';
-  import 'swiper/css';
-  import 'swiper/css/effect-fade';
+  import Swiper from "swiper";
+  import { Autoplay, EffectFade } from "swiper/modules";
+  import "swiper/css";
+  import "swiper/css/effect-fade";
 
-  new Swiper('.mySwiper', {
+  new Swiper(".mySwiper", {
     modules: [Autoplay, EffectFade],
-    effect: 'fade',
+    effect: "fade",
     loop: true,
     autoplay: {
       delay: 4000,

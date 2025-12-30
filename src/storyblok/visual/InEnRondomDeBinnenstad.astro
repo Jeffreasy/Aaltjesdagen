@@ -1,0 +1,327 @@
+---
+import { storyblokEditable, renderRichText } from "@storyblok/astro";
+
+const { blok } = Astro.props;
+
+// Storyblok field mapping: title (text), text (richtext)
+const title = blok.title || "";
+const tekst = blok.tekst; // Richtext field
+
+// Render richtext content to HTML
+const renderedText = tekst ? renderRichText(tekst) : "";
+---
+
+<section
+  {...storyblokEditable(blok)}
+  class="city-section bg-transparent relative overflow-hidden"
+  style="background: transparent !important;"
+>
+  <div class="relative container-custom section-spacing-sm content-layer">
+    <!-- Wide asymmetric layout -->
+    <div class="max-w-6xl mx-auto">
+      <div class="city-container">
+        <!-- Title column with colored background -->
+        <div class="title-column">
+          <div class="title-sticky">
+            <div class="city-icon">🏛️</div>
+            {title && <h2 class="city-title">{title}</h2>}
+            <div class="title-decoration"></div>
+          </div>
+        </div>
+
+        <!-- Content column -->
+        <div class="content-column">
+          {
+            renderedText && (
+              <div class="prose-city">
+                <Fragment set:html={renderedText} />
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .city-section {
+    position: relative;
+    /* Background handled by utility class */
+  }
+
+  .city-section::before {
+    display: none;
+  }
+
+  /* Gradient overlay layer */
+  .gradient-overlay {
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Content layer sits above background */
+  .content-layer {
+    z-index: 1;
+  }
+
+  .gradient-shimmer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      transparent 0%,
+      color-mix(in srgb, var(--color-primary), transparent 97%) 25%,
+      transparent 50%,
+      color-mix(in srgb, var(--color-accent), transparent 97%) 75%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  .city-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    background: color-mix(in srgb, var(--bg-elevated), transparent 10%);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    border: 1px solid var(--border-primary);
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-slow);
+  }
+
+  @media (min-width: 1024px) {
+    .city-container {
+      grid-template-columns: 1fr 2fr;
+      gap: 0;
+    }
+  }
+
+  .city-container:hover {
+    box-shadow: var(--shadow-xl);
+    border-color: var(--color-primary);
+  }
+
+  /* Title column with background */
+  .title-column {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-primary), transparent 95%) 0%,
+      color-mix(in srgb, var(--color-accent), transparent 95%) 100%
+    );
+    padding: 3rem 2rem;
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    .title-column {
+      padding: 3rem 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .title-column {
+      border-right: 3px solid var(--color-primary);
+    }
+  }
+
+  .title-column::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      var(--color-primary) 50%,
+      transparent 100%
+    );
+    opacity: 0.3;
+    z-index: 0;
+  }
+
+  .title-sticky {
+    position: relative;
+  }
+
+  @media (min-width: 1024px) {
+    .title-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+  }
+
+  .city-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    filter: drop-shadow(
+      0 2px 8px color-mix(in srgb, var(--color-primary), transparent 80%)
+    );
+  }
+
+  .city-title {
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .city-title {
+      font-size: 2.5rem;
+    }
+  }
+
+  .title-decoration {
+    position: relative;
+    width: 4rem;
+    height: 0.375rem;
+    background: linear-gradient(
+      90deg,
+      var(--color-primary) 0%,
+      var(--color-accent) 100%
+    );
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 8px
+      color-mix(in srgb, var(--color-primary), transparent 70%);
+    z-index: 1;
+  }
+
+  /* Content column */
+  .content-column {
+    padding: 3rem 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .content-column {
+      padding: 3rem 3rem;
+    }
+  }
+
+  /* Custom prose styling */
+  .prose-city :global(p) {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .prose-city :global(p) {
+      font-size: 1.0625rem;
+    }
+  }
+
+  .prose-city :global(p:first-of-type) {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+  }
+
+  .prose-city :global(strong) {
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .prose-city :global(ul),
+  .prose-city :global(ol) {
+    margin: 1.75rem 0;
+    padding-left: 1.75rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .prose-city :global(li) {
+    color: var(--text-secondary);
+    position: relative;
+    padding-left: 0.75rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .prose-city :global(ul li)::marker {
+    color: var(--color-primary);
+    font-size: 1.25em;
+  }
+
+  .prose-city :global(li::before) {
+    content: "";
+    position: absolute;
+    left: -1.5rem;
+    top: 0.75rem;
+    width: 0.375rem;
+    height: 0.375rem;
+    background: var(--color-accent);
+    border-radius: 50%;
+    opacity: 0.5;
+    z-index: 0;
+  }
+
+  .prose-city :global(a) {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all var(--transition-base);
+    background: linear-gradient(
+      90deg,
+      var(--color-accent) 0%,
+      var(--color-accent) 100%
+    );
+    background-size: 0% 2px;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    padding-bottom: 2px;
+  }
+
+  .prose-city :global(a:hover) {
+    color: var(--color-accent);
+    background-size: 100% 2px;
+  }
+
+  .prose-city :global(h1),
+  .prose-city :global(h2),
+  .prose-city :global(h3),
+  .prose-city :global(h4),
+  .prose-city :global(h5),
+  .prose-city :global(h6) {
+    color: var(--text-primary);
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .prose-city :global(h3) {
+    font-size: 1.375rem;
+    color: var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    .prose-city :global(h3) {
+      font-size: 1.625rem;
+    }
+  }
+
+  .prose-city :global(h3::before) {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.25rem;
+    bottom: 0.25rem;
+    width: 0.25rem;
+    background: var(--color-accent);
+    border-radius: 0.125rem;
+  }
+</style>
