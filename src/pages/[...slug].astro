@@ -1,18 +1,16 @@
 ---
-import { getStory, getAllStories } from '../services/storyblok'
-import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
-import BaseLayout from '../layouts/BaseLayout.astro'
+import { getStory, getAllStories } from "../services/storyblok";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
-  const stories = await getAllStories('published')
+  const stories = await getAllStories("draft");
 
   return stories.map((story: any) => {
     // Handle home page and nested paths for catch-all route [...slug]
     // For [...slug], we pass the full slug as a string (Astro will handle the parsing)
-    const slugParam = story.full_slug === 'home'
-      ? undefined
-      : story.full_slug
-    
+    const slugParam = story.full_slug === "home" ? undefined : story.full_slug;
+
     return {
       params: {
         slug: slugParam,
@@ -20,19 +18,19 @@ export async function getStaticPaths() {
       props: {
         story,
       },
-    }
-  })
+    };
+  });
 }
 
 // Enable live preview in development
-const { slug } = Astro.params
-const { story: staticStory } = Astro.props
+const { slug } = Astro.params;
+const { story: staticStory } = Astro.props;
 
 // In dev mode, always fetch fresh data for live updates
 // In production, use the pre-fetched story from props
 const story = import.meta.env.DEV
-  ? await getStory(slug || 'home', 'draft')
-  : staticStory
+  ? await getStory(slug || "home", "draft")
+  : staticStory;
 ---
 
 <BaseLayout title={story.name}>
