@@ -1,0 +1,887 @@
+
+> astro-ultimate-tutorial@0.0.1 build
+> astro build
+
+[2m00:09:52[22m [34m[content][39m Syncing content
+[2m00:09:52[22m [34m[content][39m Synced content
+[2m00:09:52[22m [34m[types][39m Generated [2m91ms[22m
+[2m00:09:52[22m [34m[build][39m output: [34m"static"[39m
+[2m00:09:52[22m [34m[build][39m mode: [34m"static"[39m
+[2m00:09:52[22m [34m[build][39m directory: [34mC:\Users\JJALa\Desktop\Aaltjesdagen\Frontend\dist\[39m
+[2m00:09:52[22m [34m[build][39m adapter: [32m@astrojs/vercel[39m
+[2m00:09:52[22m [34m[build][39m Collecting build info...
+[2m00:09:52[22m [34m[build][39m [32mÔ£ô Completed in 263ms.[39m
+[2m00:09:52[22m [34m[build][39m Building static entrypoints...
+[2m00:09:54[22m [34m[vite][39m [32mÔ£ô built in 2.49s[39m
+[2m00:09:54[22m [34m[build][39m [32mÔ£ô Completed in 2.54s.[39m
+
+[42m[30m building client (vite) [39m[49m
+[2m00:09:54[22m [34m[vite][39m transforming...
+[2m00:09:55[22m [34m[vite][39m [32mÔ£ô[39m 41 modules transformed.
+[2m00:09:55[22m [34m[vite][39m rendering chunks...
+[2m00:09:55[22m [34m[vite][39m computing gzip size...
+[2m00:09:55[22m [34m[vite][39m [2mdist/[22m[36m_astro/page.CfMR_-1W.js                                             [39m[1m[2m 0.88 kB[22m[1m[22m[2m Ôöé gzip:  0.53 kB[22m
+[2m00:09:55[22m [34m[vite][39m [2mdist/[22m[36m_astro/BaseLayout.astro_astro_type_script_index_0_lang.1YU6Ep37.js  [39m[1m[2m45.27 kB[22m[1m[22m[2m Ôöé gzip: 16.30 kB[22m
+[2m00:09:55[22m [34m[vite][39m [2mdist/[22m[36m_astro/Hero.astro_astro_type_script_index_0_lang.DSzJVwSB.js        [39m[1m[2m74.93 kB[22m[1m[22m[2m Ôöé gzip: 23.06 kB[22m
+[2m00:09:55[22m [34m[vite][39m [32mÔ£ô built in 568ms[39m
+
+[42m[30m generating static routes [39m[49m
+[2m00:09:55[22m [32mÔûÂ[39m src/pages/[...slug].astro
+[DEBUG] Story content for bereikbaarheid: {
+  "_uid": "4080a673-8a7e-4b07-8599-57932fab1672",
+  "body": [
+    {
+      "_uid": "1fa98d28-f852-4826-8427-1e1598977e57",
+      "foto": [
+        {
+          "id": 128230834252071,
+          "alt": "",
+          "name": "",
+          "focus": "",
+          "title": "",
+          "source": "",
+          "filename": "https://a.storyblok.com/f/289358601689489/1024x575/82449b6273/pexels-kelly-2655864-1-1024x575.jpg",
+          "copyright": "",
+          "fieldtype": "asset",
+          "meta_data": {}
+        }
+      ],
+      "text": "Hier parkeer je de auto of fiets\nTijdens Aaltjesdagen kan het heel erg druk worden met verkeer. De organisatie raad bezoekers aan om zoveel mogelijk met de fiets of het openbaar vervoer te komen.\n\nEr zijn extra plekken gemaakt om goed en veilig de fiets te stallen er er rijden elk uur diverse bussen van en naar het centrum.",
+      "title": "bereikbaarheid",
+      "component": "BereikbaarHero",
+      "_editable": "<!--#storyblok#{\"name\": \"BereikbaarHero\", \"space\": \"289358601689489\", \"uid\": \"1fa98d28-f852-4826-8427-1e1598977e57\", \"id\": \"127588696652744\"}-->"
+    },
+    {
+      "_uid": "14ca5c92-d272-4b54-9e58-0b143e4190f4",
+      "tekst": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "De organisatie roept bezoekers op om zoveel mogelijk met de fiets te komen. Harderwijk biedt verschillende locaties om de fiets te stallen en tijdens het evenement worden er extra stallingen gemaakt. Het is tijdens het festival niet toegestaan om met de fiets het terrein op te gaan. Dus het advies is ook echt om te parkeren bij de fietsenstalling.┬á",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "STALPLAATSEN",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              },
+              {
+                "text": ":",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó Het Fietshuis in de Academiestraat",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó Langs de stadsmuur op de Stille Wei",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó Op de Houtwalgarage",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó Op parkeerplaats P6 bij het Dolfinarium",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó NS Fietsenstalling bij Station Harderwijk",
+                "type": "text"
+              }
+            ]
+          }
+        ]
+      },
+      "title": "Stallen fietsen",
+      "component": "Stallen fietsen",
+      "_editable": "<!--#storyblok#{\"name\": \"Stallen fietsen\", \"space\": \"289358601689489\", \"uid\": \"14ca5c92-d272-4b54-9e58-0b143e4190f4\", \"id\": \"127588696652744\"}-->"
+    },
+    {
+      "_uid": "65579248-d6ae-4c11-b4c0-61b9f41f3478",
+      "tekst": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "Heel veel mensen komen naar de Aaltjesdagen met de auto. Door het evenement zijn een aantal parkeerplaatsen in gebruik als evenementenlocatie. Ook zijn er diverse wegen afgesloten en daarom raad de organisatie vooral inwoners uit Harderwijk en uit de directe omgeving om met de fiets of het openbaar vervoer te komen. Kom je van verder dan zijn er zeker nog mogelijkheden om te parkeren met de auto. Volg te allen tijde de aanwijzingen van de verkeersregelaars.",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "Parkeer bij voorkeur op ",
+                "type": "text"
+              },
+              {
+                "text": "P8 ÔÇô ZONNEWEIDE ",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "link",
+                    "attrs": {
+                      "href": "https://www.google.nl/maps/place/Parkeerplaats+Zonneweide+P8/@52.3549337,5.6258634,1348m/data=!3m1!1e3!4m6!3m5!1s0x47c6333e4c02cfa1:0x6eaee591cbd2cada!8m2!3d52.3578131!4d5.6267439!16s%2Fg%2F11jgswwv3m?entry=ttu&g_ep=EgoyMDI1MDEyNy4wIKXMDSoASAFQAw%3D%3D",
+                      "uuid": null,
+                      "anchor": null,
+                      "target": "_blank",
+                      "linktype": "url"
+                    }
+                  },
+                  {
+                    "type": "bold"
+                  },
+                  {
+                    "type": "underline"
+                  }
+                ]
+              },
+              {
+                "text": "(1800 plekken) ",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "link",
+                    "attrs": {
+                      "href": "https://www.google.nl/maps/place/Parkeerplaats+Zonneweide+P8/@52.3549337,5.6258634,1348m/data=!3m1!1e3!4m6!3m5!1s0x47c6333e4c02cfa1:0x6eaee591cbd2cada!8m2!3d52.3578131!4d5.6267439!16s%2Fg%2F11jgswwv3m?entry=ttu&g_ep=EgoyMDI1MDEyNy4wIKXMDSoASAFQAw%3D%3D",
+                      "uuid": null,
+                      "anchor": null,
+                      "target": "_blank",
+                      "linktype": "url"
+                    }
+                  },
+                  {
+                    "type": "underline"
+                  }
+                ]
+              },
+              {
+                "text": "Vuurtorenweg, 3846 AN Harderwijk.┬á Op P8 zijn de meeste parkeerplekken beschikbaar en deze parkeerplaats is makkelijk toegankelijk vanaf de N302. Hierdoor hoef je niet door de binnenstad te rijden, die deze dagen heel erg druk is. Ook rijdt er vanaf hier een elektrische pendel-trein direct naar de boulevard toe.",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "Overige parkeermogelijkheden zijn bij ",
+                "type": "text"
+              },
+              {
+                "text": "P9 ÔÇô┬áSCHEEPSSINGEL ",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "link",
+                    "attrs": {
+                      "href": "https://www.google.nl/maps/place/P9+Scheepssingel/@52.3498533,5.6210569,674m/data=!3m1!1e3!4m6!3m5!1s0x47c633d22b5f8ad1:0xa81657c915814b3f!8m2!3d52.3505933!4d5.6234691!16s%2Fg%2F11f_p3h4r2?entry=ttu&g_ep=EgoyMDI1MDEyNy4wIKXMDSoASAFQAw%3D%3D",
+                      "uuid": null,
+                      "anchor": null,
+                      "target": "_blank",
+                      "linktype": "url"
+                    }
+                  },
+                  {
+                    "type": "bold"
+                  },
+                  {
+                    "type": "underline"
+                  }
+                ]
+              },
+              {
+                "text": "(97 plekken) Scheepssingel, 3841 KR Harderwijk, ",
+                "type": "text"
+              },
+              {
+                "text": "P14 ÔÇô┬áHOUTWAL ",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "link",
+                    "attrs": {
+                      "href": "https://www.google.nl/maps/place/Houtwalgarage/@52.3502547,5.6226233,1348m/data=!3m1!1e3!4m6!3m5!1s0x47c633d1228723ff:0x4c4a047b947fe4f5!8m2!3d52.3483023!4d5.6207832!16s%2Fg%2F1hhj61kqr?entry=ttu&g_ep=EgoyMDI1MDEyNy4wIKXMDSoASAFQAw%3D%3D",
+                      "uuid": null,
+                      "anchor": null,
+                      "target": "_blank",
+                      "linktype": "url"
+                    }
+                  },
+                  {
+                    "type": "bold"
+                  },
+                  {
+                    "type": "underline"
+                  }
+                ]
+              },
+              {
+                "text": "(450 plekken) Vitringasingel 71, 3841 EW Harderwijk en ",
+                "type": "text"
+              },
+              {
+                "text": "P19 ÔÇô┬áWESTEINDE ",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "link",
+                    "attrs": {
+                      "href": "https://www.google.nl/maps/place/Parkeerplaats+P19+Westeinde/@52.3460308,5.6158856,674m/data=!3m1!1e3!4m6!3m5!1s0x47c633d79b77483b:0xc2ee3715fa500072!8m2!3d52.3455446!4d5.6147188!16s%2Fg%2F11fy4t04x9?entry=ttu&g_ep=EgoyMDI1MDEyNy4wIKXMDSoASAFQAw%3D%3D",
+                      "uuid": null,
+                      "anchor": null,
+                      "target": "_blank",
+                      "linktype": "url"
+                    }
+                  },
+                  {
+                    "type": "bold"
+                  },
+                  {
+                    "type": "underline"
+                  }
+                ]
+              },
+              {
+                "text": "(150 plekken) Kruithuis, 3844 DB Harderwijk",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "LET OP: Grote delen van de omliggende woonwijken zijn parkeerschijfzones. De organisatie van de Aaltjesdagen roept alle bezoekers die met de auto komen ook op om niet in de woonwijken te parkeren. Dit kan voor veel overlast zorgen bij bewoners en ook tot onnodige verkeersopstoppingen leiden. Voor meer informatie over het parkeren. Kijk op de website van de",
+                "type": "text"
+              },
+              {
+                "text": " gemeente Harderwijk",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "link",
+                    "attrs": {
+                      "href": "https://www.harderwijk.nl/parkeren-verkeer-en-vervoer/parkeerterreinen",
+                      "uuid": null,
+                      "anchor": null,
+                      "target": null,
+                      "linktype": "url"
+                    }
+                  },
+                  {
+                    "type": "underline"
+                  }
+                ]
+              },
+              {
+                "text": ".",
+                "type": "text"
+              }
+            ]
+          }
+        ]
+      },
+      "title": "Parkeren Auto",
+      "component": "Parkeren Auto",
+      "_editable": "<!--#storyblok#{\"name\": \"Parkeren Auto\", \"space\": \"289358601689489\", \"uid\": \"65579248-d6ae-4c11-b4c0-61b9f41f3478\", \"id\": \"127588696652744\"}-->"
+    },
+    {
+      "_uid": "85fc1c3e-ab26-44e6-a41d-562d951a4ae0",
+      "tekst": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "Harderwijk is een centraal knooppunt op de Veluwe en heeft een verbinding met Flevoland. Hierdoor zijn er veel mogelijkheden om gebruik te maken van het openbaar vervoer. De organisatie raad mensen aan om zoveel mogelijk met het openbaar vervoer te komen om zo verkeersdrukte te voorkomen.┬á",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "TREIN:┬á",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "hard_break",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              },
+              {
+                "text": "Harderwijk heeft een eigen treinstation met verbindingen richting Zwolle en Amersfoort/Utrecht Centraal. Per uur arriveren en vertrekken er vier treinen.",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "BUS:",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "hard_break",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              },
+              {
+                "text": "Naast het treinstation ligt het centrale busstation van Harderwijk. Vanaf hier vertrekken bussen naar Flevoland en naar verschillende plekken op de Veluwe. Alle bussen richting Flevoland stoppen bij het centrum van Harderwijk.┬á",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "De binnenstad van Harderwijk is te bereiken via drie verschillende haltes: Centrum, Dolfinarium en Burgemeester de Meesterstraat.",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "Je kunt gebruik maken van de volgende buslijnen.",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó 111 (Harderwijk ÔÇô Nunspeet)",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó 142 (Harderwijk ÔÇô Nijkerk)",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó 144 (Harderwijk ÔÇô Zeewolde)",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó 147 (Harderwijk ÔÇô Dronten)┬á",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó 148 (Harderwijk ÔÇô Lelystad)┬á",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó 159 (Harderwijk ÔÇô Almere)",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó 247 (Walibi Expres)",
+                "type": "text"
+              }
+            ]
+          }
+        ]
+      },
+      "title": "Openbaar vervoer",
+      "component": "Openbaar vervoer",
+      "_editable": "<!--#storyblok#{\"name\": \"Openbaar vervoer\", \"space\": \"289358601689489\", \"uid\": \"85fc1c3e-ab26-44e6-a41d-562d951a4ae0\", \"id\": \"127588696652744\"}-->"
+    },
+    {
+      "_uid": "530510db-52da-4af7-920d-87a6f7456a17",
+      "tekst": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "heading",
+            "attrs": {
+              "level": 4,
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "text": "Iedereen is welkom op Aaltjesdagen",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": "left"
+            },
+            "content": [
+              {
+                "text": "Om je bezoek zo aangenaam mogelijk te maken informeren we je graag over de mogelijkheden om ons event te bezoeken voor mensen met een beperking.",
+                "type": "text"
+              }
+            ]
+          }
+        ]
+      },
+      "title": "toegankelijkheid",
+      "component": "toegankelijkheid",
+      "_editable": "<!--#storyblok#{\"name\": \"toegankelijkheid\", \"space\": \"289358601689489\", \"uid\": \"530510db-52da-4af7-920d-87a6f7456a17\", \"id\": \"127588696652744\"}-->"
+    },
+    {
+      "_uid": "d6619c31-7ce3-4ca1-9d2e-d79d30802cb3",
+      "tekst": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "Sinds de recente herinrichting van de binnenstad van Harderwijk is Aaltjesdagen goed bereikbaar voor mensen met een beperking. Alle verschillende locaties zijn gelijkvloers.",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "Hou er wel rekening mee dat de Vischmarkt is bedekt met keien. Het Onderstroom-festival is op de Stille Wei en dat is een terrein bedekt met gras. Afhankelijk van het weer zou dit drassig kunnen zijn. Op verschillende plekken zijn kabelgoten aanwezig. We proberen dit zoveel mogelijk te beperken, maar kunnen van te voren nog niet goed aangeven waar die precies komen te liggen.",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "GEHANDICAPTEN-PARKEERMOGELIJKHEDEN",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              },
+              {
+                "text": ":",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó P2 ÔÇô Lelykade, geen plaatsen",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó P8 ÔÇô Zonneweide, 5 plaatsen",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó P9 ÔÇô Scheepssingel, 2 plaatsen",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó P14 ÔÇô Houtwal, 9 plaatsen",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó P19 ÔÇô Westeinde, 2 parkeerplaatsen",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "ROLSTOELTOEGANKELIJKE TOILETTEN:",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "hard_break",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              },
+              {
+                "text": "ÔÇó Hotel Monopole (Buiten de Bruggepoort 3, Harderwijk)",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó Baron Eten en Drinken (Markt 15, Harderwijk)",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó Hema (Donkerstraat 52-54, Harderwijk)",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó Houtwalgarage (Vitringasingel 71, Harderwijk)",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó Stadhuis Harderwijk (Havendam 56, Harderwijk)",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó Havenkantoor (Havendam 41, Harderwijk)",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó Openbaar toilet Strandeiland (Hoge Brug 10, Harderwijk)",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó Sir Jack (Vijhestraat 36, Harderwijk)",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ÔÇó De Boterlap (Markt 5, Harderwijk)",
+                "type": "text"
+              }
+            ]
+          }
+        ]
+      },
+      "title": "In en rondom de binnenstad",
+      "component": "In en rondom de binnenstad",
+      "_editable": "<!--#storyblok#{\"name\": \"In en rondom de binnenstad\", \"space\": \"289358601689489\", \"uid\": \"d6619c31-7ce3-4ca1-9d2e-d79d30802cb3\", \"id\": \"127588696652744\"}-->"
+    },
+    {
+      "_uid": "e9f6cb3b-1d51-45ce-85e5-1355c5aeb708",
+      "tekst": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "Tijdens het evenement zijn er verschillende EHBO-posten aanwezig. Bij deze posten zijn ook rolstoeltoegankelijke toiletten aanwezig en zijn er ook stroompunten voor elektrische hulpmiddelen. De medische inzet wordt verzorgd door Just4Medical. Zij hanteert de Veldnorm Evenementenzorg in de dienstverlening.",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "LOCATIES VAN EHBO-POSTEN:┬á",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              },
+              {
+                "type": "hard_break",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              },
+              {
+                "text": "Onderstroom festival",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              },
+              {
+                "text": " op de Wijde Wellen op vrijdag van 18:00 tot 00:00 uur en op zaterdag van 10:00 tot 00:00 uur.",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "ADF- muziekfestival / Life Goals┬á op P6",
+                "type": "text",
+                "marks": [
+                  {
+                    "type": "bold"
+                  }
+                ]
+              },
+              {
+                "text": " op vrijdag van 18:00 tot 00:00 uur en op zaterdag van 10:00 tot 00:00 uur.",
+                "type": "text"
+              }
+            ]
+          }
+        ]
+      },
+      "title": "EHBO-posten",
+      "component": "EHBO-posten",
+      "_editable": "<!--#storyblok#{\"name\": \"EHBO-posten\", \"space\": \"289358601689489\", \"uid\": \"e9f6cb3b-1d51-45ce-85e5-1355c5aeb708\", \"id\": \"127588696652744\"}-->"
+    },
+    {
+      "_uid": "f70ee15b-be93-4fa0-8a75-9753b8edf077",
+      "tekst": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "Assistentiehonden zijn overal van harte welkom",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "Er is geen prikkelarme rustruimte aanwezig.",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "Er is geen gebarentolk of audiotolk aanwezig.",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "Er zijn geen speciale kijkplatforms aanwezig.",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "attrs": {
+              "textAlign": null
+            },
+            "content": [
+              {
+                "text": "Door de gehele binnenstad en op alle evenementenlocatie zijn voldoende zitplekken aanwezig. Eigen zitgelegenheid meenemen is overal mogelijk op het festival, behalve op het ADF-muziekfestival in verband met de veiligheid.┬á",
+                "type": "text"
+              },
+              {
+                "type": "hard_break"
+              },
+              {
+                "text": "Schroom niet om een medewerker van Aaltjesdagen aan te spreken als je vragen hebt tijdens het evenement zelf.",
+                "type": "text"
+              }
+            ]
+          }
+        ]
+      },
+      "title": "Belangrijk om te weten",
+      "component": "Belangrijk om te weten",
+      "_editable": "<!--#storyblok#{\"name\": \"Belangrijk om te weten\", \"space\": \"289358601689489\", \"uid\": \"f70ee15b-be93-4fa0-8a75-9753b8edf077\", \"id\": \"127588696652744\"}-->"
+    }
+  ],
+  "logo": [],
+  "component": "page",
+  "footer_menu": [],
+  "header_menu": [],
+  "social_links": [],
+  "_editable": "<!--#storyblok#{\"name\": \"page\", \"space\": \"289358601689489\", \"uid\": \"4080a673-8a7e-4b07-8599-57932fab1672\", \"id\": \"127588696652744\"}-->"
+}
+[2m00:09:55[22m   [34mÔö£ÔöÇ[39m [2m/config/index.html[22m [2m(+12ms)[22m 
+[2m00:09:55[22m   [34mÔö£ÔöÇ[39m [2m/salsa/index.html[22m [2m(+5ms)[22m 
+[2m00:09:55[22m   [34mÔö£ÔöÇ[39m [2m/contact/index.html[22m [2m(+4ms)[22m 
+[2m00:09:55[22m   [34mÔö£ÔöÇ[39m [2m/vacatures/index.html[22m [2m(+4ms)[22m 
+[2m00:09:55[22m   [34mÔö£ÔöÇ[39m [2m/sponsoring/index.html[22m [2m(+4ms)[22m 
+[2m00:09:55[22m   [34mÔö£ÔöÇ[39m [2m/content/index.html[22m [2m(+4ms)[22m 
+[2m00:09:55[22m   [34mÔö£ÔöÇ[39m [2m/braderie/index.html[22m [2m(+5ms)[22m 
+[2m00:09:55[22m   [34mÔö£ÔöÇ[39m [2m/adf-muziekfestival/index.html[22m [2m(+6ms)[22m 
+[2m00:09:55[22m   [34mÔö£ÔöÇ[39m [2m/bereikbaarheid/index.html[22m [2m(+9ms)[22m 
+[2m00:09:55[22m   [34mÔööÔöÇ[39m [2m/index.html[22m­ƒöì Gridmenu - Available fields: [
+  '_uid',
+  'foto',
+  'link',
+  'title',
+  'content',
+  'component',
+  'titlecontent',
+  '_editable'
+]
+­ƒöì Gridmenu - Full blok data: {
+  "_uid": "1cfec684-291e-49cd-a296-8ff5e16bad0e",
+  "foto": [],
+  "link": {
+    "id": "",
+    "url": "",
+    "linktype": "story",
+    "fieldtype": "multilink",
+    "cached_url": ""
+  },
+  "title": "PROGRAMMA-Onderdelen die je zeker niet mag missen",
+  "content": "",
+  "component": "Gridmenu",
+  "titlecontent": "Nog geen idee wat er allemaal te doen is met de Aaltjesdagen? Geen paniek!\nWe hebben nog een aantal suggesties voor je. Bekijk deze lijst hieronderÔÇª",
+  "_editable": "<!--#storyblok#{\"name\": \"Gridmenu\", \"space\": \"289358601689489\", \"uid\": \"1cfec684-291e-49cd-a296-8ff5e16bad0e\", \"id\": \"126137999996107\"}-->"
+}
+ [2m(+14ms)[22m 
+[2m00:09:55[22m [32mÔ£ô Completed in 187ms.
+[39m
+[2m00:09:55[22m [34m[@astrojs/vercel][39m Copying static files to .vercel/output/static
+[2m00:09:55[22m [34m[build][39m 10 page(s) built in [1m3.73s[22m
+[2m00:09:55[22m [34m[build][39m [1mComplete![22m

@@ -1,12 +1,11 @@
 ---
-import { storyblokEditable, renderRichText } from "@storyblok/astro";
+import { storyblokEditable } from "@storyblok/astro";
 
 const { blok } = Astro.props;
 
 // Storyblok field mapping: title (text), text (textarea), foto (multi-assets)
 const title = blok.title || "";
 const text = blok.text || ""; // Plain textarea field (not richtext)
-const foto = blok.foto;
 ---
 
 <section
@@ -14,19 +13,12 @@ const foto = blok.foto;
   class="hero-section relative overflow-hidden bg-transparent"
   style="background-color: transparent !important;"
 >
-  <!-- Content -->
   <div class="relative container-custom section-spacing-sm content-layer">
     <div class="max-w-5xl mx-auto">
-      <!-- Hero card with prominent styling -->
       <div class="hero-card">
-        <!-- Accent bar -->
         <div class="accent-bar"></div>
-
         {title && <h1 class="hero-title">{title}</h1>}
-
         {text && <p class="hero-text">{text}</p>}
-
-        <!-- Decorative element -->
         <div class="hero-decoration"></div>
       </div>
     </div>
@@ -111,14 +103,14 @@ const foto = blok.foto;
     letter-spacing: -0.02em;
     color: var(--text-primary);
     margin-bottom: 1.5rem;
-    background: linear-gradient(
+    /* background: linear-gradient(
       135deg,
       var(--color-primary) 0%,
       var(--color-accent) 100%
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
+    background-clip: text; */
   }
 
   @media (min-width: 768px) {

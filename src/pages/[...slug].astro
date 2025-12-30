@@ -7,6 +7,12 @@ export async function getStaticPaths() {
   const stories = await getAllStories("draft");
 
   return stories.map((story: any) => {
+    if (story.full_slug === "bereikbaarheid") {
+      console.log(
+        `[DEBUG] Story content for ${story.full_slug}:`,
+        JSON.stringify(story.content, null, 2),
+      );
+    }
     // Handle home page and nested paths for catch-all route [...slug]
     // For [...slug], we pass the full slug as a string (Astro will handle the parsing)
     const slugParam = story.full_slug === "home" ? undefined : story.full_slug;
