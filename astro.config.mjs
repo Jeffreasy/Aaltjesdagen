@@ -3,7 +3,7 @@ import { storyblok } from '@storyblok/astro'
 import { loadEnv } from 'vite'
 import tailwind from '@astrojs/tailwind'
 import vercel from '@astrojs/vercel/static'  // CHANGED: specific import
-import basicSsl from '@vitejs/plugin-basic-ssl'
+
 
 const env = loadEnv('', process.cwd(), 'STORYBLOK')
 
@@ -59,7 +59,6 @@ export default defineConfig({
     }),
   ],
   vite: {
-    plugins: [basicSsl()],
     server: {
       https: true,
     },
