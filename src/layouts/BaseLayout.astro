@@ -39,8 +39,7 @@ const isStoryblokEnabled = import.meta.env.DEV;
   <body class="flex flex-col min-h-screen">
     <!-- Animated Background -->
     <div class="fixed inset-0 z-[-1] bg-animated" aria-hidden="true">
-      <div class="orb absolute w-[500px] h-[500px] bottom-[25%] left-[50%] blur-[80px] opacity-60 rounded-full [background:var(--bg-gradient-animated-3)] [animation:float-3_30s_ease-in-out_infinite]">
-      </div>
+      <div class="orb" aria-hidden="true"></div>
     </div>
     <header
       class="glass sticky top-0 py-4 shadow-lg border-b border-white/30 dark:border-gray-700/30 relative z-header"

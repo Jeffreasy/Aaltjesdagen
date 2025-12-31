@@ -460,6 +460,21 @@
     }
   }
 
+  /* === ORB STYLING === */
+  /* Centralized styling for animated .orb element to prevent Tailwind purging issues */
+  .orb {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    bottom: 25%;
+    left: 50%;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    background: var(--bg-gradient-animated-3);
+    animation: float-3 30s ease-in-out infinite;
+  }
+
   @media (prefers-reduced-motion: reduce) {
 
     .bg-animated::before,
