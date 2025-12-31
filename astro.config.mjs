@@ -2,16 +2,17 @@ import { defineConfig } from 'astro/config'
 import { storyblok } from '@storyblok/astro'
 import { loadEnv } from 'vite'
 import tailwind from '@astrojs/tailwind'
-import vercel from '@astrojs/vercel'
+import vercel from '@astrojs/vercel/static'  // CHANGED: specific import
 import basicSsl from '@vitejs/plugin-basic-ssl'
+
 const env = loadEnv('', process.cwd(), 'STORYBLOK')
 
-// https://astro.build/config
 export default defineConfig({
   output: 'static',
-  adapter: vercel({
-    webAnalytics: { enabled: false }
-  }),
+  adapter: vercel(),
+  build: {
+    inlineStylesheets: 'never',  // CRITICAL: Never inline CSS
+  },
   integrations: [
     storyblok({
       accessToken: env.STORYBLOK_TOKEN || 'vgdfUWE4CP2d3ZXnPtoikQtt',
@@ -63,8 +64,13 @@ export default defineConfig({
       https: true,
     },
     build: {
-      cssCodeSplit: false,  // Force single CSS file
-      assetsInlineLimit: 0   // Don't inline assets
+      cssCodeSplit: false,
+      assetsInlineLimit: 0,
+      rollupOptions: {
+        output: {
+          assetFileNames: '_astro/[name].[hash][extname]',
+        }
+      }
     }
   },
 })
