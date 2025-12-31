@@ -11,9 +11,9 @@
  *
  * MIGRATION: Phase 3 - Refactored to use Link component and constants
  */
-import { NAVIGATION_ITEMS } from '@/constants/site';
-import Link from '@/components/ui/Link.astro';
-import ThemeToggle from '../ui/ThemeToggle.astro';
+import { NAVIGATION_ITEMS } from "@/constants/site";
+import Link from "@/components/ui/Link.astro";
+import ThemeToggle from "../ui/ThemeToggle.astro";
 
 // Bepaal actieve pagina voor mobile nav (custom styling)
 const currentPath = Astro.url.pathname;
@@ -24,11 +24,13 @@ const currentPath = Astro.url.pathname;
   class="hidden md:flex flex-wrap items-center gap-6"
   aria-label="Main navigation"
 >
-  {NAVIGATION_ITEMS.map((item) => (
-    <Link href={item.href} variant="nav">
-      {item.name}
-    </Link>
-  ))}
+  {
+    NAVIGATION_ITEMS.map((item) => (
+      <Link href={item.href} variant="nav">
+        {item.name}
+      </Link>
+    ))
+  }
   <ThemeToggle />
 </nav>
 
@@ -55,18 +57,15 @@ const currentPath = Astro.url.pathname;
       <span
         class="absolute left-0 w-full h-0.5 bg-current transition-all rounded-full"
         :class="mobileMenuOpen ? 'top-2.5 rotate-45 bg-text-primary' : 'top-0 bg-text-primary'"
-        style="transition-duration: var(--transition-duration, 300ms);"
-      ></span>
+        style="transition-duration: var(--transition-duration, 300ms);"></span>
       <span
         class="absolute left-0 top-2 w-full h-0.5 bg-current transition-all rounded-full bg-text-primary"
         :class="mobileMenuOpen ? 'opacity-0 scale-0' : 'opacity-100'"
-        style="transition-duration: var(--transition-duration, 300ms);"
-      ></span>
+        style="transition-duration: var(--transition-duration, 300ms);"></span>
       <span
         class="absolute left-0 w-full h-0.5 bg-current transition-all rounded-full"
         :class="mobileMenuOpen ? 'top-2.5 -rotate-45 bg-text-primary' : 'top-4 bg-text-primary'"
-        style="transition-duration: var(--transition-duration, 300ms);"
-      ></span>
+        style="transition-duration: var(--transition-duration, 300ms);"></span>
     </div>
   </button>
 
@@ -127,13 +126,11 @@ const currentPath = Astro.url.pathname;
                     href={item.href}
                     class:list={[
                       "nav-mobile-link",
-                      isActive && "nav-mobile-link--active"
+                      isActive && "nav-mobile-link--active",
                     ]}
                     aria-current={isActive ? "page" : undefined}
                   >
-                    <span class="nav-mobile-link__number">
-                      0{index + 1}
-                    </span>
+                    <span class="nav-mobile-link__number">0{index + 1}</span>
                     {item.name}
                   </a>
                 );
@@ -193,7 +190,7 @@ const currentPath = Astro.url.pathname;
   }
 
   .nav-mobile-link:hover {
-    color: var(--color-primary);
+    color: #50b0ae; /* Teal - Direct value to bypass variable resolution issue */
   }
 
   .nav-mobile-link--active {
@@ -213,7 +210,7 @@ const currentPath = Astro.url.pathname;
   }
 
   .nav-mobile-link:hover .nav-mobile-link__number {
-    color: var(--color-secondary);
+    color: #ff7e67; /* Coral - Direct value to bypass variable resolution issue */
     opacity: 1;
   }
 

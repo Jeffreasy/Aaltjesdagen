@@ -7,7 +7,7 @@
  *
  * @component
  */
-import type { LinkProps } from '@/types/navigation';
+import type { LinkProps } from "@/types/navigation";
 
 interface Props extends LinkProps {
   /** Link content (passed via slot) */
@@ -15,42 +15,41 @@ interface Props extends LinkProps {
 
 const {
   href,
-  variant = 'nav',
+  variant = "nav",
   active: activeProp,
   external = false,
-  class: className = '',
+  class: className = "",
   ariaLabel,
 } = Astro.props;
 
 // Determine active state based on current URL
 const currentPath = Astro.url.pathname;
-const isActive = activeProp !== undefined
-  ? activeProp
-  : currentPath === href || (href !== '/' && currentPath.startsWith(href));
+const isActive =
+  activeProp !== undefined
+    ? activeProp
+    : currentPath === href || (href !== "/" && currentPath.startsWith(href));
 
 // External link attributes
 const externalAttrs = external
-  ? { target: '_blank', rel: 'noopener noreferrer' }
+  ? { target: "_blank", rel: "noopener noreferrer" }
   : {};
 ---
 
 <a
   href={href}
   class:list={[
-    'link',
+    "link",
     `link--${variant}`,
-    { 'link--active': isActive },
+    { "link--active": isActive },
     className,
   ]}
-  aria-current={isActive ? 'page' : undefined}
+  aria-current={isActive ? "page" : undefined}
   aria-label={ariaLabel}
   {...externalAttrs}
 >
   <slot />
-  
-  {variant === 'nav' && (
-    <span class="link__underline" aria-hidden="true" />
-  )}
+
+  {variant === "nav" && <span class="link__underline" aria-hidden="true" />}
 </a>
 
 <style>
@@ -81,7 +80,7 @@ const externalAttrs = external
   }
 
   .link--nav:hover {
-    color: var(--color-secondary);
+    color: #ff7e67; /* Coral - Direct value to bypass variable resolution issue */
   }
 
   .link--nav.link--active {
@@ -116,7 +115,7 @@ const externalAttrs = external
   }
 
   .link--footer:hover {
-    color: var(--color-primary);
+    color: #50b0ae; /* Teal - Direct value to bypass variable resolution issue */
     transform: translateX(2px);
   }
 
@@ -135,7 +134,7 @@ const externalAttrs = external
   }
 
   .link--inline:hover {
-    color: var(--color-primary-dark);
+    color: #3a8e8c; /* Teal dark - Direct value to bypass variable resolution issue */
     text-decoration-thickness: 2px;
   }
 
