@@ -1,0 +1,199 @@
+---
+/**
+ * IconBadge Component
+ * 
+ * Reusable icon badge with gradient background and optional animations.
+ * Used across all 8 Bereikbaarheid components for consistent icon styling.
+ * 
+ * @component
+ * @example
+ * ```astro
+ * <IconBadge icon="🚗" variant="primary" size="lg" rotation={-3} />
+ * <IconBadge icon="🏥" variant="error" animation="pulse" />
+ * <IconBadge icon="🚲" variant="accent" size="md" />
+ * ```
+ */
+
+interface Props {
+  /** Emoji icon or SVG content */
+  icon: string;
+  /** Color theme variant */
+  variant?: 'primary' | 'secondary' | 'accent' | 'error';
+  /** Badge size */
+  size?: 'sm' | 'md' | 'lg';
+  /** Optional static rotation in degrees */
+  rotation?: number;
+  /** Optional animation type */
+  animation?: 'none' | 'pulse' | 'hover-rotate';
+  /** Additional CSS classes */
+  class?: string;
+}
+
+const {
+  icon,
+  variant = 'primary',
+  size = 'md',
+  rotation = 0,
+  animation = 'none',
+  class: className = ''
+} = Astro.props;
+---
+
+<div 
+  class={`icon-badge icon-badge--${variant} icon-badge--${size} icon-badge--${animation} ${className}`}
+  style={rotation !== 0 ? `transform: rotate(${rotation}deg);` : ''}
+>
+  <span class="icon-content">{icon}</span>
+  <div class="badge-glow"></div>
+</div>
+
+<style>
+  /* === BASE BADGE STYLING === */
+  .icon-badge {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 1.25rem;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+  
+  /* === SIZE VARIANTS === */
+  .icon-badge--sm {
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .icon-badge--sm .icon-content {
+    font-size: 1.5rem;
+  }
+  
+  .icon-badge--md {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+  
+  .icon-badge--md .icon-content {
+    font-size: 2rem;
+  }
+  
+  .icon-badge--lg {
+    width: 5rem;
+    height: 5rem;
+  }
+  
+  .icon-badge--lg .icon-content {
+    font-size: 2.5rem;
+  }
+  
+  /* === COLOR VARIANTS === */
+  .icon-badge--primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, color-mix(in srgb, var(--color-primary), black 10%) 100%);
+    box-shadow: 0 10px 20px -5px color-mix(in srgb, var(--color-primary), transparent 60%);
+  }
+  
+  .icon-badge--secondary {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, color-mix(in srgb, var(--color-secondary), black 10%) 100%);
+    box-shadow: 0 10px 20px -5px color-mix(in srgb, var(--color-secondary), transparent 60%);
+  }
+  
+  .icon-badge--accent {
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+    box-shadow: 0 10px 20px -5px color-mix(in srgb, var(--color-accent), transparent 60%);
+  }
+  
+  .icon-badge--error {
+    background: linear-gradient(135deg, var(--color-error) 0%, color-mix(in srgb, var(--color-error), black 10%) 100%);
+    box-shadow: 0 10px 20px -5px color-mix(in srgb, var(--color-error), transparent 60%);
+  }
+  
+  /* === ANIMATION VARIANTS === */
+  .icon-badge--pulse {
+    animation: pulse-badge 3s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-badge {
+    0%, 100% {
+      box-shadow: 
+        0 10px 20px -5px color-mix(in srgb, var(--color-error), transparent 60%),
+        0 0 0 4px color-mix(in srgb, var(--color-error), transparent 90%);
+    }
+    50% {
+      box-shadow: 
+        0 10px 20px -5px color-mix(in srgb, var(--color-error), transparent 40%),
+        0 0 0 6px color-mix(in srgb, var(--color-error), transparent 85%);
+    }
+  }
+  
+  .icon-badge--hover-rotate:hover {
+    transform: rotate(0deg) scale(1.05) !important;
+  }
+  
+  /* === ICON CONTENT === */
+  .icon-content {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    z-index: 1;
+    position: relative;
+  }
+  
+  /* === BADGE GLOW EFFECT === */
+  .badge-glow {
+    position: absolute;
+    inset: -0.5rem;
+    border-radius: 1.5rem;
+    background: inherit;
+    filter: blur(1rem);
+    opacity: 0.3;
+    z-index: 0;
+  }
+  
+  /* === ACCESSIBILITY === */
+  @media (prefers-reduced-motion: reduce) {
+    .icon-badge--pulse {
+      animation: none !important;
+    }
+    
+    .icon-badge {
+      transition: none !important;
+    }
+  }
+</style>
+
+<!--
+MIGRATION EXAMPLES:
+
+1. ParkerenAutos (lines 22-32) - Car icon with rotation:
+   BEFORE:
+   <div class="absolute -top-6 -left-6 w-20 h-20 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center text-4xl shadow-2xl shadow-primary/30 transform -rotate-3 hover:rotate-0 transition-transform duration-300">
+     🚗
+   </div>
+   
+   AFTER:
+   <IconBadge icon="🚗" variant="primary" size="lg" rotation={-3} animation="hover-rotate" class="absolute -top-6 -left-6" />
+
+2. EhboPosten (lines 28-34) - Medical icon with pulse animation:
+   BEFORE:
+   <div class="medical-badge">
+     <span class="badge-icon">🏥</span>
+   </div>
+   
+   AFTER:
+   <IconBadge icon="🏥" variant="error" size="lg" animation="pulse" class="medical-badge" />
+
+3. Toegankelijkheid (lines 29-33) - Accessibility icon:
+   BEFORE:
+   <div class="icon-wrapper">
+     <span class="icon">♿</span>
+   </div>
+   
+   AFTER:
+   <IconBadge icon="♿" variant="accent" size="md" class="icon-wrapper" />
+
+BENEFITS:
+- 60+ lines of duplicate styling removed per component
+- Consistent sizing, colors, and animations
+- Easy to maintain and update globally
+- Automatic dark mode support via CSS variables
+- Responsive to reduced-motion preferences
+-->

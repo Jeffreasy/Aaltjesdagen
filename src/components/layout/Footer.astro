@@ -10,34 +10,15 @@
  * - Social media + Newsletter
  * - Privacy/Cookie links
  * - Design system compliant (adaptief light/dark theme)
+ *
+ * MIGRATION: Phase 3 - Refactored to use base components and constants
  */
-import Navigation from "./Navigation.astro";
+import { SITE, NAVIGATION_ITEMS, SOCIAL_LINKS, LEGAL_LINKS, DEVELOPER } from '@/constants/site';
+import SocialLink from '@/components/common/SocialLink.astro';
+import NewsletterForm from '@/components/common/NewsletterForm.astro';
+import Link from '@/components/ui/Link.astro';
 
 const currentYear = new Date().getFullYear();
-
-const socialLinks = [
-  {
-    name: "Facebook",
-    href: "https://facebook.com/aaltjesdagen",
-    icon: "M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z", // Facebook path
-  },
-  {
-    name: "Instagram",
-    href: "https://instagram.com/aaltjesdagen",
-    icon: "M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01M6.5 6.5h11v11h-11v-11z M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5z", // Instagram paths (combined)
-  },
-  {
-    name: "Twitter",
-    href: "https://twitter.com/aaltjesdagen",
-    icon: "M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z", // Twitter path
-  },
-];
-
-const legalLinks = [
-  { name: "Privacy Policy", href: "/privacy" },
-  { name: "Cookie Settings", href: "/cookies" },
-  { name: "Algemene Voorwaarden", href: "/voorwaarden" },
-];
 ---
 
 <footer
@@ -65,14 +46,13 @@ const legalLinks = [
       <div class="lg:col-span-1">
         <img
           src="/assets/logo.png"
-          alt="Aaltjesdagen Logo"
+          alt={`${SITE.name} Logo`}
           width="150"
           height="50"
           class="h-10 w-auto mb-6 brightness-0 dark:invert transition-all duration-300 opacity-90"
         />
         <p class="text-sm leading-relaxed text-[var(--text-secondary)]">
-          Het grootste evenement van Harderwijk! Kom en geniet van muziek,
-          cultuur en gezelligheid tijdens de jaarlijkse Aaltjesdagen.
+          {SITE.description}
         </p>
       </div>
 
@@ -87,20 +67,11 @@ const legalLinks = [
         </h3>
         <nav class="footer-nav" aria-label="Footer navigation">
           <ul class="space-y-3">
-            <li><a href="/" class="footer-link">Home</a></li>
-            <li>
-              <a href="/bereikbaarheid" class="footer-link">Bereikbaarheid</a>
-            </li>
-            <li>
-              <a href="/adf-muziekfestival" class="footer-link"
-                >ADF Muziekfestival</a
-              >
-            </li>
-            <li><a href="/braderie" class="footer-link">Braderie</a></li>
-            <li><a href="/salsa" class="footer-link">Salsa</a></li>
-            <li><a href="/sponsoring" class="footer-link">Sponsoring</a></li>
-            <li><a href="/vacatures" class="footer-link">Vacatures</a></li>
-            <li><a href="/contact" class="footer-link">Contact</a></li>
+            {NAVIGATION_ITEMS.map((item) => (
+              <li>
+                <Link href={item.href} variant="footer">{item.name}</Link>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>
@@ -132,8 +103,8 @@ const legalLinks = [
                 d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
               ></path>
             </svg>
-            <a href="mailto:info@aaltjesdagen.nl" class="footer-link">
-              info@aaltjesdagen.nl
+            <a href={`mailto:${SITE.email}`} class="footer-link">
+              {SITE.email}
             </a>
           </div>
 
@@ -154,7 +125,7 @@ const legalLinks = [
                 d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
               ></path>
             </svg>
-            <span>+31 (0)341 123 456</span>
+            <span>{SITE.phone}</span>
           </div>
 
           <!-- Locatie -->
@@ -180,8 +151,8 @@ const legalLinks = [
                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
             </svg>
             <address class="not-italic">
-              Harderwijk<br />
-              Gelderland, Nederland
+              {SITE.location.city}<br />
+              {SITE.location.region}, {SITE.location.country}
             </address>
           </div>
         </div>
@@ -199,74 +170,13 @@ const legalLinks = [
 
         <!-- Social Media Links -->
         <div class="flex gap-3 mb-6">
-          {
-            socialLinks.map((social) => (
-              <a
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="social-link"
-                aria-label={`Volg ons op ${social.name}`}
-                title={social.name}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d={social.icon}
-                  />
-                </svg>
-              </a>
-            ))
-          }
+          {SOCIAL_LINKS.map((social) => (
+            <SocialLink {...social} variant="footer" size="md" />
+          ))}
         </div>
 
         <!-- Newsletter Signup -->
-        <div class="newsletter-box">
-          <p class="text-sm text-[var(--text-secondary)] mb-3 font-medium">
-            Ontvang updates over Aaltjesdagen
-          </p>
-          <form
-            class="flex gap-2"
-            onsubmit="event.preventDefault(); alert('Newsletter signup coming soon!');"
-          >
-            <input
-              type="email"
-              placeholder="Uw email"
-              class="newsletter-input"
-              aria-label="Email voor nieuwsbrief"
-              required
-            />
-            <button
-              type="submit"
-              class="newsletter-button"
-              aria-label="Aanmelden voor nieuwsbrief"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-              </svg>
-            </button>
-          </form>
-        </div>
+        <NewsletterForm />
       </div>
     </div>
 
@@ -277,26 +187,21 @@ const legalLinks = [
         class="flex flex-wrap justify-center gap-6 mb-4"
         aria-label="Legal navigation"
       >
-        {
-          legalLinks.map((link) => (
-            <a
-              href={link.href}
-              class="text-xs text-[var(--text-tertiary)] hover:text-primary transition-colors"
-            >
-              {link.name}
-            </a>
-          ))
-        }
+        {LEGAL_LINKS.map((link) => (
+          <Link href={link.href} variant="footer" class="text-xs text-[var(--text-tertiary)]">
+            {link.name}
+          </Link>
+        ))}
       </nav>
 
       <!-- Copyright -->
       <div class="text-center text-xs text-[var(--text-tertiary)]">
-        <p>&copy; {currentYear} Aaltjesdagen. Alle rechten voorbehouden.</p>
+        <p>&copy; {currentYear} {SITE.name}. Alle rechten voorbehouden.</p>
         <p
           class="mt-2 text-[var(--text-tertiary)] text-[10px] uppercase tracking-wider opacity-60 hover:opacity-100 transition-opacity duration-300"
         >
           Website door <span class="font-bold text-[var(--text-secondary)]"
-            >Jeffrey Lavente</span
+            >{DEVELOPER.name}</span
           >
         </p>
       </div>
@@ -305,7 +210,7 @@ const legalLinks = [
 </footer>
 
 <style>
-  /* Footer Links */
+  /* Footer Links - Basic styles (hover/focus handled by Link component) */
   .footer-link {
     color: var(--text-secondary);
     text-decoration: none;
@@ -324,112 +229,13 @@ const legalLinks = [
     border-radius: 4px;
   }
 
-  /* Social Media Links */
-  .social-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 0.75rem;
-    background: var(--bg-base);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-secondary);
-    transition: all var(--transition-base);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .social-link:hover {
-    background: var(--color-secondary);
-    border-color: var(--color-secondary);
-    color: var(--text-inverse); /* White text on hover */
-    transform: translateY(-3px);
-    box-shadow: 0 8px 16px rgba(243, 146, 0, 0.3);
-  }
-
-  .social-link:active {
-    transform: translateY(-1px);
-  }
-
-  .social-link:focus-visible {
-    outline: 2px solid var(--color-secondary);
-    outline-offset: 2px;
-  }
-
-  /* Newsletter Box */
-  .newsletter-box {
-    padding: 1rem;
-    background: var(--bg-base);
-    border-radius: 1rem;
-    border: 1px solid var(--border-secondary);
-  }
-
-  /* Newsletter Input */
-  .newsletter-input {
-    flex: 1;
-    padding: 0.625rem 0.875rem;
-    border-radius: 0.5rem;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border-primary);
-    color: var(--text-primary);
-    font-size: 0.875rem;
-    transition: all var(--transition-base);
-  }
-
-  .newsletter-input::placeholder {
-    color: var(--text-tertiary);
-  }
-
-  .newsletter-input:focus {
-    outline: none;
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgba(80, 176, 174, 0.2);
-  }
-
-  /* Newsletter Button */
-  .newsletter-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.625rem;
-    border-radius: 0.5rem;
-    background: linear-gradient(
-      135deg,
-      var(--color-accent),
-      var(--color-accent-dark)
-    );
-    color: var(--text-inverse);
-    border: none;
-    cursor: pointer;
-    transition: all var(--transition-base);
-    box-shadow: 0 4px 12px rgba(80, 176, 174, 0.3);
-  }
-
-  .newsletter-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(80, 176, 174, 0.4);
-  }
-
-  .newsletter-button:active {
-    transform: scale(0.95);
-  }
-
-  .newsletter-button:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-  }
-
   /* Reduced Motion Support */
   @media (prefers-reduced-motion: reduce) {
-    .footer-link,
-    .social-link,
-    .newsletter-input,
-    .newsletter-button {
+    .footer-link {
       transition: none !important;
     }
 
-    .footer-link:hover,
-    .social-link:hover {
+    .footer-link:hover {
       transform: none !important;
     }
   }

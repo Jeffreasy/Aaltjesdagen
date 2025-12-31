@@ -36,19 +36,19 @@ const programsDataJson = JSON.stringify(sortedProgrammas)
     <!-- Header Section -->
     <div class="text-center max-w-4xl mx-auto mb-16">
       {blok.TitelProgramma && (
-        <div class="inline-flex items-center gap-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-5 py-2 rounded-full shadow-sm mb-8">
+        <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full shadow-sm mb-8" style="background: var(--bg-base); border: 1px solid var(--border-primary);">
           <span class="relative flex h-2 w-2">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
           </span>
-          <span class="text-accent font-black text-xs uppercase tracking-[0.2em]">
+          <span class="font-black text-xs uppercase tracking-[0.2em]" style="color: var(--color-accent);">
             {blok.TitelProgramma}
           </span>
         </div>
       )}
       
       {dagTitel && (
-        <h2 class="text-4xl md:text-7xl font-black text-[var(--color-accent)] dark:text-gray-100 mb-8 tracking-tighter leading-none">
+        <h2 class="text-4xl md:text-7xl font-black mb-8 tracking-tighter leading-none" style="color: var(--color-accent);">
           {new Date(dagTitel).toLocaleDateString('nl-NL', {
             weekday: 'long',
             day: 'numeric',
@@ -59,14 +59,14 @@ const programsDataJson = JSON.stringify(sortedProgrammas)
 
       <div class="flex justify-center items-center gap-4 mb-10">
         <div class="h-px w-20 bg-gradient-to-r from-transparent to-gray-300 dark:to-gray-600"></div>
-        <div class="text-secondary font-black text-xl italic tracking-tighter">
+        <div class="font-black text-xl italic tracking-tighter" style="color: var(--color-accent);">
           {dagTitel && new Date(dagTitel).getFullYear()}
         </div>
         <div class="h-px w-20 bg-gradient-to-l from-transparent to-gray-300 dark:to-gray-600"></div>
       </div>
 
       {blok.headline && blok.TitelProgramma !== blok.headline && (
-        <p class="text-xl md:text-2xl text-[var(--color-accent)] dark:text-gray-400 font-medium max-w-2xl mx-auto leading-relaxed">
+        <p class="text-xl md:text-2xl font-medium max-w-2xl mx-auto leading-relaxed" style="color: var(--text-secondary);">
           {blok.headline}
         </p>
       )}
@@ -78,7 +78,7 @@ const programsDataJson = JSON.stringify(sortedProgrammas)
         <div class="glass p-3 rounded-2xl shadow-2xl flex flex-wrap justify-center gap-2 max-w-full overflow-x-auto no-scrollbar">
           <button
             @click="activeFilter = 'all'"
-            :class="activeFilter === 'all' ? 'bg-gradient-to-r from-primary to-teal-600 text-white shadow-lg scale-105' : 'text-gray-700 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-gray-700/70 hover:scale-105'"
+            :class="activeFilter === 'all' ? 'bg-gradient-to-r from-primary to-teal-600 text-white shadow-lg scale-105' : 'hover:bg-white/70 hover:scale-105'" style="color: var(--text-primary);"
             class="px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 whitespace-nowrap"
           >
             Alles ({sortedProgrammas.length})
@@ -88,7 +88,7 @@ const programsDataJson = JSON.stringify(sortedProgrammas)
             return (
               <button
                 @click={`activeFilter = '${loc}'`}
-                :class={`activeFilter === '${loc}' ? 'bg-gradient-to-r from-primary to-teal-600 text-white shadow-lg scale-105' : 'text-gray-700 dark:text-gray-300 hover:bg-white/70 dark:hover:bg-gray-700/70 hover:scale-105'`}
+                :class={`activeFilter === '${loc}' ? 'bg-gradient-to-r from-primary to-teal-600 text-white shadow-lg scale-105' : 'hover:bg-white/70 hover:scale-105'`} style="color: var(--text-primary);"
                 class="px-5 py-2 rounded-xl text-xs font-bold transition-all duration-300 whitespace-nowrap"
               >
                 {loc} ({count})
@@ -129,7 +129,7 @@ const programsDataJson = JSON.stringify(sortedProgrammas)
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
                         </div>
-                        <span class="text-sm font-bold text-gray-900 dark:text-gray-100">
+                        <span class="text-sm font-bold" style="color: var(--text-primary);">
                           {prog.Tijd ? new Date(prog.Tijd).toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' }) : '-'}
                         </span>
                       </div>
@@ -145,11 +145,11 @@ const programsDataJson = JSON.stringify(sortedProgrammas)
                           />
                         )}
                         <div class="min-w-0">
-                          <h4 class="text-sm md:text-base font-bold text-gray-900 dark:text-gray-100 group-hover:text-primary transition-colors truncate">
+                          <h4 class="text-sm md:text-base font-bold group-hover:text-primary transition-colors truncate" style="color: var(--text-primary);">
                             {prog.title || prog.name}
                           </h4>
                           {prog.Resourcetitle && (
-                            <p class="text-xs text-secondary font-semibold uppercase tracking-wide mt-0.5">
+                            <p class="text-xs font-semibold uppercase tracking-wide mt-0.5" style="color: var(--color-accent);">
                               {prog.Resourcetitle}
                             </p>
                           )}
@@ -212,7 +212,7 @@ const programsDataJson = JSON.stringify(sortedProgrammas)
                   </div>
                   
                   <div class="flex-1 min-w-0">
-                    <h4 class="text-sm font-bold text-gray-900 dark:text-gray-100 mb-1 line-clamp-2">{prog.title || prog.name}</h4>
+                    <h4 class="text-sm font-bold mb-1 line-clamp-2" style="color: var(--text-primary);">{prog.title || prog.name}</h4>
                     <div class="flex flex-wrap gap-2">
                       {prog.Resourcetitle && (
                         <span class="text-[10px] text-secondary font-bold uppercase tracking-wide">

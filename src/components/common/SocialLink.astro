@@ -1,0 +1,154 @@
+---
+/**
+ * SocialLink Component
+ * 
+ * Reusable social media link with icon, hover effects, and accessibility features.
+ * Supports multiple visual variants for different contexts (default, compact, footer).
+ * 
+ * @component
+ * @example
+ * ```astro
+ * <SocialLink
+ *   platform="Facebook"
+ *   href="https://facebook.com/aaltjesdagen"
+ *   ariaLabel="Volg ons op Facebook"
+ *   iconPath="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"
+ *   variant="footer"
+ *   size="md"
+ * />
+ * ```
+ */
+import type { SocialLinkProps } from '@/types/navigation';
+
+interface Props extends SocialLinkProps {}
+
+const {
+  platform,
+  href,
+  variant = 'default',
+  size = 'md',
+  ariaLabel,
+  iconPath,
+} = Astro.props;
+
+// Generate aria-label if not provided
+const accessibleLabel = ariaLabel || `Volg ons op ${platform}`;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={['social-link', `social-link--${variant}`, `social-link--${size}`]}
+  aria-label={accessibleLabel}
+  title={platform}
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="social-link__icon"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    aria-hidden="true"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d={iconPath}
+    />
+  </svg>
+</a>
+
+<style>
+  /* Base Social Link Styles */
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    background: var(--bg-base);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-secondary);
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+  }
+
+  .social-link:hover {
+    background: var(--color-secondary);
+    border-color: var(--color-secondary);
+    color: var(--text-inverse);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg-primary);
+  }
+
+  .social-link:active {
+    transform: translateY(-1px);
+  }
+
+  .social-link:focus-visible {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 2px;
+  }
+
+  /* Size Variants */
+  .social-link--sm {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .social-link--sm .social-link__icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .social-link--md {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .social-link--md .social-link__icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .social-link--lg {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .social-link--lg .social-link__icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  /* Style Variants */
+  
+  /* Compact variant: Minimal padding, smaller, for tight spaces */
+  .social-link--compact {
+    border-radius: 50%;
+    padding: 0.5rem;
+  }
+
+  .social-link--compact:hover {
+    transform: scale(1.1);
+  }
+
+  /* Footer variant: Matches existing Footer styling */
+  .social-link--footer {
+    /* Inherits base styles - no additional overrides needed */
+  }
+
+  /* Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    .social-link {
+      transition: none !important;
+    }
+
+    .social-link:hover,
+    .social-link--compact:hover {
+      transform: none !important;
+    }
+  }
+</style>

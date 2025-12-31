@@ -43,13 +43,15 @@ if (!displayBody && fullText.length > 50 && hasMultipleSentences) {
         <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"
         ></span>
       </span>
-      <span class="text-accent font-bold text-sm uppercase tracking-wider"
-        >Uitgelicht</span
+      <span
+        class="font-bold text-sm uppercase tracking-wider"
+        style="color: var(--color-accent);">Uitgelicht</span
       >
     </div>
 
     <h2
-      class="text-3xl md:text-6xl font-black text-accent mb-10 tracking-tight leading-tight drop-shadow-sm"
+      class="text-3xl md:text-6xl font-black mb-10 tracking-tight leading-tight drop-shadow-sm"
+      style="color: var(--color-accent);"
     >
       {displayHeadline}
     </h2>
@@ -57,7 +59,10 @@ if (!displayBody && fullText.length > 50 && hasMultipleSentences) {
     {
       displayBody && (
         <div class="space-y-6">
-          <p class="text-lg md:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed font-medium max-w-3xl mx-auto">
+          <p
+            class="text-lg md:text-2xl leading-relaxed font-medium max-w-3xl mx-auto"
+            style="color: var(--text-secondary);"
+          >
             {displayBody}
           </p>
         </div>

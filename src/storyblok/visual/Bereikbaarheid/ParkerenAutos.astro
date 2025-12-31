@@ -1,5 +1,18 @@
 ---
+/**
+ * ParkerenAutos Component
+ * Migrated to use base components from src/components/bereikbaarheid/
+ * - IconBadge.astro: Replaces manual icon badge implementation (lines 102-127)
+ * - DecorativeUnderline.astro: Replaces title underline (lines 149-161)
+ * - ContentCard.astro: Replaces manual glass card wrapper (lines 66-93)
+ */
 import { storyblokEditable, renderRichText } from "@storyblok/astro";
+import type { BereikbaarheidProps, ParkerenAutosBlok } from './types';
+import IconBadge from '../../../components/bereikbaarheid/IconBadge.astro';
+import DecorativeUnderline from '../../../components/bereikbaarheid/DecorativeUnderline.astro';
+import ContentCard from '../../../components/bereikbaarheid/ContentCard.astro';
+
+interface Props extends BereikbaarheidProps<ParkerenAutosBlok> {}
 
 const { blok } = Astro.props;
 
@@ -18,111 +31,42 @@ const renderedText = tekst ? renderRichText(tekst) : "";
   <div class="relative container-custom section-spacing-sm content-layer">
     <!-- Narrower centered layout -->
     <div class="max-w-4xl mx-auto">
-      <div class="parking-card glass">
-        <!-- Header with icon badge -->
-        {
-          title && (
-            <div class="card-header">
-              <div class="icon-badge">
-                <span class="icon">🚗</span>
-              </div>
-              <h2 class="card-title">{title}</h2>
-              <div class="title-underline" />
-            </div>
-          )
-        }
+      {/* ContentCard replaces manual glass card wrapper (lines 66-93) */}
+      <ContentCard variant="glass" padding="lg" hoverEffect={true}>
+        {/* Using named slot for header improves semantic structure */}
+        <div slot="header" class="card-header">
+          {/* IconBadge replaces manual icon badge (lines 102-127) with rotation and hover-rotate animation */}
+          <IconBadge icon="🚗" variant="primary" size="lg" rotation={-3} animation="hover-rotate" />
+          {title && <h2 class="card-title">{title}</h2>}
+          {/* DecorativeUnderline replaces manual underline (lines 149-161) */}
+          <DecorativeUnderline variant="secondary" width="md" />
+        </div>
 
         {
           renderedText && (
-            <div class="card-content prose-styled">
+            <div class="card-content prose-base prose-primary">
               <Fragment set:html={renderedText} />
             </div>
           )
         }
-      </div>
+      </ContentCard>
     </div>
   </div>
 </section>
 
 <style>
-  .parking-section {
-    /* Background handled by utility class or transparent */
-  }
-
-  /* Background pattern layer */
-  .pattern-background {
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  /* Content layer sits above background */
+  /* === Component-specific styles === */
+  /* Layout and positioning only - card/icon/underline styling now handled by base components */
+  
+  /* Content layer - sits above background */
   .content-layer {
-    z-index: 1;
+    z-index: var(--z-content);
   }
 
-  .parking-card {
-    position: relative;
-    background: color-mix(in srgb, var(--bg-overlay), transparent 20%);
-    backdrop-filter: blur(16px);
-    border-radius: 1.5rem;
-    padding: 2.5rem 2rem;
-    border: 1px solid var(--border-secondary);
-    box-shadow:
-      var(--shadow-xl),
-      inset 0 1px 0 0 color-mix(in srgb, var(--text-inverse), transparent 90%);
-    transition: all var(--transition-slow);
-  }
-
-  @media (min-width: 768px) {
-    .parking-card {
-      padding: 4rem 3.5rem;
-    }
-  }
-
-  .parking-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--color-primary);
-    box-shadow:
-      0 25px 50px -12px
-        color-mix(in srgb, var(--color-primary), transparent 75%),
-      inset 0 1px 0 0 color-mix(in srgb, var(--text-inverse), transparent 80%);
-  }
-
-  /* Card header */
+  /* Card header - centered layout */
   .card-header {
     text-align: center;
     margin-bottom: 2.5rem;
-  }
-
-  .icon-badge {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 5rem;
-    height: 5rem;
-    background: linear-gradient(
-      135deg,
-      var(--color-primary) 0%,
-      var(--color-accent) 100%
-    );
-    border-radius: 1.25rem;
-    margin-bottom: 1.5rem;
-    box-shadow:
-      0 10px 15px -3px color-mix(in srgb, var(--color-primary), transparent 70%),
-      0 4px 6px -2px color-mix(in srgb, var(--color-primary), transparent 80%);
-    transform: rotate(-3deg);
-    transition: transform var(--transition-base);
-    z-index: 1;
-  }
-
-  .parking-card:hover .icon-badge {
-    transform: rotate(0deg) scale(1.05);
-  }
-
-  .icon {
-    font-size: 2.5rem;
-    filter: drop-shadow(0 2px 4px var(--shadow-sm));
   }
 
   .card-title {
@@ -140,121 +84,22 @@ const renderedText = tekst ? renderRichText(tekst) : "";
     }
   }
 
-  /* Decorative underline */
-  .title-underline {
-    position: relative;
-    width: 4rem;
-    height: 0.25rem;
-    background: linear-gradient(
-      90deg,
-      var(--color-secondary) 0%,
-      var(--color-accent) 100%
-    );
-    margin: 0 auto;
-    border-radius: 0.125rem;
-    z-index: 1;
-  }
-
-  /* Card content */
+  /* Card content - minimal wrapper styling */
   .card-content {
     position: relative;
   }
-
-  /* Styled prose */
-  .prose-styled :global(p) {
-    font-size: 1rem;
-    line-height: 1.8;
-    color: var(--text-secondary);
-    margin-bottom: 1.25rem;
-  }
-
-  @media (min-width: 768px) {
-    .prose-styled :global(p) {
-      font-size: 1.0625rem;
-    }
-  }
-
-  .prose-styled :global(strong) {
-    font-weight: 700;
-    color: var(--color-primary);
-  }
-
-  .prose-styled :global(ul),
-  .prose-styled :global(ol) {
-    margin: 1.75rem 0;
-    padding-left: 1.75rem;
-    display: grid;
-    gap: 1rem;
-  }
-
-  .prose-styled :global(li) {
-    color: var(--text-secondary);
-    position: relative;
-    padding-left: 0.75rem;
-  }
-
-  .prose-styled :global(ul li)::marker {
-    color: var(--color-primary);
-    font-size: 1.25em;
-  }
-
-  .prose-styled :global(ol li)::marker {
-    color: var(--color-primary);
-    font-weight: 700;
-  }
-
-  .prose-styled :global(a) {
-    color: var(--color-accent);
-    text-decoration: none;
-    font-weight: 600;
-    position: relative;
-    transition: color var(--transition-base);
-  }
-
-  .prose-styled :global(a::after) {
-    content: "";
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--color-accent);
-    transform: scaleX(0);
-    transition: transform var(--transition-base);
-    transform-origin: left;
-  }
-
-  .prose-styled :global(a:hover) {
-    color: var(--color-accent-dark);
-  }
-
-  .prose-styled :global(a:hover::after) {
-    transform: scaleX(1);
-  }
-
-  .prose-styled :global(h1),
-  .prose-styled :global(h2),
-  .prose-styled :global(h3),
-  .prose-styled :global(h4),
-  .prose-styled :global(h5),
-  .prose-styled :global(h6) {
-    color: var(--text-primary);
-    font-weight: 700;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    line-height: 1.3;
-  }
-
-  .prose-styled :global(h3) {
-    font-size: 1.375rem;
-    color: var(--color-primary);
-    border-left: 4px solid var(--color-accent);
-    padding-left: 1rem;
-  }
-
-  @media (min-width: 768px) {
-    .prose-styled :global(h3) {
-      font-size: 1.625rem;
-    }
-  }
 </style>
+
+<!--
+REFACTORING NOTES:
+- Removed duplicate glass card wrapper CSS (~90 lines) - now handled by ContentCard (variant="glass", padding="lg", hoverEffect={true})
+- Removed duplicate icon badge CSS (~26 lines) - now handled by IconBadge (variant="primary", size="lg", rotation={-3}, animation="hover-rotate")
+- Removed duplicate decorative underline CSS (~13 lines) - now handled by DecorativeUnderline (variant="secondary", width="md")
+- Removed ~129 total lines of CSS
+- Kept card-header centering (component-specific layout)
+- Kept card-title typography (component-specific styling)
+- Base components used:
+  * IconBadge: Replaces lines 102-131 (icon badge with gradient, rotation, hover animation)
+  * DecorativeUnderline: Replaces lines 149-161 (gradient underline bar)
+  * ContentCard: Replaces lines 66-93 (glassmorphism card with backdrop-filter, borders, shadows, hover effects)
+-->

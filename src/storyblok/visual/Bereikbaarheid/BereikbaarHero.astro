@@ -1,11 +1,21 @@
 ---
+// MIGRATION NOTE: In Storyblok CMS, rename field "text" → "tekst" for this component
+// This standardizes with other Bereikbaarheid components (Priority 1.2)
+
+// PHASE 2 MIGRATION: Refactored to use base components
+// - ContentCard.astro replaces .hero-card styling (~50 lines removed)
+// - Kept component-specific: .accent-bar, .hero-decoration
 import { storyblokEditable } from "@storyblok/astro";
+import type { BereikbaarheidProps, BereikbaarHeroBlok } from './types';
+import ContentCard from '../../../components/bereikbaarheid/ContentCard.astro';
+
+interface Props extends BereikbaarheidProps<BereikbaarHeroBlok> {}
 
 const { blok } = Astro.props;
 
-// Storyblok field mapping: title (text), text (textarea), foto (multi-assets)
+// Storyblok field mapping: title (text), tekst (textarea), foto (multi-assets)
 const title = blok.title || "";
-const text = blok.text || ""; // Plain textarea field (not richtext)
+const text = blok.tekst || ""; // tekst field (plain textarea, not richtext)
 ---
 
 <section
@@ -14,12 +24,12 @@ const text = blok.text || ""; // Plain textarea field (not richtext)
 >
   <div class="relative container-custom section-spacing-sm content-layer">
     <div class="max-w-5xl mx-auto">
-      <div class="hero-card">
+      <ContentCard variant="glass" padding="lg" maxWidth="full">
         <div class="accent-bar"></div>
         {title && <h1 class="hero-title">{title}</h1>}
         {text && <p class="hero-text">{text}</p>}
         <div class="hero-decoration"></div>
-      </div>
+      </ContentCard>
     </div>
   </div>
 </section>
@@ -32,54 +42,24 @@ const text = blok.text || ""; // Plain textarea field (not richtext)
     align-items: center;
   }
 
-  /* Background pattern layer */
+  /* Background pattern layer - sits at base layer */
   .pattern-background {
-    z-index: 0;
+    z-index: var(--z-base);
     pointer-events: none;
   }
 
-  /* Gradient overlay layer */
+  /* Gradient overlay layer - sits at base layer */
   .gradient-overlay {
-    z-index: 0;
+    z-index: var(--z-base);
     pointer-events: none;
   }
 
-  /* Content layer sits above backgrounds */
+  /* Content layer - sits above backgrounds */
   .content-layer {
-    z-index: 1;
+    z-index: var(--z-content);
   }
 
-  .hero-card {
-    position: relative;
-    background: color-mix(in srgb, var(--bg-elevated), transparent 20%);
-    border: 2px solid var(--border-primary);
-    border-radius: 1.5rem;
-    padding: 3rem 2rem;
-    box-shadow:
-      0 20px 25px -5px color-mix(in srgb, var(--color-primary), transparent 90%),
-      0 10px 10px -5px color-mix(in srgb, var(--color-primary), transparent 96%),
-      0 0 0 1px color-mix(in srgb, var(--color-primary), transparent 95%);
-    backdrop-filter: blur(12px);
-    overflow: hidden;
-    transition: all var(--transition-slow);
-  }
-
-  @media (min-width: 768px) {
-    .hero-card {
-      padding: 4rem 4rem;
-    }
-  }
-
-  .hero-card:hover {
-    border-color: var(--color-primary);
-    box-shadow:
-      0 25px 50px -12px
-        color-mix(in srgb, var(--color-primary), transparent 75%),
-      0 0 0 1px var(--color-primary);
-    transform: translateY(-4px);
-  }
-
-  /* Accent bar at the top */
+  /* Accent bar at the top - component-specific decoration */
   .accent-bar {
     position: absolute;
     top: 0;
@@ -102,14 +82,6 @@ const text = blok.text || ""; // Plain textarea field (not richtext)
     letter-spacing: -0.02em;
     color: var(--text-primary);
     margin-bottom: 1.5rem;
-    /* background: linear-gradient(
-      135deg,
-      var(--color-primary) 0%,
-      var(--color-accent) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text; */
   }
 
   @media (min-width: 768px) {
@@ -139,7 +111,7 @@ const text = blok.text || ""; // Plain textarea field (not richtext)
     }
   }
 
-  /* Decorative element - bottom right corner accent */
+  /* Decorative element - bottom right corner accent - component-specific */
   .hero-decoration {
     position: absolute;
     bottom: -2rem;
@@ -154,7 +126,7 @@ const text = blok.text || ""; // Plain textarea field (not richtext)
     opacity: 0.08;
     pointer-events: none;
     border-radius: 50%;
-    z-index: 0;
+    z-index: var(--z-base);
   }
 
   @media (min-width: 768px) {

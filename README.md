@@ -51,17 +51,16 @@ Visit `http://localhost:4321` to view the site.
 - `src/pages`: Astro pages and routing (includes dynamic `[...slug].astro`)
 - `src/storyblok`: Storyblok-specific components
 - `src/styles`: Global styles and design system (`global.css`)
-- `plans/`: Implementation plans and documentation
+- `docs/`: **📚 Project documentation** (design system, components, workflows)
 
-## 🎨 Design System
+## 📚 Documentation
 
-The project uses a comprehensive design system defined in `src/styles/global.css`. It includes:
-- **Colors**: Primary, Secondary, Brand Accents.
-- **Typography**: Responsive type scale.
-- **Components**: `.card-base`, `.btn-primary`, `.glass` effects.
-- **Animations**: Custom keyframe animations.
+Voor uitgebreide documentatie, zie de **`docs/`** folder:
 
-See `plans/design-system-analysis.md` for detailed documentation.
+- **[docs/README.md](./docs/README.md)** - Project overview & quick start
+- **[docs/DESIGN_SYSTEM.md](./docs/DESIGN_SYSTEM.md)** - Colors, typography, component patterns
+- **[docs/COMPONENTS.md](./docs/COMPONENTS.md)** - Component library reference
+- **[docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md)** - Development workflows & best practices
 
 ## 📦 Build & Deploy
 

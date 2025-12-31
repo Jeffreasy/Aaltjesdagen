@@ -21,7 +21,7 @@ const renderedText = tekst ? renderRichText(tekst) : "";
   >
   </div>
 
-  <div class="relative container-custom section-spacing-sm content-layer">
+  <div class="relative container-custom section-spacing content-layer">
     <!-- Highlighted prominent card -->
     <div class="max-w-5xl mx-auto">
       <div class="important-card">
@@ -37,7 +37,9 @@ const renderedText = tekst ? renderRichText(tekst) : "";
                 </div>
                 <div class="header-content">
                   <div class="label-badge">Let op</div>
-                  <h2 class="important-title">{title}</h2>
+                  <h2 class="heading-section !text-[var(--color-accent)] !mb-0">
+                    {title}
+                  </h2>
                 </div>
               </div>
             )
@@ -102,22 +104,19 @@ const renderedText = tekst ? renderRichText(tekst) : "";
     backdrop-filter: blur(12px);
     border-radius: 1.5rem;
     overflow: hidden;
-    border: 2px solid var(--color-secondary);
+    border: 2px solid var(--color-accent);
     box-shadow:
-      0 20px 25px -5px
-        color-mix(in srgb, var(--color-secondary), transparent 85%),
-      0 10px 10px -5px
-        color-mix(in srgb, var(--color-secondary), transparent 90%),
-      0 0 0 1px color-mix(in srgb, var(--color-secondary), transparent 90%);
+      0 20px 25px -5px color-mix(in srgb, var(--color-accent), transparent 85%),
+      0 10px 10px -5px color-mix(in srgb, var(--color-accent), transparent 90%),
+      0 0 0 1px color-mix(in srgb, var(--color-accent), transparent 90%);
     transition: all var(--transition-slow);
   }
 
   .important-card:hover {
-    border-color: var(--color-secondary);
+    border-color: var(--color-accent);
     box-shadow:
-      0 25px 50px -12px
-        color-mix(in srgb, var(--color-secondary), transparent 70%),
-      0 0 0 1px var(--color-secondary);
+      0 25px 50px -12px color-mix(in srgb, var(--color-accent), transparent 70%),
+      0 0 0 1px var(--color-accent);
     transform: translateY(-4px);
   }
 
@@ -126,8 +125,8 @@ const renderedText = tekst ? renderRichText(tekst) : "";
     height: 0.75rem;
     background: repeating-linear-gradient(
       45deg,
-      var(--color-secondary),
-      var(--color-secondary) 1rem,
+      var(--color-accent),
+      var(--color-accent) 1rem,
       var(--color-warning) 1rem,
       var(--color-warning) 2rem
     );
@@ -165,7 +164,7 @@ const renderedText = tekst ? renderRichText(tekst) : "";
     margin-bottom: 2.5rem;
     padding-bottom: 2rem;
     border-bottom: 2px dashed
-      color-mix(in srgb, var(--color-secondary), transparent 70%);
+      color-mix(in srgb, var(--color-accent), transparent 70%);
   }
 
   @media (max-width: 767px) {
@@ -183,7 +182,7 @@ const renderedText = tekst ? renderRichText(tekst) : "";
     height: 5.5rem;
     background: linear-gradient(
       135deg,
-      var(--color-secondary) 0%,
+      var(--color-accent) 0%,
       var(--color-warning) 100%
     );
     border-radius: 1.25rem;
@@ -210,7 +209,7 @@ const renderedText = tekst ? renderRichText(tekst) : "";
       transform: scale(1.05);
       box-shadow:
         0 15px 30px -5px
-          color-mix(in srgb, var(--color-secondary), transparent 40%),
+          color-mix(in srgb, var(--color-accent), transparent 40%),
         inset 0 2px 0 0 color-mix(in srgb, var(--text-inverse), transparent 70%);
     }
   }
@@ -228,13 +227,12 @@ const renderedText = tekst ? renderRichText(tekst) : "";
   .label-badge {
     display: inline-block;
     padding: 0.375rem 1rem;
-    background: color-mix(in srgb, var(--color-secondary), transparent 90%);
-    border: 1px solid
-      color-mix(in srgb, var(--color-secondary), transparent 70%);
+    background: color-mix(in srgb, var(--color-accent), transparent 90%);
+    border: 1px solid color-mix(in srgb, var(--color-accent), transparent 70%);
     border-radius: 2rem;
     font-size: 0.875rem;
     font-weight: 700;
-    color: var(--color-secondary);
+    color: var(--color-accent);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 1rem;
@@ -267,7 +265,7 @@ const renderedText = tekst ? renderRichText(tekst) : "";
   .corner-accent::after {
     content: "";
     position: absolute;
-    background: var(--color-secondary);
+    background: var(--color-accent);
     z-index: 0;
   }
 
@@ -341,7 +339,7 @@ const renderedText = tekst ? renderRichText(tekst) : "";
 
   .prose-important :global(strong) {
     font-weight: 700;
-    color: var(--color-secondary);
+    color: var(--color-accent);
   }
 
   .prose-important :global(ul),
@@ -357,19 +355,19 @@ const renderedText = tekst ? renderRichText(tekst) : "";
     position: relative;
     padding: 0.75rem;
     padding-left: 1.5rem;
-    background: color-mix(in srgb, var(--color-secondary), transparent 97%);
-    border-left: 4px solid var(--color-secondary);
+    background: color-mix(in srgb, var(--color-accent), transparent 97%);
+    border-left: 4px solid var(--color-accent);
     border-radius: 0 0.5rem 0.5rem 0;
   }
 
   .prose-important :global(ul li)::marker {
-    color: var(--color-secondary);
+    color: var(--color-accent);
     font-size: 1.25em;
     font-weight: 900;
   }
 
   .prose-important :global(a) {
-    color: var(--color-secondary);
+    color: var(--color-accent);
     text-decoration: none;
     font-weight: 700;
     transition: all var(--transition-base);
@@ -379,7 +377,7 @@ const renderedText = tekst ? renderRichText(tekst) : "";
   .prose-important :global(a:hover) {
     color: var(--color-warning);
     border-bottom-color: var(--color-warning);
-    background: color-mix(in srgb, var(--color-secondary), transparent 95%);
+    background: color-mix(in srgb, var(--color-accent), transparent 95%);
     padding: 0 0.25rem;
   }
 
@@ -398,13 +396,13 @@ const renderedText = tekst ? renderRichText(tekst) : "";
 
   .prose-important :global(h3) {
     font-size: 1.375rem;
-    color: var(--color-secondary);
+    color: var(--color-accent);
     display: flex;
     align-items: center;
     gap: 1rem;
     padding: 1rem 1.5rem;
-    background: color-mix(in srgb, var(--color-secondary), transparent 95%);
-    border-left: 5px solid var(--color-secondary);
+    background: color-mix(in srgb, var(--color-accent), transparent 95%);
+    border-left: 5px solid var(--color-accent);
     border-radius: 0 0.75rem 0.75rem 0;
   }
 
@@ -416,7 +414,7 @@ const renderedText = tekst ? renderRichText(tekst) : "";
 
   .prose-important :global(h3::before) {
     content: "●";
-    color: var(--color-secondary);
+    color: var(--color-accent);
     font-size: 1.5em;
     flex-shrink: 0;
     position: relative;

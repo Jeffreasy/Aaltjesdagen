@@ -11,6 +11,14 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap');
 
+/* Prose Styling System */
+@import './prose/prose-base.css';
+@import './prose/prose-variants.css';
+@import './prose/prose-decorations.css';
+
+/* Animation System */
+@import './animations.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -78,6 +86,17 @@
     --shadow-lg: 0 10px 15px -3px rgba(44, 62, 80, 0.08), 0 4px 6px -2px rgba(44, 62, 80, 0.04);
     --shadow-xl: 0 20px 25px -5px rgba(44, 62, 80, 0.08), 0 10px 10px -5px rgba(44, 62, 80, 0.03);
 
+    /* Dynamic shadow colors using color-mix for theme adaptation */
+    --shadow-color-primary: color-mix(in srgb, var(--color-accent), transparent 70%);
+    --shadow-color-accent: color-mix(in srgb, var(--color-accent), transparent 80%);
+    --shadow-color-focus: color-mix(in srgb, var(--color-accent), transparent 80%);
+
+    /* Shadow system with dynamic colors */
+    --shadow-sm-primary: 0 1px 2px 0 var(--shadow-color-primary);
+    --shadow-md-primary: 0 4px 6px -1px var(--shadow-color-primary);
+    --shadow-lg-primary: 0 8px 16px var(--shadow-color-primary);
+    --shadow-xl-primary: 0 10px 20px var(--shadow-color-primary);
+
     /* Gradients */
     /* Smooth gradient without hard stops - prevents visible line at bottom */
     --bg-gradient-base: linear-gradient(180deg, var(--bg-base) 0%, var(--bg-base) 100%);
@@ -95,6 +114,20 @@
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Animation durations for Alpine.js transitions (matches Tailwind's duration scale) */
+    --duration-200: 200ms;
+    /* Fast transitions (Tailwind: duration-200) */
+    --duration-300: 300ms;
+    /* Base transitions (Tailwind: duration-300) */
+    --duration-500: 500ms;
+    /* Slow transitions (Tailwind: duration-500) */
+
+    /* Predefined easing functions */
+    --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+    /* Tailwind's ease-out */
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    /* Tailwind's ease-in */
 
     /* Typography Configuration */
     --font-heading: 'Outfit', sans-serif;
@@ -126,6 +159,18 @@
     /* Toast notifications */
     --z-max: 999;
     /* Maximum z-index for critical UI */
+
+    /* Navigation-specific z-index tokens */
+    --z-nav-mobile-toggle: 600;
+    /* Mobile menu toggle button (above backdrop) */
+    --z-nav-mobile-backdrop: 500;
+    /* Mobile menu backdrop overlay */
+    --z-nav-mobile-panel: 500;
+    /* Mobile menu drawer panel */
+    /* Note: These align with existing modal system:
+       - Modal backdrop: 500 (same layer as mobile nav backdrop)
+       - Modal content: 600 (same layer as mobile toggle)
+       This ensures mobile nav behaves consistently with other overlays */
   }
 
   /* === DARK MODE PALETTE === */
@@ -452,9 +497,11 @@
     0% {
       transform: translate(0, 0) scale(1);
     }
+
     50% {
       transform: translate(-20px, 30px) scale(1.05);
     }
+
     100% {
       transform: translate(0, 0) scale(1);
     }

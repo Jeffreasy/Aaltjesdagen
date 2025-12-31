@@ -8,21 +8,14 @@
  * - Active page indicator
  * - Keyboard navigation support (Tab, Enter, Escape)
  * - Alpine.js state management
+ *
+ * MIGRATION: Phase 3 - Refactored to use Link component and constants
  */
-import ThemeToggle from "../ui/ThemeToggle.astro";
+import { NAVIGATION_ITEMS } from '@/constants/site';
+import Link from '@/components/ui/Link.astro';
+import ThemeToggle from '../ui/ThemeToggle.astro';
 
-const navItems = [
-  { name: "Home", href: "/" },
-  { name: "Bereikbaarheid", href: "/bereikbaarheid" },
-  { name: "ADF Muziekfestival", href: "/adf-muziekfestival" },
-  { name: "Braderie", href: "/braderie" },
-  { name: "Salsa", href: "/salsa" },
-  { name: "Sponsoring", href: "/sponsoring" },
-  { name: "Vacatures", href: "/vacatures" },
-  { name: "Contact", href: "/contact" },
-];
-
-// Bepaal actieve pagina
+// Bepaal actieve pagina voor mobile nav (custom styling)
 const currentPath = Astro.url.pathname;
 ---
 
@@ -31,34 +24,11 @@ const currentPath = Astro.url.pathname;
   class="hidden md:flex flex-wrap items-center gap-6"
   aria-label="Main navigation"
 >
-  {
-    navItems.map((item) => {
-      const isActive =
-        currentPath === item.href ||
-        (item.href !== "/" && currentPath.startsWith(item.href));
-
-      return (
-        <a
-          href={item.href}
-          class:list={[
-            "nav-link",
-            "text-sm",
-            "font-medium",
-            "transition-all",
-            "relative",
-            "group",
-            { "nav-link-active": isActive },
-          ]}
-          aria-current={isActive ? "page" : undefined}
-        >
-          {item.name}
-
-          {/* Active indicator onderstreep */}
-          <span class="nav-underline" aria-hidden="true" />
-        </a>
-      );
-    })
-  }
+  {NAVIGATION_ITEMS.map((item) => (
+    <Link href={item.href} variant="nav">
+      {item.name}
+    </Link>
+  ))}
   <ThemeToggle />
 </nav>
 
@@ -76,21 +46,26 @@ const currentPath = Astro.url.pathname;
     @click="mobileMenuOpen = !mobileMenuOpen"
     x-effect="mobileMenuOpen ? document.body.style.overflow = 'hidden' : document.body.style.overflow = ''"
     type="button"
-    class="relative z-[60] w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-300"
+    class="relative w-12 h-12 flex items-center justify-center rounded-xl transition-all"
+    style="z-index: var(--z-nav-mobile-toggle);"
     :class="mobileMenuOpen ? 'fixed top-6 right-6 bg-transparent' : 'bg-elevated border border-primary/10 shadow-sm'"
     aria-label="Toggle menu"
   >
     <div class="relative w-6 h-5">
       <span
-        class="absolute left-0 w-full h-0.5 bg-current transition-all duration-300 rounded-full"
+        class="absolute left-0 w-full h-0.5 bg-current transition-all rounded-full"
         :class="mobileMenuOpen ? 'top-2.5 rotate-45 bg-text-primary' : 'top-0 bg-text-primary'"
+        style="transition-duration: var(--transition-duration, 300ms);"
       ></span>
       <span
-        class="absolute left-0 top-2 w-full h-0.5 bg-current transition-all duration-300 rounded-full bg-text-primary"
-        :class="mobileMenuOpen ? 'opacity-0 scale-0' : 'opacity-100'"></span>
+        class="absolute left-0 top-2 w-full h-0.5 bg-current transition-all rounded-full bg-text-primary"
+        :class="mobileMenuOpen ? 'opacity-0 scale-0' : 'opacity-100'"
+        style="transition-duration: var(--transition-duration, 300ms);"
+      ></span>
       <span
-        class="absolute left-0 w-full h-0.5 bg-current transition-all duration-300 rounded-full"
+        class="absolute left-0 w-full h-0.5 bg-current transition-all rounded-full"
         :class="mobileMenuOpen ? 'top-2.5 -rotate-45 bg-text-primary' : 'top-4 bg-text-primary'"
+        style="transition-duration: var(--transition-duration, 300ms);"
       ></span>
     </div>
   </button>
@@ -98,7 +73,8 @@ const currentPath = Astro.url.pathname;
   <!-- Drawer & Backdrop -->
   <template x-teleport="body">
     <div
-      class="fixed inset-0 z-[50]"
+      class="fixed inset-0"
+      style="z-index: var(--z-nav-mobile-backdrop);"
       x-show="mobileMenuOpen"
       role="dialog"
       aria-modal="true"
@@ -107,13 +83,14 @@ const currentPath = Astro.url.pathname;
       <div
         class="absolute inset-0 bg-black/50 backdrop-blur-sm"
         x-show="mobileMenuOpen"
-        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter="transition ease-out"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave="transition ease-in"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
         @click="mobileMenuOpen = false"
+        style="transition-duration: var(--transition-duration, 300ms);"
       >
       </div>
 
@@ -121,12 +98,13 @@ const currentPath = Astro.url.pathname;
       <div
         class="absolute top-0 right-0 h-full w-full max-w-sm bg-[var(--bg-base)] shadow-2xl flex flex-col border-l border-[var(--border-primary)]"
         x-show="mobileMenuOpen"
-        x-transition:enter="transition transform ease-out duration-300"
+        x-transition:enter="transition transform ease-out"
         x-transition:enter-start="translate-x-full"
         x-transition:enter-end="translate-x-0"
-        x-transition:leave="transition transform ease-in duration-300"
+        x-transition:leave="transition transform ease-in"
         x-transition:leave-start="translate-x-0"
         x-transition:leave-end="translate-x-full"
+        style="transition-duration: var(--transition-duration, 300ms);"
       >
         <!-- Background Decor -->
         <div
@@ -140,7 +118,7 @@ const currentPath = Astro.url.pathname;
         >
           <nav class="flex flex-col gap-6" aria-label="Mobile navigation">
             {
-              navItems.map((item, index) => {
+              NAVIGATION_ITEMS.map((item, index) => {
                 const isActive =
                   currentPath === item.href ||
                   (item.href !== "/" && currentPath.startsWith(item.href));
@@ -148,13 +126,12 @@ const currentPath = Astro.url.pathname;
                   <a
                     href={item.href}
                     class:list={[
-                      "text-2xl font-bold tracking-tight transition-all duration-300 flex items-center gap-4 group",
-                      isActive
-                        ? "text-primary pl-4 border-l-4 border-secondary"
-                        : "text-[var(--text-secondary)] hover:text-primary",
+                      "nav-mobile-link",
+                      isActive && "nav-mobile-link--active"
                     ]}
+                    aria-current={isActive ? "page" : undefined}
                   >
-                    <span class="text-xs font-bold text-secondary/60 group-hover:text-secondary opacity-0 group-hover:opacity-100 transition-opacity translate-y-1">
+                    <span class="nav-mobile-link__number">
                       0{index + 1}
                     </span>
                     {item.name}
@@ -200,53 +177,47 @@ const currentPath = Astro.url.pathname;
 </div>
 
 <style>
-  /* Desktop Navigation Links */
-  .nav-link {
+  /* === MOBILE NAVIGATION STYLES === */
+  /* Custom mobile nav link styling (different from desktop Link component) */
+  .nav-mobile-link {
     color: var(--text-secondary);
-    padding: 0.5rem 0;
-    display: inline-flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    text-decoration: none;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 
-  .nav-link:hover {
-    color: var(--color-secondary);
-  }
-
-  .nav-link:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 4px;
-    border-radius: 4px;
-  }
-
-  /* Active link styling */
-  .nav-link-active {
+  .nav-mobile-link:hover {
     color: var(--color-primary);
-    font-weight: 600;
   }
 
-  /* Animated underline indicator */
-  .nav-underline {
-    display: block;
-    height: 2px;
-    width: 0;
-    background: var(--color-secondary);
-    transition: width var(--transition-base);
-    border-radius: 1px;
+  .nav-mobile-link--active {
+    color: var(--color-primary);
+    padding-left: 1rem;
+    border-left: 4px solid var(--color-secondary);
   }
 
-  /* Hover underline */
-  .nav-link:hover .nav-underline {
-    width: 100%;
+  .nav-mobile-link__number {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 700;
+    color: rgb(243 146 0 / 0.6);
+    opacity: 0;
+    transform: translateY(0.25rem);
+    transition: all var(--transition-base);
   }
 
-  /* Active underline always visible */
-  .nav-link-active .nav-underline {
-    width: 100%;
-    background: var(--color-primary);
+  .nav-mobile-link:hover .nav-mobile-link__number {
+    color: var(--color-secondary);
+    opacity: 1;
   }
 
-  /* Utility */
+  /* === UTILITY CLASSES === */
   .bg-elevated {
     background-color: var(--bg-elevated);
   }
@@ -259,10 +230,10 @@ const currentPath = Astro.url.pathname;
     display: none !important;
   }
 
-  /* Reduced Motion Support */
+  /* === REDUCED MOTION === */
   @media (prefers-reduced-motion: reduce) {
-    .nav-link,
-    .nav-underline {
+    .nav-mobile-link,
+    .nav-mobile-link__number {
       transition: none !important;
     }
   }

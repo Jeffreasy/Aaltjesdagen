@@ -83,8 +83,8 @@ const isStoryblok = storyblokImages.length > 0;
 
   {/* Animated Scroll Indicator */}
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 animate-bounce-slow pointer-events-auto cursor-pointer group" onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})">
-    <span class="text-white/80 group-hover:text-accent transition-colors duration-300 text-sm font-medium tracking-widest uppercase text-shadow-sm">Ontdek</span>
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white group-hover:text-accent transition-colors duration-300 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <span class="group-hover:transition-colors duration-300 text-sm font-medium tracking-widest uppercase text-shadow-sm" style="color: var(--text-inverse);">Ontdek</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 drop-shadow-md transition-colors duration-300" style="color: var(--text-inverse);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
     </svg>
   </div>

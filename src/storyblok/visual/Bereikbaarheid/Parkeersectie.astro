@@ -1,11 +1,23 @@
 ---
+// MIGRATION NOTE: In Storyblok CMS, rename field "content" → "tekst" for this component
+// This standardizes with other Bereikbaarheid components (Priority 1.2)
+
+// PHASE 2 MIGRATION: Refactored to use base components
+// - IconBadge.astro replaces .icon-badge styling (~30 lines removed)
+// - ContentCard.astro replaces .parking-card styling (~70 lines removed)
+// - Kept component-specific: background animations, decorative footer
 import { storyblokEditable } from "@storyblok/astro";
+import type { BereikbaarheidProps, ParkeersectieBlok } from './types';
+import ContentCard from '../../../components/bereikbaarheid/ContentCard.astro';
+import IconBadge from '../../../components/bereikbaarheid/IconBadge.astro';
+
+interface Props extends BereikbaarheidProps<ParkeersectieBlok> {}
 
 const { blok } = Astro.props;
 
-// Storyblok field mapping: title, content, foto, link (lowercase!)
+// Storyblok field mapping: title, tekst, foto, link (lowercase!)
 const title = blok.title || "";
-const content = blok.content || "";
+const content = blok.tekst || ""; // tekst field (plain text, not richtext)
 const foto = blok.foto;
 const link = blok.link;
 
@@ -15,7 +27,7 @@ const hasMultipleSentences = title.includes(".");
 let displayTitle = title;
 let displayBody = content;
 
-// Als er veel tekst in de title staat en geen aparte content is, splitsen we het voor een professionele look
+// Als er veel tekst in de title staat en geen aparte tekst is, splitsen we het voor een professionele look
 if (!displayBody && title.length > 50 && hasMultipleSentences) {
   const firstDotIndex = title.indexOf(".");
   displayTitle = title.substring(0, firstDotIndex + 1);
@@ -31,61 +43,30 @@ const optimizedImageUrl = imageUrl
 
 <section
   {...storyblokEditable(blok)}
-  class="section-spacing px-6 relative overflow-hidden"
+  class="parking-section !bg-transparent relative overflow-hidden"
 >
-  <!-- Animated gradient background -->
-  <div
-    class="absolute inset-0 bg-gradient-to-br from-accent/5 via-white dark:via-gray-900 to-blue-50/20 dark:to-gray-800/20"
-  >
-  </div>
-  <div
-    class="absolute top-10 left-10 w-72 h-72 bg-accent/5 dark:bg-accent/10 rounded-full blur-3xl animate-pulse"
-  >
-  </div>
-  <div
-    class="absolute bottom-10 right-10 w-96 h-96 bg-blue-100/30 dark:bg-blue-900/20 rounded-full blur-3xl"
-  >
-  </div>
+  <!-- Animated gradient background - component-specific -->
+  <div class="animated-background"></div>
+  <div class="glow-orb glow-orb-left"></div>
+  <div class="glow-orb glow-orb-right"></div>
 
-  <div class="max-w-5xl mx-auto relative z-10">
+  <div class="content-container">
     <!-- Parking Icon Header with enhanced styling -->
-    <div class="flex justify-center mb-8">
-      <div class="relative">
-        <div
-          class="w-20 h-20 bg-gradient-to-br from-accent to-accent-dark rounded-2xl flex items-center justify-center shadow-xl transform hover:scale-110 transition-transform duration-300 rotate-3"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-11 w-11 text-white drop-shadow-lg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-            ></path>
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-          </svg>
-        </div>
-        <div
-          class="absolute -inset-2 bg-gradient-to-br from-accent/20 to-accent-dark/20 rounded-2xl blur-xl -z-10"
-        >
-        </div>
-      </div>
+    <div class="icon-container">
+      <IconBadge 
+        icon="🅿️" 
+        variant="accent" 
+        size="lg" 
+        rotation={3} 
+        animation="hover-rotate" 
+      />
     </div>
 
-    <div class="card-base p-8 md:p-12">
+    <ContentCard variant="elevated" padding="lg" maxWidth="full" hoverEffect={true}>
       <!-- Title -->
       {
         displayTitle && (
-          <h2 class="text-3xl md:text-5xl font-black text-[var(--color-accent)] dark:text-gray-100 mb-8 text-center leading-tight">
+          <h2 class="card-title">
             {displayTitle}
           </h2>
         )
@@ -94,8 +75,8 @@ const optimizedImageUrl = imageUrl
       <!-- Body Text / Content -->
       {
         displayBody && (
-          <div class="mb-10">
-            <p class="text-lg md:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed text-center max-w-3xl mx-auto font-medium">
+          <div class="card-body">
+            <p class="body-text">
               {displayBody}
             </p>
           </div>
@@ -105,11 +86,11 @@ const optimizedImageUrl = imageUrl
       <!-- Foto with modern styling -->
       {
         optimizedImageUrl && (
-          <div class="mb-10 rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-shadow duration-300 border border-gray-200/50 dark:border-gray-700/50">
+          <div class="image-container">
             <img
               src={optimizedImageUrl}
               alt={displayTitle || "Parkeren"}
-              class="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
+              class="parking-image"
               loading="lazy"
             />
           </div>
@@ -119,12 +100,12 @@ const optimizedImageUrl = imageUrl
       <!-- Link -->
       {
         link?.cached_url && (
-          <div class="text-center mt-10">
-            <a href={`/${link.cached_url}`} class="btn-accent">
+          <div class="link-container">
+            <a href={`/${link.cached_url}`} class="link-button">
               Meer informatie
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
+                class="link-arrow"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -140,27 +121,247 @@ const optimizedImageUrl = imageUrl
           </div>
         )
       }
-    </div>
 
-    <!-- Decorative Element -->
-    <div class="mt-12 flex justify-center items-center gap-4">
-      <div class="h-px w-20 bg-gradient-to-r from-transparent to-accent/30">
+      <!-- Decorative Element - component-specific -->
+      <div class="decorative-footer">
+        <div class="decorative-line decorative-line-left"></div>
+        <div class="decorative-icon-wrapper">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="decorative-icon"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div class="decorative-line decorative-line-right"></div>
       </div>
-      <div class="relative">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6 text-accent drop-shadow"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-            clip-rule="evenodd"></path>
-        </svg>
-      </div>
-      <div class="h-px w-20 bg-gradient-to-l from-transparent to-accent/30">
-      </div>
-    </div>
+    </ContentCard>
   </div>
 </section>
+
+<style>
+  /* Section Base */
+  .parking-section {
+    position: relative;
+    overflow: hidden;
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  @media (min-width: 768px) {
+    .parking-section {
+      padding: var(--space-3xl) var(--space-md);
+    }
+  }
+
+  /* Animated Background - sits at base layer - component-specific */
+  .animated-background {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-accent), transparent 95%) 0%,
+      var(--bg-base) 50%,
+      color-mix(in srgb, var(--color-primary), transparent 97%) 100%
+    );
+    z-index: var(--z-base);
+  }
+
+  /* Glow Orbs - sit at base layer - component-specific */
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(64px);
+    pointer-events: none;
+    z-index: var(--z-base);
+  }
+
+  .glow-orb-left {
+    top: 2.5rem;
+    left: 2.5rem;
+    width: 18rem;
+    height: 18rem;
+    background: color-mix(in srgb, var(--color-accent), transparent 95%);
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  .glow-orb-right {
+    bottom: 2.5rem;
+    right: 2.5rem;
+    width: 24rem;
+    height: 24rem;
+    background: color-mix(in srgb, var(--color-primary), transparent 90%);
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  /* Content Container */
+  .content-container {
+    max-width: 80rem;
+    margin: 0 auto;
+    position: relative;
+    z-index: var(--z-base);
+  }
+
+  /* Icon Container */
+  .icon-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  /* Card Title */
+  .card-title {
+    font-size: 1.875rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    margin-bottom: 2rem;
+    text-align: center;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  @media (min-width: 768px) {
+    .card-title {
+      font-size: 3rem;
+    }
+  }
+
+  /* Card Body */
+  .card-body {
+    margin-bottom: 2.5rem;
+  }
+
+  .body-text {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    text-align: center;
+    max-width: 48rem;
+    margin: 0 auto;
+    font-weight: 500;
+  }
+
+  @media (min-width: 768px) {
+    .body-text {
+      font-size: 1.5rem;
+    }
+  }
+
+  /* Image Container */
+  .image-container {
+    margin-bottom: 2.5rem;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-2xl);
+    border: 1px solid var(--border-secondary);
+    transition: all var(--transition-slow);
+  }
+
+  .image-container:hover {
+    box-shadow: 0 25px 50px -12px
+      color-mix(in srgb, var(--color-primary), transparent 75%);
+  }
+
+  .parking-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+
+  .parking-image:hover {
+    transform: scale(1.05);
+  }
+
+  /* Link Container */
+  .link-container {
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+
+  .link-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    background: linear-gradient(
+      135deg,
+      var(--color-primary) 0%,
+      var(--color-accent) 100%
+    );
+    color: var(--text-inverse);
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    box-shadow:
+      0 10px 15px -3px color-mix(in srgb, var(--color-primary), transparent 70%),
+      0 4px 6px -2px color-mix(in srgb, var(--color-primary), transparent 80%);
+    transition: all var(--transition-base);
+  }
+
+  .link-button:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 20px 25px -5px color-mix(in srgb, var(--color-primary), transparent 60%),
+      0 10px 10px -5px color-mix(in srgb, var(--color-primary), transparent 70%);
+  }
+
+  .link-arrow {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  /* Decorative Footer - component-specific */
+  .decorative-footer {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .decorative-line {
+    height: 1px;
+    width: 5rem;
+  }
+
+  .decorative-line-left {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in srgb, var(--color-accent), transparent 70%) 100%
+    );
+  }
+
+  .decorative-line-right {
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-accent), transparent 70%) 0%,
+      transparent 100%
+    );
+  }
+
+  .decorative-icon-wrapper {
+    position: relative;
+  }
+
+  .decorative-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-accent);
+    filter: drop-shadow(0 1px 2px var(--shadow-sm));
+  }
+</style>
