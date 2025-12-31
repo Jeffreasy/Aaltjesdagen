@@ -9,7 +9,9 @@ const env = loadEnv('', process.cwd(), 'STORYBLOK')
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: { enabled: false }
+  }),
   integrations: [
     storyblok({
       accessToken: env.STORYBLOK_TOKEN || 'vgdfUWE4CP2d3ZXnPtoikQtt',
@@ -51,12 +53,18 @@ export default defineConfig({
         ProgrammaADF: 'storyblok/visual/ADF Muziekfestival/ProgrammaADF',
       },
     }),
-    tailwind(),
+    tailwind({
+      applyBaseStyles: true,
+    }),
   ],
   vite: {
     plugins: [basicSsl()],
     server: {
       https: true,
     },
+    build: {
+      cssCodeSplit: false,  // Force single CSS file
+      assetsInlineLimit: 0   // Don't inline assets
+    }
   },
 })
