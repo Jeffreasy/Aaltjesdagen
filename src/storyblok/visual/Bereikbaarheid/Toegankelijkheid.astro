@@ -3,10 +3,11 @@
 // - IconBadge.astro replaces .icon-wrapper styling (~20 lines removed)
 // - ContentCard.astro replaces .access-card styling (~30 lines removed)
 // - Kept component-specific: .top-accent, .corner-decoration
-import { storyblokEditable, renderRichText } from "@storyblok/astro";
-import type { BereikbaarheidProps, ToeankelijkBlok } from './types';
-import ContentCard from '../../../components/bereikbaarheid/ContentCard.astro';
-import IconBadge from '../../../components/bereikbaarheid/IconBadge.astro';
+import { storyblokEditable } from "@storyblok/astro";
+import { renderText } from "../../../utils/storyblok";
+import type { BereikbaarheidProps, ToeankelijkBlok } from "./types";
+import ContentCard from "../../../components/bereikbaarheid/ContentCard.astro";
+import IconBadge from "../../../components/bereikbaarheid/IconBadge.astro";
 
 interface Props extends BereikbaarheidProps<ToeankelijkBlok> {}
 
@@ -17,17 +18,22 @@ const title = blok.title || "";
 const tekst = blok.tekst; // Richtext field
 
 // Render richtext content to HTML
-const renderedText = tekst ? renderRichText(tekst) : "";
+const renderedText = renderText(tekst);
 ---
 
 <section
   {...storyblokEditable(blok)}
   class="access-section !bg-transparent relative overflow-hidden"
 >
-  <div class="relative container-custom section-spacing-sm content-layer">
+  <div class="section-container content-layer">
     <!-- Compact centered layout with highlighted border -->
     <div class="max-w-5xl mx-auto">
-      <ContentCard variant="elevated" padding="lg" maxWidth="full" hoverEffect={true}>
+      <ContentCard
+        variant="elevated"
+        padding="lg"
+        maxWidth="full"
+        hoverEffect={true}
+      >
         <!-- Top accent border - component-specific -->
         <div class="top-accent"></div>
 
@@ -36,11 +42,11 @@ const renderedText = tekst ? renderRichText(tekst) : "";
           {
             title && (
               <div class="header-section">
-                <IconBadge 
-                  icon="♿" 
-                  variant="accent" 
-                  size="lg" 
-                  animation="none" 
+                <IconBadge
+                  icon="♿"
+                  variant="accent"
+                  size="lg"
+                  animation="none"
                 />
                 <h2 class="access-title">{title}</h2>
               </div>

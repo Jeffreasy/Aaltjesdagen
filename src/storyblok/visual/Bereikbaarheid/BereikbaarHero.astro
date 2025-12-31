@@ -6,8 +6,8 @@
 // - ContentCard.astro replaces .hero-card styling (~50 lines removed)
 // - Kept component-specific: .accent-bar, .hero-decoration
 import { storyblokEditable } from "@storyblok/astro";
-import type { BereikbaarheidProps, BereikbaarHeroBlok } from './types';
-import ContentCard from '../../../components/bereikbaarheid/ContentCard.astro';
+import type { BereikbaarheidProps, BereikbaarHeroBlok } from "./types";
+import ContentCard from "../../../components/bereikbaarheid/ContentCard.astro";
 
 interface Props extends BereikbaarheidProps<BereikbaarHeroBlok> {}
 
@@ -22,7 +22,7 @@ const text = blok.tekst || ""; // tekst field (plain textarea, not richtext)
   {...storyblokEditable(blok)}
   class="hero-section relative overflow-hidden !bg-transparent"
 >
-  <div class="relative container-custom section-spacing-sm content-layer">
+  <div class="section-container content-layer">
     <div class="max-w-5xl mx-auto">
       <ContentCard variant="glass" padding="lg" maxWidth="full">
         <div class="accent-bar"></div>

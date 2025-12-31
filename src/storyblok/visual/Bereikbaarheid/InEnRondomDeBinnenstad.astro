@@ -4,11 +4,12 @@
 // - DecorativeUnderline.astro replaces .title-decoration (~15 lines removed)
 // - ContentCard.astro wraps container (~20 lines removed)
 // - Kept component-specific: split layout grid, .title-column gradient, sticky positioning
-import { storyblokEditable, renderRichText } from "@storyblok/astro";
-import type { BereikbaarheidProps, InEnRondomDeBinnenstadBlok } from './types';
-import ContentCard from '../../../components/bereikbaarheid/ContentCard.astro';
-import IconBadge from '../../../components/bereikbaarheid/IconBadge.astro';
-import DecorativeUnderline from '../../../components/bereikbaarheid/DecorativeUnderline.astro';
+import { storyblokEditable } from "@storyblok/astro";
+import { renderText } from "../../../utils/storyblok";
+import type { BereikbaarheidProps, InEnRondomDeBinnenstadBlok } from "./types";
+import ContentCard from "../../../components/bereikbaarheid/ContentCard.astro";
+import IconBadge from "../../../components/bereikbaarheid/IconBadge.astro";
+import DecorativeUnderline from "../../../components/bereikbaarheid/DecorativeUnderline.astro";
 
 interface Props extends BereikbaarheidProps<InEnRondomDeBinnenstadBlok> {}
 
@@ -19,32 +20,37 @@ const title = blok.title || "";
 const tekst = blok.tekst; // Richtext field
 
 // Render richtext content to HTML
-const renderedText = tekst ? renderRichText(tekst) : "";
+const renderedText = renderText(tekst);
 ---
 
 <section
   {...storyblokEditable(blok)}
   class="city-section !bg-transparent relative overflow-hidden"
 >
-  <div class="relative container-custom section-spacing-sm content-layer">
+  <div class="section-container content-layer">
     <!-- Wide asymmetric layout -->
     <div class="max-w-6xl mx-auto">
-      <ContentCard variant="default" padding="sm" maxWidth="full" hoverEffect={true}>
+      <ContentCard
+        variant="default"
+        padding="sm"
+        maxWidth="full"
+        hoverEffect={true}
+      >
         <div class="city-container">
           <!-- Title column with colored background -->
           <div class="title-column">
             <div class="title-sticky">
-              <IconBadge 
-                icon="🏛️" 
-                variant="primary" 
-                size="lg" 
-                animation="none" 
+              <IconBadge
+                icon="🏛️"
+                variant="primary"
+                size="lg"
+                animation="none"
               />
               {title && <h2 class="city-title">{title}</h2>}
-              <DecorativeUnderline 
-                variant="gradient" 
-                width="sm" 
-                height="medium" 
+              <DecorativeUnderline
+                variant="gradient"
+                width="sm"
+                height="medium"
               />
             </div>
           </div>

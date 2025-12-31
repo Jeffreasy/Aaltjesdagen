@@ -3,10 +3,11 @@
 // - IconBadge.astro replaces .medical-badge styling (~40 lines removed)
 // - ContentCard.astro replaces .ehbo-card styling (~20 lines removed)
 // - Kept component-specific: .medical-strip, .alert-indicator
-import { storyblokEditable, renderRichText } from "@storyblok/astro";
-import type { BereikbaarheidProps, EhboPostenBlok } from './types';
-import ContentCard from '../../../components/bereikbaarheid/ContentCard.astro';
-import IconBadge from '../../../components/bereikbaarheid/IconBadge.astro';
+import { storyblokEditable } from "@storyblok/astro";
+import { renderText } from "../../../utils/storyblok";
+import type { BereikbaarheidProps, EhboPostenBlok } from "./types";
+import ContentCard from "../../../components/bereikbaarheid/ContentCard.astro";
+import IconBadge from "../../../components/bereikbaarheid/IconBadge.astro";
 
 interface Props extends BereikbaarheidProps<EhboPostenBlok> {}
 
@@ -17,14 +18,14 @@ const title = blok.title || "";
 const tekst = blok.tekst; // Richtext field
 
 // Render richtext content to HTML
-const renderedText = tekst ? renderRichText(tekst) : "";
+const renderedText = renderText(tekst);
 ---
 
 <section
   {...storyblokEditable(blok)}
   class="ehbo-section !bg-transparent relative overflow-hidden"
 >
-  <div class="relative container-custom section-spacing-sm content-layer">
+  <div class="section-container content-layer">
     <!-- Compact card with medical theme -->
     <div class="max-w-4xl mx-auto">
       <ContentCard variant="elevated" padding="lg" maxWidth="full">

@@ -6,11 +6,12 @@
  * - DecorativeUnderline.astro: Replaces title underline (lines 149-161)
  * - ContentCard.astro: Replaces manual glass card wrapper (lines 66-93)
  */
-import { storyblokEditable, renderRichText } from "@storyblok/astro";
-import type { BereikbaarheidProps, ParkerenAutosBlok } from './types';
-import IconBadge from '../../../components/bereikbaarheid/IconBadge.astro';
-import DecorativeUnderline from '../../../components/bereikbaarheid/DecorativeUnderline.astro';
-import ContentCard from '../../../components/bereikbaarheid/ContentCard.astro';
+import { storyblokEditable } from "@storyblok/astro";
+import { renderText } from "../../../utils/storyblok";
+import type { BereikbaarheidProps, ParkerenAutosBlok } from "./types";
+import IconBadge from "../../../components/bereikbaarheid/IconBadge.astro";
+import DecorativeUnderline from "../../../components/bereikbaarheid/DecorativeUnderline.astro";
+import ContentCard from "../../../components/bereikbaarheid/ContentCard.astro";
 
 interface Props extends BereikbaarheidProps<ParkerenAutosBlok> {}
 
@@ -21,22 +22,30 @@ const title = blok.title || "";
 const tekst = blok.tekst; // Richtext field
 
 // Render richtext content to HTML
-const renderedText = tekst ? renderRichText(tekst) : "";
+const renderedText = renderText(tekst);
 ---
 
 <section
   {...storyblokEditable(blok)}
   class="parking-section !bg-transparent relative overflow-hidden"
 >
-  <div class="relative container-custom section-spacing-sm content-layer">
+  <div class="section-container content-layer">
     <!-- Narrower centered layout -->
     <div class="max-w-4xl mx-auto">
       {/* ContentCard replaces manual glass card wrapper (lines 66-93) */}
       <ContentCard variant="glass" padding="lg" hoverEffect={true}>
         {/* Using named slot for header improves semantic structure */}
         <div slot="header" class="card-header">
-          {/* IconBadge replaces manual icon badge (lines 102-127) with rotation and hover-rotate animation */}
-          <IconBadge icon="🚗" variant="primary" size="lg" rotation={-3} animation="hover-rotate" />
+          {
+            /* IconBadge replaces manual icon badge (lines 102-127) with rotation and hover-rotate animation */
+          }
+          <IconBadge
+            icon="🚗"
+            variant="primary"
+            size="lg"
+            rotation={-3}
+            animation="hover-rotate"
+          />
           {title && <h2 class="card-title">{title}</h2>}
           {/* DecorativeUnderline replaces manual underline (lines 149-161) */}
           <DecorativeUnderline variant="secondary" width="md" />
@@ -57,7 +66,7 @@ const renderedText = tekst ? renderRichText(tekst) : "";
 <style>
   /* === Component-specific styles === */
   /* Layout and positioning only - card/icon/underline styling now handled by base components */
-  
+
   /* Content layer - sits above background */
   .content-layer {
     z-index: var(--z-content);

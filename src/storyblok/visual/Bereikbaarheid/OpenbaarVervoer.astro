@@ -3,10 +3,11 @@
 // - IconBadge.astro replaces .transport-icon styling (~10 lines removed)
 // - ContentCard.astro wraps transport-grid (~30 lines removed)
 // - Kept component-specific: gradient title area, split layout, .gradient-overlay pattern
-import { storyblokEditable, renderRichText } from "@storyblok/astro";
-import type { BereikbaarheidProps, OpenbaarVervoerBlok } from './types';
-import ContentCard from '../../../components/bereikbaarheid/ContentCard.astro';
-import IconBadge from '../../../components/bereikbaarheid/IconBadge.astro';
+import { storyblokEditable } from "@storyblok/astro";
+import { renderText } from "../../../utils/storyblok";
+import type { BereikbaarheidProps, OpenbaarVervoerBlok } from "./types";
+import ContentCard from "../../../components/bereikbaarheid/ContentCard.astro";
+import IconBadge from "../../../components/bereikbaarheid/IconBadge.astro";
 
 interface Props extends BereikbaarheidProps<OpenbaarVervoerBlok> {}
 
@@ -17,28 +18,33 @@ const title = blok.title || "";
 const tekst = blok.tekst; // Richtext field
 
 // Render richtext content to HTML
-const renderedText = tekst ? renderRichText(tekst) : "";
+const renderedText = renderText(tekst);
 ---
 
 <section
   {...storyblokEditable(blok)}
   class="transport-section bg-transparent relative overflow-hidden"
 >
-  <div class="relative container-custom section-spacing-sm content-layer">
+  <div class="section-container content-layer">
     <!-- Full width layout with gradient card -->
     <div class="max-w-7xl mx-auto">
-      <ContentCard variant="default" padding="sm" maxWidth="full" hoverEffect={true}>
+      <ContentCard
+        variant="default"
+        padding="sm"
+        maxWidth="full"
+        hoverEffect={true}
+      >
         <div class="transport-grid">
           <!-- Left: Title area with gradient background -->
           <div class="title-area">
             <div class="gradient-overlay"></div>
             <div class="title-content">
-              <IconBadge 
-                icon="🚌" 
-                variant="secondary" 
-                size="lg" 
-                animation="none" 
-                class="transport-icon-badge" 
+              <IconBadge
+                icon="🚌"
+                variant="secondary"
+                size="lg"
+                animation="none"
+                class="transport-icon-badge"
               />
               {title && <h2 class="gradient-title">{title}</h2>}
             </div>

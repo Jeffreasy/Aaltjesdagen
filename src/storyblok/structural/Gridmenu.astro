@@ -1,6 +1,7 @@
 ---
 import { storyblokEditable } from "@storyblok/astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import { storyblokImage } from "../../utils/images";
 
 const { blok } = Astro.props;
 
@@ -61,7 +62,7 @@ const link = blok.link;
           <div class="card-base group flex flex-col">
             <div class="relative h-48 overflow-hidden">
               <img
-                src={`${foto.filename}/m/600x400/filters:quality(80)`}
+                src={storyblokImage(foto.filename, 600, 400)}
                 alt={foto.alt || title || "Gridmenu afbeelding"}
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />

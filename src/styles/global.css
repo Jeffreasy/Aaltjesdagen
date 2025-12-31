@@ -552,6 +552,71 @@
       transition: none !important;
     }
   }
+
+  /* === GRADIENT UTILITIES === */
+  /* Common gradient patterns used across components */
+  .gradient-primary-accent {
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  }
+
+  .gradient-accent-primary {
+    background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
+  }
+
+  .gradient-tri-color {
+    background: linear-gradient(90deg,
+        var(--color-primary) 0%,
+        var(--color-accent) 50%,
+        var(--color-secondary) 100%);
+  }
+
+  /* === SECTION CONTAINER UTILITIES === */
+  /* Consistent layout pattern for Bereikbaarheid components */
+  .section-container {
+    @apply relative container-custom section-spacing-sm;
+    z-index: var(--z-content);
+  }
+
+  .section-container-lg {
+    @apply relative container-custom section-spacing;
+    z-index: var(--z-content);
+  }
+
+  /* === DECORATIVE ORB UTILITIES === */
+  /* Background decoration elements for visual interest */
+  .decorative-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .decorative-orb-primary {
+    @apply decorative-orb;
+    width: 24rem;
+    /* 96 * 4px = 384px */
+    height: 24rem;
+    background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
+    opacity: 0.05;
+    filter: blur(60px);
+  }
+
+  .dark .decorative-orb-primary {
+    opacity: 0.10;
+  }
+
+  .decorative-orb-accent {
+    @apply decorative-orb;
+    width: 18rem;
+    /* 72 * 4px = 288px */
+    height: 18rem;
+    background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+    opacity: 0.05;
+    filter: blur(60px);
+  }
+
+  .dark .decorative-orb-accent {
+    opacity: 0.10;
+  }
 }
 
 

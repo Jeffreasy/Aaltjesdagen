@@ -5,10 +5,11 @@
  * - IconBadge.astro: Replaces manual icon implementation
  * - ContentCard.astro: Replaces manual card wrapper (partially - sidebar accent is component-specific)
  */
-import { storyblokEditable, renderRichText } from "@storyblok/astro";
-import type { BereikbaarheidProps, StallenFietsenBlok } from './types';
-import IconBadge from '../../../components/bereikbaarheid/IconBadge.astro';
-import ContentCard from '../../../components/bereikbaarheid/ContentCard.astro';
+import { storyblokEditable } from "@storyblok/astro";
+import { renderText } from "../../../utils/storyblok";
+import type { BereikbaarheidProps, StallenFietsenBlok } from "./types";
+import IconBadge from "../../../components/bereikbaarheid/IconBadge.astro";
+import ContentCard from "../../../components/bereikbaarheid/ContentCard.astro";
 
 interface Props extends BereikbaarheidProps<StallenFietsenBlok> {}
 
@@ -19,14 +20,14 @@ const title = blok.title || "";
 const tekst = blok.tekst; // Richtext field
 
 // Render richtext content to HTML
-const renderedText = tekst ? renderRichText(tekst) : "";
+const renderedText = renderText(tekst);
 ---
 
 <section
   {...storyblokEditable(blok)}
   class="content-section !bg-transparent relative"
 >
-  <div class="relative container-custom section-spacing-sm content-layer">
+  <div class="section-container content-layer">
     <!-- Wide layout with side accent -->
     <div class="max-w-6xl mx-auto">
       <div class="content-wrapper-outer">
@@ -61,7 +62,7 @@ const renderedText = tekst ? renderRichText(tekst) : "";
 <style>
   /* === Component-specific styles === */
   /* Layout and positioning only - card/icon styling now handled by base components */
-  
+
   .content-section {
     position: relative;
     /* Background handled by utility class */
