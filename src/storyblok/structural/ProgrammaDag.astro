@@ -27,7 +27,6 @@ const programsDataJson = JSON.stringify(sortedProgrammas)
   class="section-spacing relative overflow-hidden"
   x-data={`{ activeFilter: 'all', modalOpen: false, selectedProgram: null, programs: ${programsDataJson} }`}
   @keydown.escape.window="modalOpen = false"
-  client:load
 >
   <!-- Decorative gradient orbs - Enhanced -->
   <div class="absolute top-20 right-10 w-96 h-96 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl"></div>
@@ -146,7 +145,7 @@ const programsDataJson = JSON.stringify(sortedProgrammas)
                           />
                         )}
                         <div class="min-w-0">
-                          <h4 class="text-sm md:text-base font-bold group-hover:text-primary transition-colors truncate" style="color: var(--text-primary);">
+                          <h4 class="program-title text-sm md:text-base font-bold transition-all duration-300 truncate" style="color: var(--text-primary);">
                             {prog.title || prog.name}
                           </h4>
                           {prog.Resourcetitle && (
@@ -213,7 +212,7 @@ const programsDataJson = JSON.stringify(sortedProgrammas)
                   </div>
                   
                   <div class="flex-1 min-w-0">
-                    <h4 class="text-sm font-bold mb-1 line-clamp-2" style="color: var(--text-primary);">{prog.title || prog.name}</h4>
+                    <h4 class="program-title text-sm font-bold mb-1 line-clamp-2 transition-all duration-300" style="color: var(--text-primary);">{prog.title || prog.name}</h4>
                     <div class="flex flex-wrap gap-2">
                       {prog.Resourcetitle && (
                         <span class="text-[10px] text-secondary font-bold uppercase tracking-wide">
@@ -267,3 +266,49 @@ const programsDataJson = JSON.stringify(sortedProgrammas)
   <!-- Modal Component -->
   <ProgramModal />
 </section>
+
+<style>
+  /* Program Title Hover Effects */
+  .program-title {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Desktop: Change color and add underline on row hover */
+  tr:hover .program-title,
+  .program-title:hover {
+    color: #ff7e67 !important; /* Coral - Direct value to match navigation hover */
+  }
+
+  /* Mobile: Change color on container hover */
+  div:hover > div > .program-title {
+    color: #ff7e67 !important; /* Coral - Direct value */
+  }
+
+  /* Decorative underline effect on desktop */
+  @media (min-width: 768px) {
+    .program-title::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ff7e67; /* Coral */
+      transition: width 0.3s ease;
+    }
+
+    tr:hover .program-title::after,
+    .program-title:hover::after {
+      width: 100%;
+    }
+  }
+
+  /* Ensure smooth transitions */
+  @media (prefers-reduced-motion: reduce) {
+    .program-title,
+    .program-title::after {
+      transition: none !important;
+    }
+  }
+</style>

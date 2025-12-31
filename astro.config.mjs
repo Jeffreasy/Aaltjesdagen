@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config'
 import { storyblok } from '@storyblok/astro'
 import { loadEnv } from 'vite'
 import tailwind from '@astrojs/tailwind'
-import vercel from '@astrojs/vercel/static'  // CHANGED: specific import
+import vercel from '@astrojs/vercel'  // Using recommended import path
 
 
 const env = loadEnv('', process.cwd(), 'STORYBLOK')
@@ -60,7 +60,7 @@ export default defineConfig({
   ],
   vite: {
     server: {
-      https: true,
+      https: false,  // Disabled HTTPS for local dev to avoid SSL errors
     },
   },
 })

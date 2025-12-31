@@ -61,8 +61,8 @@
 
     /* === LIGHT MODE PALETTE (Default) === */
     /* "Breathable & Professional" */
-    --bg-base: #f8fbfb;
-    /* Very light teal-tinted white */
+    --bg-base: #f5fafa;
+    /* More color, less sterile white */
     --bg-elevated: #ffffff;
     /* Pure white for lift */
     --bg-overlay: rgba(255, 255, 255, 0.9);
@@ -100,15 +100,16 @@
     /* Gradients */
     /* Smooth gradient without hard stops - prevents visible line at bottom */
     --bg-gradient-base: linear-gradient(180deg, var(--bg-base) 0%, var(--bg-base) 100%);
-    --bg-gradient-subtle: linear-gradient(135deg, #f8fbfb 0%, #ffffff 100%);
+    /* Subtle gradient with warmth and depth */
+    --bg-gradient-subtle: linear-gradient(135deg, #fafcfc 0%, #ffffff 50%, #f5fafa 100%);
 
-    /* Blob Gradients (Updated for Teal/Coral) */
-    --bg-gradient-animated-1: radial-gradient(circle at 20% 50%, rgba(80, 176, 174, 0.15), transparent 50%);
-    /* Teal */
-    --bg-gradient-animated-2: radial-gradient(circle at 80% 50%, rgba(255, 126, 103, 0.12), transparent 50%);
-    /* Coral */
-    --bg-gradient-animated-3: radial-gradient(circle at 50% 80%, rgba(62, 142, 140, 0.10), transparent 50%);
-    /* Darker Teal */
+    /* Blob Gradients (Updated for Teal/Coral) - Maximum Visibility */
+    --bg-gradient-animated-1: radial-gradient(circle at 20% 50%, rgba(80, 176, 174, 0.55), transparent 50%);
+    /* Teal - Strong presence */
+    --bg-gradient-animated-2: radial-gradient(circle at 80% 50%, rgba(255, 126, 103, 0.48), transparent 50%);
+    /* Coral - Clearly visible */
+    --bg-gradient-animated-3: radial-gradient(circle at 50% 80%, rgba(62, 142, 140, 0.45), transparent 50%);
+    /* Darker Teal - Strong depth */
 
     /* Animation Timing */
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -465,8 +466,10 @@
     width: 600px;
     height: 600px;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.6;
+    filter: blur(55px);
+    /* Reduced blur for sharper, more visible colors */
+    opacity: 0.9;
+    /* High visibility */
     animation: float 20s infinite ease-in-out alternate;
   }
 
@@ -516,8 +519,10 @@
     bottom: 25%;
     left: 50%;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.6;
+    filter: blur(55px);
+    /* Reduced blur for sharper, more visible colors */
+    opacity: 0.9;
+    /* High visibility */
     background: var(--bg-gradient-animated-3);
     animation: float-3 30s ease-in-out infinite;
   }
