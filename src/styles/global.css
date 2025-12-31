@@ -79,7 +79,8 @@
     --shadow-xl: 0 20px 25px -5px rgba(44, 62, 80, 0.08), 0 10px 10px -5px rgba(44, 62, 80, 0.03);
 
     /* Gradients */
-    --bg-gradient-base: linear-gradient(180deg, var(--bg-base) 0%, #f0f7f7 100%);
+    /* Smooth gradient without hard stops - prevents visible line at bottom */
+    --bg-gradient-base: linear-gradient(180deg, var(--bg-base) 0%, var(--bg-base) 100%);
     --bg-gradient-subtle: linear-gradient(135deg, #f8fbfb 0%, #ffffff 100%);
 
     /* Blob Gradients (Updated for Teal/Coral) */
@@ -158,7 +159,8 @@
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
 
     /* Gradients */
-    --bg-gradient-base: linear-gradient(180deg, #0f1717 0%, #0a0f0f 100%);
+    /* Smooth gradient without hard stops - prevents visible line at bottom */
+    --bg-gradient-base: linear-gradient(180deg, var(--bg-base) 0%, var(--bg-base) 100%);
     --bg-gradient-subtle: linear-gradient(135deg, #0f1717 0%, #1a2626 100%);
 
     /* Blob Gradients (More vibrant in dark mode) */
@@ -191,7 +193,8 @@
       --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
 
       /* Gradients */
-      --bg-gradient-base: linear-gradient(180deg, #0f1717 0%, #0a0f0f 100%);
+      /* Smooth gradient without hard stops - prevents visible line at bottom */
+      --bg-gradient-base: linear-gradient(180deg, var(--bg-base) 0%, var(--bg-base) 100%);
       --bg-gradient-subtle: linear-gradient(135deg, #0f1717 0%, #1a2626 100%);
 
       /* Blob Gradients (More vibrant in dark mode) */
@@ -202,6 +205,11 @@
   }
 
   /* === GLOBAL RESETS & BASE STYLES === */
+  html {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
   body {
     background-color: var(--bg-base);
     color: var(--text-secondary);
@@ -212,7 +220,7 @@
       color 0.3s ease,
       border-color 0.3s ease,
       box-shadow 0.3s ease;
-    @apply antialiased min-h-screen selection:bg-teal-500 selection:text-white;
+    @apply antialiased min-h-screen selection:bg-teal-500 selection:text-white overflow-x-hidden;
   }
 
   /* Headings - Strict Authority */
@@ -399,8 +407,10 @@
     position: fixed;
     inset: 0;
     z-index: var(--z-background);
-    overflow: hidden;
-    background: var(--bg-gradient-base);
+    /* overflow: hidden; removed - laat blobs smooth uitfaden */
+    /* Use solid background color to prevent gradient line issues */
+    background: var(--bg-base);
+    min-height: 100vh;
   }
 
   .bg-animated::before,
@@ -416,13 +426,13 @@
   }
 
   .bg-animated::before {
-    top: -10%;
+    top: -15%;
     left: -10%;
     background: var(--bg-gradient-animated-1);
   }
 
   .bg-animated::after {
-    bottom: -10%;
+    bottom: -15%;
     right: -10%;
     background: var(--bg-gradient-animated-2);
     animation-delay: -10s;
@@ -438,11 +448,31 @@
     }
   }
 
+  @keyframes float-3 {
+    0% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(-20px, 30px) scale(1.05);
+    }
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
 
     .bg-animated::before,
     .bg-animated::after {
       animation: none;
+    }
+
+    .orb {
+      animation: none !important;
+    }
+
+    body {
+      transition: none !important;
     }
   }
 }
