@@ -119,7 +119,7 @@ const programsDataJson = JSON.stringify(sortedProgrammas)
                 return (
                   <tr 
                     x-show={`activeFilter === 'all' || activeFilter === '${location}'`}
-                    class="hover:bg-primary/5 transition-colors group cursor-pointer"
+                    class="scroll-slide-up hover:bg-primary/5 transition-colors group cursor-pointer"
                     @click={`modalOpen = true; selectedProgram = ${index}`}
                   >
                     <td class="px-4 py-3 whitespace-nowrap">
@@ -196,7 +196,7 @@ const programsDataJson = JSON.stringify(sortedProgrammas)
             return (
               <div
                 x-show={`activeFilter === 'all' || activeFilter === '${location}'`}
-                class="p-4 hover:bg-primary/5 transition-colors cursor-pointer"
+                class="scroll-slide-up p-4 hover:bg-primary/5 transition-colors cursor-pointer"
                 @click={`modalOpen = true; selectedProgram = ${index}`}
               >
 <div class="flex items-start gap-3">
