@@ -11,9 +11,13 @@ const hasFilters = locations.length > 0
 
 <section
   {...storyblokEditable(blok)}
-  class="section-spacing bg-gradient-modern dot-pattern"
+  class="section-spacing relative overflow-hidden"
   x-data="{ activeFilter: 'all' }"
 >
+  <!-- Subtle corner decorative accents -->
+  <div class="absolute top-10 left-10 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-10 right-10 w-64 h-64 bg-accent/5 dark:bg-accent/10 rounded-full blur-3xl"></div>
+
   <div class="container-custom">
     <div class="text-center max-w-4xl mx-auto mb-20">
       {blok.TitelProgramma && (
@@ -53,7 +57,7 @@ const hasFilters = locations.length > 0
 
     {/* Filter Bar with Glassmorphism */}
     {hasFilters && (
-      <div class="sticky top-20 z-30 mb-20 flex justify-center">
+      <div class="sticky top-20 mb-20 flex justify-center" style="z-index: var(--z-sticky);">
         <div class="glass p-3 rounded-2xl shadow-2xl flex flex-wrap justify-center gap-2 max-w-full overflow-x-auto no-scrollbar">
           <button
             @click="activeFilter = 'all'"

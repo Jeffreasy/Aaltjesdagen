@@ -13,9 +13,14 @@ const renderedText = tekst ? renderRichText(tekst) : "";
 
 <section
   {...storyblokEditable(blok)}
-  class="important-section bg-transparent relative overflow-hidden"
-  style="background: transparent !important;"
+  class="important-section relative overflow-hidden"
 >
+  <!-- Subtle decorative glow -->
+  <div
+    class="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-secondary/3 dark:bg-secondary/5 rounded-full blur-3xl"
+  >
+  </div>
+
   <div class="relative container-custom section-spacing-sm content-layer">
     <!-- Highlighted prominent card -->
     <div class="max-w-5xl mx-auto">
@@ -239,7 +244,7 @@ const renderedText = tekst ? renderRichText(tekst) : "";
     font-size: 2rem;
     font-weight: 900;
     line-height: 1.2;
-    color: var(--text-primary);
+    color: var(--color-accent);
     letter-spacing: -0.01em;
   }
 

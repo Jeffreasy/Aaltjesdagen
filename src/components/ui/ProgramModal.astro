@@ -5,7 +5,8 @@
 <div
   x-show="modalOpen"
   x-cloak
-  class="fixed inset-0 flex items-center justify-center p-4 z-[9999]"
+  class="fixed inset-0 flex items-center justify-center p-4"
+  style="z-index: var(--z-modal);"
   @click="modalOpen = false"
   x-transition:enter="transition ease-out duration-300"
   x-transition:enter-start="opacity-0"
@@ -21,13 +22,17 @@
   aria-labelledby="modal-title"
 >
   <!-- Backdrop -->
-  <div class="fixed inset-0 backdrop-blur-sm z-[9998]" style="background: var(--bg-overlay);"></div>
-  
+  <div
+    class="fixed inset-0 backdrop-blur-sm"
+    style="background: var(--bg-overlay); z-index: var(--z-modal-backdrop);"
+  >
+  </div>
+
   <!-- Modal Content -->
   <div
     @click.stop
-    class="relative rounded-3xl max-w-4xl w-full max-h-[90vh] flex flex-col z-[9999]"
-    style="background: var(--bg-elevated); box-shadow: var(--shadow-xl);"
+    class="relative rounded-3xl max-w-4xl w-full max-h-[90vh] flex flex-col"
+    style="background: var(--bg-elevated); box-shadow: var(--shadow-xl); z-index: var(--z-modal);"
     x-transition:enter="transition ease-out duration-300 delay-75"
     x-transition:enter-start="opacity-0 scale-95 translate-y-4"
     x-transition:enter-end="opacity-100 scale-100 translate-y-0"
@@ -39,33 +44,50 @@
     <button
       @click="modalOpen = false"
       class="absolute top-6 right-6 w-12 h-12 rounded-full flex items-center justify-center transition-colors group"
-      style="background: var(--bg-elevated); box-shadow: var(--shadow-xl); border: 1px solid var(--border-primary); z-index: 10;"
+      style="background: var(--bg-elevated); box-shadow: var(--shadow-xl); border: 1px solid var(--border-primary);"
       aria-label="Close modal"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:scale-110 transition-transform" style="color: var(--text-secondary);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 group-hover:scale-110 transition-transform"
+        style="color: var(--text-secondary);"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"></path>
       </svg>
     </button>
 
     <!-- Modal Body - with proper scroll container -->
-    <div x-show="selectedProgram !== null && programs[selectedProgram]" class="overflow-y-auto flex-1">
+    <div
+      x-show="selectedProgram !== null && programs[selectedProgram]"
+      class="overflow-y-auto flex-1"
+    >
       <!-- Hero Image -->
-      <div 
+      <div
         x-show="programs[selectedProgram]?.Fotokaart?.[0]?.filename"
         class="relative h-72 md:h-96 bg-gradient-to-br from-primary/10 to-secondary/10"
       >
-        <img 
+        <img
           :src="programs[selectedProgram]?.Fotokaart?.[0]?.filename ? programs[selectedProgram].Fotokaart[0].filename + '/m/1200x800/filters:quality(85)' : ''"
           :alt="programs[selectedProgram]?.title || programs[selectedProgram]?.name || ''"
           class="w-full h-full object-cover"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
+        >
+        </div>
       </div>
 
       <!-- Content Section -->
       <div class="p-8 md:p-12">
         <!-- Category Badge -->
-        <span 
+        <span
           x-show="programs[selectedProgram]?.Resourcetitle"
           x-text="programs[selectedProgram]?.Resourcetitle || ''"
           class="inline-block text-secondary font-bold text-sm uppercase tracking-widest px-4 py-2 bg-secondary/10 rounded-full mb-6"
@@ -77,61 +99,135 @@
           x-text="programs[selectedProgram]?.title || programs[selectedProgram]?.name || ''"
           class="text-3xl md:text-5xl font-black mb-8 leading-tight"
           style="color: var(--text-primary);"
-        ></h2>
+        >
+        </h2>
 
         <!-- Meta Info Row -->
-        <div class="flex flex-wrap gap-4 mb-10 pb-8" style="border-bottom: 1px solid var(--border-primary);">
+        <div
+          class="flex flex-wrap gap-4 mb-10 pb-8"
+          style="border-bottom: 1px solid var(--border-primary);"
+        >
           <!-- DateTime -->
-          <div x-show="programs[selectedProgram]?.Tijd" class="flex items-center gap-3 text-base px-5 py-3 rounded-xl" style="color: var(--text-primary); background: var(--bg-base);">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          <div
+            x-show="programs[selectedProgram]?.Tijd"
+            class="flex items-center gap-3 text-base px-5 py-3 rounded-xl"
+            style="color: var(--text-primary); background: var(--bg-base);"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+              ></path>
             </svg>
-            <span 
+            <span
               x-text="programs[selectedProgram]?.Tijd ? new Date(programs[selectedProgram].Tijd).toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }) : ''"
-              class="font-semibold"
-            ></span>
+              class="font-semibold"></span>
           </div>
 
           <!-- Location -->
-          <div x-show="programs[selectedProgram]?.Locatie || programs[selectedProgram]?.locatie" class="flex items-center gap-3 text-base font-bold px-5 py-3 bg-gradient-to-r from-secondary to-orange-600 text-white rounded-xl shadow-md">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          <div
+            x-show="programs[selectedProgram]?.Locatie || programs[selectedProgram]?.locatie"
+            class="flex items-center gap-3 text-base font-bold px-5 py-3 bg-gradient-to-r from-secondary to-orange-600 text-white rounded-xl shadow-md"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
             </svg>
-            <span x-text="programs[selectedProgram]?.Locatie || programs[selectedProgram]?.locatie || ''"></span>
+            <span
+              x-text="programs[selectedProgram]?.Locatie || programs[selectedProgram]?.locatie || ''"
+            ></span>
           </div>
         </div>
 
         <!-- Description -->
         <div x-show="programs[selectedProgram]?.resourceinhoud" class="mb-10">
-          <h3 class="text-xl font-bold mb-4" style="color: var(--text-primary);">Over dit programma</h3>
+          <h3
+            class="text-xl font-bold mb-4"
+            style="color: var(--text-primary);"
+          >
+            Over dit programma
+          </h3>
           <div class="prose prose-lg max-w-none">
             <p
               x-text="programs[selectedProgram]?.resourceinhoud || ''"
               class="leading-relaxed text-lg whitespace-pre-wrap"
               style="color: var(--text-secondary);"
-            ></p>
+            >
+            </p>
           </div>
         </div>
 
         <!-- No Description State -->
-        <div x-show="!programs[selectedProgram]?.resourceinhoud" class="text-center py-12 mb-8">
-          <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style="background: var(--bg-base);">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" style="color: var(--text-tertiary);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        <div
+          x-show="!programs[selectedProgram]?.resourceinhoud"
+          class="text-center py-12 mb-8"
+        >
+          <div
+            class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center"
+            style="background: var(--bg-base);"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-8 w-8"
+              style="color: var(--text-tertiary);"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              ></path>
             </svg>
           </div>
-          <p class="font-medium text-lg" style="color: var(--text-tertiary);">Geen aanvullende informatie beschikbaar</p>
+          <p class="font-medium text-lg" style="color: var(--text-tertiary);">
+            Geen aanvullende informatie beschikbaar
+          </p>
         </div>
 
         <!-- Action Button -->
-        <div class="flex justify-center pt-4" style="border-top: 1px solid var(--border-primary);">
-          <button 
-            @click="modalOpen = false"
-            class="btn-primary min-w-[250px]"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        <div
+          class="flex justify-center pt-4"
+          style="border-top: 1px solid var(--border-primary);"
+        >
+          <button @click="modalOpen = false" class="btn-primary min-w-[250px]">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"></path>
             </svg>
             Sluiten
           </button>

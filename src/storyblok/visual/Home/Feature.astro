@@ -1,0 +1,146 @@
+---
+import { storyblokEditable } from "@storyblok/astro";
+
+const { blok } = Astro.props;
+---
+
+<div {...storyblokEditable(blok)} class="card-base group h-full flex flex-col">
+  {/* Afbeelding Sectie met moderne overlay */}
+  <div class="relative h-48 overflow-hidden">
+    {
+      blok.Fotokaart?.[0]?.filename ? (
+        <>
+          <img
+            src={`${blok.Fotokaart[0].filename}/m/600x400/filters:quality(80)`}
+            alt={blok.title || blok.name}
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        </>
+      ) : (
+        <div class="w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+          <span class="text-primary/30 font-black text-5xl drop-shadow">
+            AD
+          </span>
+        </div>
+      )
+    }
+
+    {/* Category badge */}
+    {
+      blok.Resourcetitle && (
+        <div class="absolute top-3 left-3 z-10">
+          <span class="glass-dark px-3 py-1.5 text-white font-bold text-xs uppercase tracking-wider rounded-lg shadow-lg">
+            {blok.Resourcetitle}
+          </span>
+        </div>
+      )
+    }
+  </div>
+
+  {/* Content Sectie met verbeterde styling */}
+  <div class="p-5 flex flex-col flex-grow">
+    <h3
+      class="text-lg text-accent font-extrabold mb-3 group-hover:text-accent-dark transition-colors leading-tight"
+    >
+      {blok.title || blok.name}
+    </h3>
+
+    <div class="flex flex-wrap gap-3 mb-4">
+      {
+        blok.Tijd && (
+          <div
+            class="flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg"
+            style="color: var(--text-secondary); background: var(--bg-elevated);"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 text-accent"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+              />
+            </svg>
+            <span>
+              {new Date(blok.Tijd).toLocaleDateString("nl-NL", {
+                day: "numeric",
+                month: "long",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}{" "}
+              uur
+            </span>
+          </div>
+        )
+      }
+
+      {
+        (blok.Locatie || blok.locatie) && (
+          <div
+            class="flex items-center gap-2 text-xs font-semibold bg-accent/10 px-3 py-1.5 rounded-lg"
+            style="color: var(--text-secondary);"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 text-accent"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+            <span>{blok.Locatie || blok.locatie}</span>
+          </div>
+        )
+      }
+    </div>
+
+    {
+      blok.resourceinhoud && (
+        <div class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm line-clamp-3 mb-4 flex-grow">
+          {blok.resourceinhoud}
+        </div>
+      )
+    }
+
+    <div
+      class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center"
+    >
+      <span
+        class="text-accent font-bold text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all"
+      >
+        Lees meer
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4 transform group-hover:translate-x-1 transition-transform"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"></path>
+        </svg>
+      </span>
+    </div>
+  </div>
+</div>

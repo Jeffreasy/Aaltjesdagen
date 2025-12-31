@@ -1,0 +1,166 @@
+---
+import { storyblokEditable } from "@storyblok/astro";
+
+const { blok } = Astro.props;
+
+// Storyblok field mapping: title, content, foto, link (lowercase!)
+const title = blok.title || "";
+const content = blok.content || "";
+const foto = blok.foto;
+const link = blok.link;
+
+// Dynamische afhandeling van de tekst uit Storyblok
+const hasMultipleSentences = title.includes(".");
+
+let displayTitle = title;
+let displayBody = content;
+
+// Als er veel tekst in de title staat en geen aparte content is, splitsen we het voor een professionele look
+if (!displayBody && title.length > 50 && hasMultipleSentences) {
+  const firstDotIndex = title.indexOf(".");
+  displayTitle = title.substring(0, firstDotIndex + 1);
+  displayBody = title.substring(firstDotIndex + 1).trim();
+}
+
+// Image URL handling (similar to Hero component)
+const imageUrl = foto?.filename;
+const optimizedImageUrl = imageUrl
+  ? `${imageUrl}/m/800x600/filters:quality(80):format(webp)`
+  : null;
+---
+
+<section
+  {...storyblokEditable(blok)}
+  class="section-spacing px-6 relative overflow-hidden"
+>
+  <!-- Animated gradient background -->
+  <div
+    class="absolute inset-0 bg-gradient-to-br from-accent/5 via-white dark:via-gray-900 to-blue-50/20 dark:to-gray-800/20"
+  >
+  </div>
+  <div
+    class="absolute top-10 left-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl animate-pulse"
+  >
+  </div>
+  <div
+    class="absolute bottom-10 right-10 w-96 h-96 bg-blue-100/30 dark:bg-blue-900/20 rounded-full blur-3xl"
+  >
+  </div>
+
+  <div class="max-w-5xl mx-auto relative z-10">
+    <!-- Parking Icon Header with enhanced styling -->
+    <div class="flex justify-center mb-8">
+      <div class="relative">
+        <div
+          class="w-20 h-20 bg-gradient-to-br from-accent to-accent-dark rounded-2xl flex items-center justify-center shadow-xl transform hover:scale-110 transition-transform duration-300 rotate-3"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-11 w-11 text-white drop-shadow-lg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            ></path>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+        </div>
+        <div
+          class="absolute -inset-2 bg-gradient-to-br from-accent/20 to-accent-dark/20 rounded-2xl blur-xl -z-10"
+        >
+        </div>
+      </div>
+    </div>
+
+    <div class="card-base p-8 md:p-12">
+      <!-- Title -->
+      {
+        displayTitle && (
+          <h2 class="text-3xl md:text-5xl font-black text-[var(--color-accent)] dark:text-gray-100 mb-8 text-center leading-tight">
+            {displayTitle}
+          </h2>
+        )
+      }
+
+      <!-- Body Text / Content -->
+      {
+        displayBody && (
+          <div class="mb-10">
+            <p class="text-lg md:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed text-center max-w-3xl mx-auto font-medium">
+              {displayBody}
+            </p>
+          </div>
+        )
+      }
+
+      <!-- Foto with modern styling -->
+      {
+        optimizedImageUrl && (
+          <div class="mb-10 rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-shadow duration-300 border border-gray-200/50 dark:border-gray-700/50">
+            <img
+              src={optimizedImageUrl}
+              alt={displayTitle || "Parkeren"}
+              class="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          </div>
+        )
+      }
+
+      <!-- Link -->
+      {
+        link?.cached_url && (
+          <div class="text-center mt-10">
+            <a href={`/${link.cached_url}`} class="btn-accent">
+              Meer informatie
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </a>
+          </div>
+        )
+      }
+    </div>
+
+    <!-- Decorative Element -->
+    <div class="mt-12 flex justify-center items-center gap-4">
+      <div class="h-px w-20 bg-gradient-to-r from-transparent to-accent/30">
+      </div>
+      <div class="relative">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 text-accent drop-shadow"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </div>
+      <div class="h-px w-20 bg-gradient-to-l from-transparent to-accent/30">
+      </div>
+    </div>
+  </div>
+</section>

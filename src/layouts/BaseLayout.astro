@@ -53,8 +53,8 @@ const isStoryblokEnabled = import.meta.env.DEV;
       </div>
     </div>
     <header
-      class="glass sticky top-0 py-4 shadow-lg border-b border-white/30 dark:border-gray-700/30"
-      style="z-index: var(--z-fixed);"
+      class="glass sticky top-0 py-4 shadow-lg border-b border-white/30 dark:border-gray-700/30 relative"
+      style="z-index: var(--z-header);"
     >
       <div
         class="container-custom flex flex-row justify-between items-center gap-4"
@@ -69,6 +69,13 @@ const isStoryblokEnabled = import.meta.env.DEV;
           />
         </a>
         <Navigation />
+      </div>
+
+      <!-- Decorative Gradient Bottom Border -->
+      <div
+        class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-secondary via-accent to-primary"
+        aria-hidden="true"
+      >
       </div>
     </header>
 

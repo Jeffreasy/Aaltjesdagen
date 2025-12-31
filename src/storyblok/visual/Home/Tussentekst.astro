@@ -1,0 +1,87 @@
+---
+import { storyblokEditable } from "@storyblok/astro";
+
+const { blok } = Astro.props;
+
+// Storyblok field mapping: Title, Content, Link
+const title = blok.Title || "";
+const content = blok.Content || "";
+const link = blok.Link;
+
+// Dynamische afhandeling van de tekst uit Storyblok
+const hasMultipleSentences = title.includes(".");
+
+let displayTitle = title;
+let displayBody = content;
+
+// Als er veel tekst in de title staat en geen aparte content is, splitsen we het voor een professionele look
+if (!displayBody && title.length > 50 && hasMultipleSentences) {
+  const firstDotIndex = title.indexOf(".");
+  displayTitle = title.substring(0, firstDotIndex + 1);
+  displayBody = title.substring(firstDotIndex + 1).trim();
+}
+---
+
+<section
+  {...storyblokEditable(blok)}
+  class="section-spacing-sm px-6 relative overflow-hidden"
+>
+  <!-- Decorative circles -->
+  <div
+    class="absolute top-10 left-1/2 -translate-x-1/2 w-80 h-80 bg-accent/5 dark:bg-accent/10 rounded-full blur-3xl"
+  >
+  </div>
+  <div
+    class="absolute bottom-10 right-10 w-64 h-64 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl"
+  >
+  </div>
+
+  <div class="max-w-4xl mx-auto relative z-10">
+    <div class="card-base p-8 md:p-12">
+      {
+        displayTitle && (
+          <h3
+            class="text-2xl md:text-4xl font-bold mb-6 leading-tight"
+            style="color: var(--color-accent);"
+          >
+            {displayTitle}
+          </h3>
+        )
+      }
+
+      {
+        displayBody && (
+          <div class="prose prose-lg max-w-none">
+            <p class="text-base md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+              {displayBody}
+            </p>
+          </div>
+        )
+      }
+
+      {
+        link?.cached_url && (
+          <div class="mt-8">
+            <a href={`/${link.cached_url}`} class="btn-accent">
+              Lees meer
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </a>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>
