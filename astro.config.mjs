@@ -58,6 +58,9 @@ export default defineConfig({
       applyBaseStyles: true,
     }),
   ],
+  image: {
+    domains: ['a.storyblok.com'],
+  },
   vite: {
     server: {
       https: false,  // Disabled HTTPS for local dev to avoid SSL errors

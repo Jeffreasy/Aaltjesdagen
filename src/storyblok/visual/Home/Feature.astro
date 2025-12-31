@@ -15,6 +15,9 @@ const { blok } = Astro.props;
             src={storyblokImage(blok.Fotokaart[0].filename, 600, 400)}
             alt={blok.title || blok.name}
             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            width="600"
+            height="400"
+            loading="lazy"
           />
           <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </>
