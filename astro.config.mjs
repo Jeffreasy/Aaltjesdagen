@@ -63,14 +63,5 @@ export default defineConfig({
     server: {
       https: true,
     },
-    build: {
-      cssCodeSplit: false,
-      assetsInlineLimit: 0,
-      rollupOptions: {
-        output: {
-          assetFileNames: '_astro/[name].[hash][extname]',
-        }
-      }
-    }
   },
 })
