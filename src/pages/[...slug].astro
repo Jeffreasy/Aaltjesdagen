@@ -2,11 +2,17 @@
 import { getStory, getAllStories } from "../services/storyblok";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { buildLogger, startGroup, endGroup, analytics } from "../utils/logger";
 
 export async function getStaticPaths() {
+  const startTime = Date.now();
+  
+  startGroup('Static Path Generation');
+  buildLogger.start('Generating static paths...');
+  
   const stories = await getAllStories("draft");
 
-  return stories.map((story: any) => {
+  const paths = stories.map((story: any) => {
     // Handle home page and nested paths for catch-all route [...slug]
     // For [...slug], we pass the full slug as a string (Astro will handle the parsing)
     const slugParam = story.full_slug === "home" ? undefined : story.full_slug;
@@ -20,6 +26,14 @@ export async function getStaticPaths() {
       },
     };
   });
+  
+  const duration = Date.now() - startTime;
+  buildLogger.success(`Generated ${paths.length} static paths in ${duration}ms`);
+  analytics.track('Static Path Generation', duration, paths.length);
+  
+  endGroup();
+  
+  return paths;
 }
 
 // Enable live preview in development

@@ -5,6 +5,8 @@
  * @module utils/dates
  */
 
+import { logDateFormatting } from './logger';
+
 /**
  * Format date to Dutch locale string
  * 
@@ -23,6 +25,9 @@ export function formatDate(
     locale: string = 'nl-NL'
 ): string {
     if (!date) return '';
+
+    const dateStr = typeof date === 'string' ? date : date.toISOString();
+    logDateFormatting(dateStr, locale);
 
     return new Date(date).toLocaleDateString(locale, {
         weekday: 'long',

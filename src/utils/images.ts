@@ -5,6 +5,8 @@
  * @module utils/images
  */
 
+import { logImageOptimization } from './logger';
+
 /**
  * Generate Storyblok image URL with transformations
  * 
@@ -29,6 +31,12 @@ export function storyblokImage(
     format: 'webp' | 'jpg' | 'png' = 'webp'
 ): string {
     if (!filename) return '';
+
+    // Log image optimization in development mode
+    const urlParts = filename.split('/');
+    const imageName = urlParts[urlParts.length - 1] || 'unknown';
+    logImageOptimization(imageName, format, quality);
+
     return `${filename}/m/${width}x${height}/filters:quality(${quality}):format(${format})`;
 }
 
