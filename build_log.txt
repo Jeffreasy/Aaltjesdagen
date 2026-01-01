@@ -1,0 +1,46 @@
+
+> astro-ultimate-tutorial@0.0.1 build
+> astro build
+
+[2m13:04:33[22m [34m[vite][39m Re-optimizing dependencies because lockfile has changed
+[2m13:04:34[22m [34m[content][39m Syncing content
+[2m13:04:34[22m [34m[content][39m Synced content
+[2m13:04:34[22m [34m[types][39m Generated [2m1.56s[22m
+[2m13:04:34[22m [34m[build][39m output: [34m"static"[39m
+[2m13:04:34[22m [34m[build][39m mode: [34m"static"[39m
+[2m13:04:34[22m [34m[build][39m directory: [34mC:\Users\JJALa\Desktop\Aaltjesdagen\Frontend\dist\[39m
+[2m13:04:34[22m [34m[build][39m adapter: [32m@astrojs/vercel[39m
+[2m13:04:34[22m [34m[build][39m Collecting build info...
+[2m13:04:34[22m [34m[build][39m [32mÔ£ô Completed in 1.81s.[39m
+[2m13:04:35[22m [34m[build][39m Building static entrypoints...
+[2m13:04:39[22m [34m[vite][39m [32mÔ£ô built in 4.42s[39m
+[2m13:04:39[22m [34m[build][39m [32mÔ£ô Completed in 4.48s.[39m
+
+[42m[30m building client (vite) [39m[49m
+[2m13:04:39[22m [34m[vite][39m transforming...
+[2m13:04:40[22m [34m[vite][39m [32mÔ£ô[39m 41 modules transformed.
+[2m13:04:40[22m [34m[vite][39m rendering chunks...
+[2m13:04:40[22m [34m[vite][39m computing gzip size...
+[2m13:04:40[22m [34m[vite][39m [2mdist/[22m[35m_astro/Hero.DbMRVPeP.css                                            [39m[1m[2m 3.89 kB[22m[1m[22m[2m Ôöé gzip:  1.12 kB[22m
+[2m13:04:40[22m [34m[vite][39m [2mdist/[22m[36m_astro/page.CfMR_-1W.js                                             [39m[1m[2m 0.88 kB[22m[1m[22m[2m Ôöé gzip:  0.53 kB[22m
+[2m13:04:40[22m [34m[vite][39m [2mdist/[22m[36m_astro/BaseLayout.astro_astro_type_script_index_0_lang.1YU6Ep37.js  [39m[1m[2m45.27 kB[22m[1m[22m[2m Ôöé gzip: 16.30 kB[22m
+[2m13:04:40[22m [34m[vite][39m [2mdist/[22m[36m_astro/Hero.astro_astro_type_script_index_0_lang.DSzJVwSB.js        [39m[1m[2m74.93 kB[22m[1m[22m[2m Ôöé gzip: 23.06 kB[22m
+[2m13:04:40[22m [34m[vite][39m [32mÔ£ô built in 684ms[39m
+
+[42m[30m generating static routes [39m[49m
+[2m13:04:40[22m [32mÔûÂ[39m src/pages/[...slug].astro
+
+[36mÔä╣[39m ÔöîÔöÇ Static Path Generation ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+[90m[[90mbuild[90m][39m [35mÔùÉ[39m Generating static paths...
+[90m[[90mbuild[90m][39m [32mÔ£ö[39m Fetched all stories { duration: '126ms', items: 10 }
+[90m[[90mbuild[90m][39m [32mÔ£ö[39m Generated 10 static paths in 137ms
+[36mÔä╣[39m ÔööÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+
+Invalid URL
+  Stack trace:
+    at new URL (node:internal/url:797:36)
+    at AstroComponentInstance.SEO [as factory] (file:///C:/Users/JJALa/Desktop/Aaltjesdagen/Frontend/dist/chunks/astro/server_C211Bkxd.mjs:139:12)
+    at AstroComponentInstance.render (file:///C:/Users/JJALa/Desktop/Aaltjesdagen/Frontend/dist/chunks/astro/server_C211Bkxd.mjs:1462:30)
+    at renderChild (file:///C:/Users/JJALa/Desktop/Aaltjesdagen/Frontend/dist/chunks/astro/server_C211Bkxd.mjs:1360:18)
+    at new BufferedRenderer (file:///C:/Users/JJALa/Desktop/Aaltjesdagen/Frontend/dist/chunks/astro/server_C211Bkxd.mjs:783:26)
+[2m13:04:40[22m   [34mÔö£ÔöÇ[39m [2m/config/index.html[22m

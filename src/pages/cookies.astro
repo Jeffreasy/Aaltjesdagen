@@ -1,0 +1,177 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// MIGRATION: Using Design System Prose implementation
+// See docs/reference/PROSE_SYSTEM.md
+---
+
+<BaseLayout
+    title="Cookie Instellingen - Aaltjesdagen"
+    description="Cookie beleid en instellingen"
+>
+    <section class="section-spacing relative min-h-screen">
+        <!-- Background Decor -->
+        <div
+            class="absolute inset-0 pointer-events-none overflow-hidden"
+            aria-hidden="true"
+        >
+            <div class="decorative-orb-primary top-20 right-0 opacity-10"></div>
+            <div class="decorative-orb-accent bottom-40 left-10 opacity-10">
+            </div>
+        </div>
+
+        <div class="container-custom relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <!-- Header -->
+                <div class="text-center mb-12">
+                    <h1 class="heading-page mb-4 text-gradient">
+                        Cookie Instellingen
+                    </h1>
+                    <p class="text-lg text-sub font-medium">
+                        Beheer uw privacyvoorkeuren
+                    </p>
+                </div>
+
+                <!-- Content Card -->
+                <div
+                    class="bg-elevated rounded-3xl p-8 md:p-12 shadow-2xl border border-secondary relative overflow-hidden"
+                >
+                    <!-- Top Gradient Line -->
+                    <div
+                        class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-secondary via-accent to-primary"
+                    >
+                    </div>
+
+                    <article
+                        class="prose prose-lg prose-primary max-w-none dark:prose-invert"
+                    >
+                        <p class="lead">
+                            Aaltjesdagen.nl gebruikt cookies om de website te
+                            analyseren en te verbeteren. Hieronder leest u welke
+                            cookies wij gebruiken en kunt u uw voorkeuren
+                            aanpassen.
+                        </p>
+
+                        <h2>Soorten Cookies</h2>
+                        <p>
+                            Wij maken onderscheid tussen noodzakelijke
+                            functionele cookies en optionele analytische
+                            cookies.
+                        </p>
+
+                        <div
+                            class="bg-base rounded-2xl p-6 border border-primary/20 my-8 not-prose shadow-sm"
+                        >
+                            <h3
+                                class="text-lg font-bold mb-6 text-primary flex items-center gap-2"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                                    ></path></svg
+                                >
+                                Uw Voorkeuren
+                            </h3>
+
+                            <!-- Toggle 1: Functional -->
+                            <div
+                                class="flex items-center justify-between mb-6 pb-6 border-b border-secondary"
+                            >
+                                <div>
+                                    <span class="font-bold text-main block"
+                                        >Functioneel</span
+                                    >
+                                    <p class="text-sm text-sub mt-1">
+                                        Noodzakelijk voor de basiswerking (dark
+                                        mode, menu).
+                                    </p>
+                                </div>
+                                <div
+                                    class="flex items-center gap-2 px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-xs font-bold uppercase tracking-wide"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-3 w-3"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        ><path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="3"
+                                            d="M5 13l4 4L19 7"></path></svg
+                                    >
+                                    Altijd Aan
+                                </div>
+                            </div>
+
+                            <!-- Toggle 2: Analytical (Placeholder) -->
+                            <div
+                                class="flex items-center justify-between opacity-75"
+                            >
+                                <div>
+                                    <span class="font-bold text-main block"
+                                        >Analytisch</span
+                                    >
+                                    <p class="text-sm text-sub mt-1">
+                                        Anonieme statistieken via Google
+                                        Analytics.
+                                    </p>
+                                </div>
+                                <div class="relative cursor-not-allowed">
+                                    <!-- Visual Toggle Switch Representation -->
+                                    <div
+                                        class="w-12 h-7 bg-gray-200 dark:bg-gray-700 rounded-full transition-colors"
+                                    >
+                                    </div>
+                                    <div
+                                        class="absolute left-1 top-1 w-5 h-5 bg-white rounded-full shadow-sm transform translate-x-0 transition-transform"
+                                    >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2>Toelichting</h2>
+                        <h3>Functionele Cookies</h3>
+                        <p>
+                            Deze cookies zijn technisch noodzakelijk om uw
+                            voorkeuren (zoals taal of kleurenthema) te
+                            onthouden. Zonder deze cookies kan de website niet
+                            goed functioneren.
+                        </p>
+
+                        <h3>Analytische Cookies</h3>
+                        <p>
+                            Wij gebruiken Google Analytics in
+                            privacyvriendelijke modus (geanonimiseerde IP) om
+                            bezoekersstromen te analyseren. Zie onze <a
+                                href="/privacy">Privacyverklaring</a
+                            > voor details.
+                        </p>
+                    </article>
+
+                    <!-- Bottom decorative element -->
+                    <div
+                        class="mt-12 pt-6 border-t border-secondary flex justify-between items-center text-sm text-tertiary"
+                    >
+                        <p>Stichting Aaltjesdagen</p>
+                        <a
+                            href="/privacy"
+                            class="hover:text-primary transition-colors"
+                            >Privacyverklaring &rarr;</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</BaseLayout>

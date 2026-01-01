@@ -13,10 +13,16 @@
  *
  * MIGRATION: Phase 3 - Refactored to use base components and constants
  */
-import { SITE, NAVIGATION_ITEMS, SOCIAL_LINKS, LEGAL_LINKS, DEVELOPER } from '@/constants/site';
-import SocialLink from '@/components/common/SocialLink.astro';
-import NewsletterForm from '@/components/common/NewsletterForm.astro';
-import Link from '@/components/ui/Link.astro';
+import {
+  SITE,
+  NAVIGATION_ITEMS,
+  SOCIAL_LINKS,
+  LEGAL_LINKS,
+  DEVELOPER,
+} from "@/constants/site";
+import SocialLink from "@/components/common/SocialLink.astro";
+import NewsletterForm from "@/components/common/NewsletterForm.astro";
+import { Link } from "@aaltjesdagen/ui/components";
 
 const currentYear = new Date().getFullYear();
 ---
@@ -67,11 +73,15 @@ const currentYear = new Date().getFullYear();
         </h3>
         <nav class="footer-nav" aria-label="Footer navigation">
           <ul class="space-y-3">
-            {NAVIGATION_ITEMS.map((item) => (
-              <li>
-                <Link href={item.href} variant="footer">{item.name}</Link>
-              </li>
-            ))}
+            {
+              NAVIGATION_ITEMS.map((item) => (
+                <li>
+                  <Link href={item.href} variant="footer">
+                    {item.name}
+                  </Link>
+                </li>
+              ))
+            }
           </ul>
         </nav>
       </div>
@@ -170,9 +180,11 @@ const currentYear = new Date().getFullYear();
 
         <!-- Social Media Links -->
         <div class="flex gap-3 mb-6">
-          {SOCIAL_LINKS.map((social) => (
-            <SocialLink {...social} variant="footer" size="md" />
-          ))}
+          {
+            SOCIAL_LINKS.map((social) => (
+              <SocialLink {...social} variant="footer" size="md" />
+            ))
+          }
         </div>
 
         <!-- Newsletter Signup -->
@@ -187,11 +199,17 @@ const currentYear = new Date().getFullYear();
         class="flex flex-wrap justify-center gap-6 mb-4"
         aria-label="Legal navigation"
       >
-        {LEGAL_LINKS.map((link) => (
-          <Link href={link.href} variant="footer" class="text-xs text-[var(--text-tertiary)]">
-            {link.name}
-          </Link>
-        ))}
+        {
+          LEGAL_LINKS.map((link) => (
+            <Link
+              href={link.href}
+              variant="footer"
+              class="text-xs text-[var(--text-tertiary)]"
+            >
+              {link.name}
+            </Link>
+          ))
+        }
       </nav>
 
       <!-- Copyright -->

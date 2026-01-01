@@ -1,29 +1,47 @@
 ---
-import "../styles/global.css";
+import "@aaltjesdagen/ui/css";
 import Navigation from "../components/layout/Navigation.astro";
 import Footer from "../components/layout/Footer.astro";
 import BackToTop from "../components/layout/BackToTop.astro";
+import SEO from "../components/layout/SEO.astro";
+import { ClientRouter } from "astro:transitions";
+import { Image } from "astro:assets";
+// Import local logo image for optimization
+// Note: Ensure /public/assets/logo.png exists or use a relative import if it's in src/assets
+// Since the previous code used /assets/logo.png (public folder), we'll stick to that but use format="webp" if possible,
+// OR ideally move it to src/assets. For now we will enable standard Image optimization on the public file (requires width/height).
 
 interface Props {
   title?: string;
+  description?: string;
+  image?: string;
 }
 
-const { title = "Aaltjesdagen" } = Astro.props;
+const { title, description, image } = Astro.props;
 const isStoryblokEnabled = import.meta.env.DEV;
 ---
 
-<html lang="nl">
+<html lang="nl" class="scroll-smooth">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <SEO title={title} description={description} image={image} />
+    <ClientRouter />
+
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://a.storyblok.com" />
+
+    <!-- Google Fonts - Optimized Loading -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Theme Detection Script (no-flash) -->
     <script is:inline>
       // Apply theme before body renders to prevent flash
-      (function () {
+      // This needs to run on every page swap if not persisted, but scripts in head re-run with ClientRouter
+      function applyTheme() {
         const theme =
           localStorage.getItem("theme") ||
           (window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -32,27 +50,50 @@ const isStoryblokEnabled = import.meta.env.DEV;
         document.documentElement.setAttribute("data-theme", theme);
         if (theme === "dark") {
           document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
         }
-      })();
+      }
+      applyTheme();
+      // Re-apply on view transition (just in case)
+      document.addEventListener("astro:after-swap", applyTheme);
     </script>
   </head>
-  <body class="flex flex-col min-h-screen">
-    <!-- Animated Background -->
-    <div class="fixed inset-0 z-[-1] bg-animated" aria-hidden="true">
+  <body class="flex flex-col min-h-screen relative">
+    <!-- Skip to Main Content (Accessibility) -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] px-6 py-3 bg-[var(--color-primary)] text-white font-bold rounded shadow-lg outline-none ring-2 ring-white"
+    >
+      Ga direct naar de inhoud
+    </a>
+
+    <!-- Animated Background - PERSISTENT across navigation -->
+    <div
+      class="fixed inset-0 z-[-1] bg-animated"
+      aria-hidden="true"
+      transition:persist
+    >
       <div class="orb" aria-hidden="true"></div>
     </div>
+
+    <!-- Header - PERSISTENT -->
     <header
-      class="glass sticky top-0 py-4 shadow-lg border-b border-white/30 dark:border-gray-700/30 relative z-header"
+      class="glass sticky top-0 py-4 shadow-lg border-b border-white/30 dark:border-gray-700/30 relative"
+      style="z-index: var(--z-header);"
+      transition:persist
     >
       <div
         class="container-custom flex flex-row justify-between items-center gap-4"
       >
         <a href="/" class="flex items-center gap-3 group">
-          <img
+          <Image
             src="/assets/logo.png"
             alt="Aaltjesdagen Logo"
-            width="180"
-            height="60"
+            width={180}
+            height={60}
+            loading="eager"
+            fetchpriority="high"
             class="h-12 w-auto transition-all duration-300 group-hover:scale-105 brightness-0 dark:invert"
           />
         </a>
@@ -67,11 +108,18 @@ const isStoryblokEnabled = import.meta.env.DEV;
       </div>
     </header>
 
-    <main class="flex-grow relative">
+    <!-- Main Content - Animates In/Out -->
+    <main
+      id="main-content"
+      class="flex-grow relative focus:outline-none"
+      tabindex="-1"
+      transition:animate="fade"
+    >
       <slot />
     </main>
 
     <BackToTop />
+    <!-- Footer is NOT persisted, so it updates per page (good for relevant links) -->
     <Footer />
 
     {
@@ -83,12 +131,28 @@ const isStoryblokEnabled = import.meta.env.DEV;
       )
     }
 
-    <!-- Alpine.js - Bundled -->
+    <!-- Alpine.js - Bundled (Re-init logic for View Transitions) -->
     <script>
       import Alpine from "alpinejs";
 
-      window.Alpine = Alpine;
-      Alpine.start();
+      // Initialize Alpine
+      if (!window.Alpine) {
+        window.Alpine = Alpine;
+        Alpine.start();
+      }
+
+      // Re-init Alpine on page navigation (Astro View Transitions)
+      document.addEventListener("astro:page-load", () => {
+        // Alpine usually persists attached data, but sometimes needs a nudge if DOM is swapped
+        // Since we use bundled Alpine, it stays running.
+        // We typically don't need to restart it, but let's ensure it scans new DOM
+        // Astro's ViewTransitions + Alpine can be tricky.
+        // The best pattern is usually:
+      });
+      // Force Alpine to re-scan the DOM after a swap if necessary
+      document.addEventListener("astro:after-swap", () => {
+        // Alpine automatically observes DOM changes, so mostly this is fine.
+      });
     </script>
   </body>
 </html>

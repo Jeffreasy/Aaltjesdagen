@@ -12,8 +12,7 @@
  * MIGRATION: Phase 3 - Refactored to use Link component and constants
  */
 import { NAVIGATION_ITEMS } from "@/constants/site";
-import Link from "@/components/ui/Link.astro";
-import ThemeToggle from "../ui/ThemeToggle.astro";
+import { Link, ThemeToggle } from "@aaltjesdagen/ui/components";
 
 // Bepaal actieve pagina voor mobile nav (custom styling)
 const currentPath = Astro.url.pathname;
@@ -139,7 +138,11 @@ const currentPath = Astro.url.pathname;
           </nav>
 
           <!-- Footer Info in Menu -->
-          <div class="mt-auto pt-8 border-t border-[var(--border-secondary)]">
+          <div class="mt-auto pt-8 relative">
+            <div
+              class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-secondary via-accent to-primary"
+            >
+            </div>
             <div class="flex flex-col gap-4 text-[var(--text-tertiary)]">
               <p class="text-sm font-medium">Volg ons</p>
               <div class="flex gap-4">
@@ -235,3 +238,33 @@ const currentPath = Astro.url.pathname;
     }
   }
 </style>
+
+<script>
+  // Mobile Navigation Active State (Persistent Header Support)
+  function updateMobileLinks() {
+    const currentPath = window.location.pathname;
+    const links = document.querySelectorAll(".nav-mobile-link");
+
+    links.forEach((link) => {
+      const href = link.getAttribute("href");
+      if (!href) return;
+
+      const isActive =
+        href === "/"
+          ? currentPath === "/"
+          : currentPath === href || currentPath.startsWith(href);
+
+      if (isActive) {
+        link.classList.add("nav-mobile-link--active");
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.classList.remove("nav-mobile-link--active");
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  // Run on initial load and view transitions
+  updateMobileLinks();
+  document.addEventListener("astro:page-load", updateMobileLinks);
+</script>

@@ -7,7 +7,7 @@
  *
  * @component
  */
-import type { LinkProps } from "@/types/navigation";
+import type { LinkProps } from "../types/navigation";
 
 interface Props extends LinkProps {
   /** Link content (passed via slot) */
@@ -46,11 +46,48 @@ const externalAttrs = external
   aria-current={isActive ? "page" : undefined}
   aria-label={ariaLabel}
   {...externalAttrs}
+  {...!activeProp ? {} : { "data-no-auto-active": "" }}
 >
   <slot />
 
   {variant === "nav" && <span class="link__underline" aria-hidden="true" />}
 </a>
+
+<script>
+  // Client-side active state handling for View Transitions (persistent headers)
+  function updateActiveLinks() {
+    const currentPath = window.location.pathname;
+    const links = document.querySelectorAll(
+      "a.link:not([data-no-auto-active])",
+    );
+
+    links.forEach((link) => {
+      const href = link.getAttribute("href");
+      if (!href) return;
+
+      // Normalize paths to handle trailing slashes consistently if needed
+      // For now, exact match or simple prefix
+      const isActive =
+        href === "/"
+          ? currentPath === "/"
+          : currentPath === href || currentPath.startsWith(href);
+
+      if (isActive) {
+        link.classList.add("link--active");
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.classList.remove("link--active");
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  // Run on initial load
+  updateActiveLinks();
+
+  // Run on view transitions navigation
+  document.addEventListener("astro:page-load", updateActiveLinks);
+</script>
 
 <style>
   /* === BASE LINK STYLES === */
@@ -93,7 +130,12 @@ const externalAttrs = external
     display: block;
     height: 2px;
     width: 0;
-    background: var(--color-secondary);
+    background: linear-gradient(
+      90deg,
+      var(--color-secondary),
+      var(--color-accent),
+      var(--color-primary)
+    );
     transition: width var(--transition-base);
     border-radius: 1px;
   }
@@ -104,7 +146,12 @@ const externalAttrs = external
 
   .link--nav.link--active .link__underline {
     width: 100%;
-    background: var(--color-primary);
+    background: linear-gradient(
+      90deg,
+      var(--color-secondary),
+      var(--color-accent),
+      var(--color-primary)
+    );
   }
 
   /* === FOOTER VARIANT === */

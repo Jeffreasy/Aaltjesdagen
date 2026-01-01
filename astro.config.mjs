@@ -8,6 +8,7 @@ import vercel from '@astrojs/vercel'  // Using recommended import path
 const env = loadEnv('', process.cwd(), 'STORYBLOK')
 
 export default defineConfig({
+  site: 'https://www.aaltjesdagen.nl',
   output: 'static',
   adapter: vercel(),
   build: {

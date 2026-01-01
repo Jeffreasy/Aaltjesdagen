@@ -20,7 +20,7 @@ import { renderRichText } from "@storyblok/astro";
  * ```
  */
 export function renderText(content: any): string {
-    return content ? renderRichText(content) : "";
+    return content ? (renderRichText(content) as string) || "" : "";
 }
 
 /**

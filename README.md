@@ -1,73 +1,141 @@
-# Aaltjesdagen Frontend
+# 🎡 Aaltjesdagen Frontend
 
-The modern, high-performance frontend for the Aaltjesdagen event website, built with **Astro**, **Tailwind CSS**, and **Storyblok**.
+> The official high-performance frontend for the **Aaltjesdagen Harderwijk** event website. Built for speed, accessibility, and a premium user experience.
 
-## 🚀 Tech Stack
+![Project Status](https://img.shields.io/badge/Status-Active-success)
+![Framework](https://img.shields.io/badge/Built%20With-Astro%205.0-orange?logo=astro)
+![Styling](https://img.shields.io/badge/Styling-Tailwind%20CSS-blue?logo=tailwindcss)
+![CMS](https://img.shields.io/badge/CMS-Storyblok-00b3b0?logo=storyblok)
+![TypeScript](https://img.shields.io/badge/Languages-TypeScript-blue?logo=typescript)
 
-- **Framework:** [Astro 5.0](https://astro.build)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com) with a custom Design System
-- **CMS:** [Storyblok](https://www.storyblok.com)
-- **Interactivity:** [Alpine.js](https://alpinejs.dev)
-- **Package Manager:** NPM
+This repository houses the modern frontend application for the Aaltjesdagen event. It features a custom **Design System 2.0**, fully integrated as a local package (`@aaltjesdagen/ui`), ensuring consistent branding and high-performance component reuse.
 
-## 🛠️ Getting Started
+---
+
+## 🚀 Key Features
+
+- **⚡ Zero-JS by Default**: Powered by **Astro**, delivering static HTML for maximum performance with islands of interactivity where needed.
+- **🎨 Design System 2.0**: A dedicated, reusable UI package (`@aaltjesdagen/ui`) implementing our "Breathable & Sophisticated" theme with **Tailwind CSS**.
+- **🌗 Dark Mode Specific**: First-class dark mode support with deep teal styling and glassmorphism effects.
+- **🧱 Component-Driven**: Modular visual blocks managed via **Storyblok** for flexible content editing.
+- **🏃 Interactive Elements**: Lightweight interactions powered by **Alpine.js** (Modals, Filter Bars, Mobile Menu).
+- **♿ Accessible**: Built with WCAG best practices, including semantic HTML, focus management, and reduced motion support.
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technology | Description |
+|----------|------------|-------------|
+| **Core** | [Astro 5.0](https://astro.build) | Static Site Generator & Islands Architecture |
+| **Language** | [TypeScript](https://www.typescriptlang.org/) | Type-safe development |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com) | Utility-first CSS framework |
+| **CMS** | [Storyblok](https://www.storyblok.com) | Headless Content Management |
+| **State** | [Alpine.js](https://alpinejs.dev) | Lightweight JavaScript framework for interactivity |
+| **Package** | `@aaltjesdagen/ui` | Custom local design system package |
+
+---
+
+## 📂 Project Structure
+
+We follow a modular, monorepo-style structure to separate the core application from the reusable design system.
+
+```bash
+├── 📁 src/
+│   ├── 📁 components/      # Application-specific components
+│   ├── 📁 layouts/         # Page layouts (BaseLayout.astro)
+│   ├── 📁 pages/           # File-based routing ([...slug].astro)
+│   └── 📁 storyblok/       # Storyblok visual components (CMS blocks)
+├── 📁 packages/
+│   └── 📁 design-system/   # 🎨 @aaltjesdagen/ui (Shared UI Library)
+│       ├── 📁 components/  # Atomic UI components (Link, Button, Modal)
+│       ├── 📁 styles/      # CSS tokens & Tailwind Config
+│       └── 📁 utils/       # Shared helpers (Dates, Images)
+└── 📁 docs/                # Project documentation
+```
+
+---
+
+## 🏁 Getting Started
 
 ### Prerequisites
 
-- Node.js (v18.17.1 or higher)
-- NPM
+- **Node.js**: v18.17.1 or higher
+- **NPM**: v9+
 
 ### Installation
 
-1. Clone the repository
-2. Install dependencies:
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-org/aaltjesdagen-frontend.git
+   cd aaltjesdagen-frontend
+   ```
 
-```bash
-npm install
-```
+2. **Install dependencies:**
+   *(This also links the local `@aaltjesdagen/ui` package)*
+   ```bash
+   npm install
+   ```
 
-### Environment Setup
-
-Create a `.env` file in the root directory (if not present) and add your Storyblok token:
-
-```env
-STORYBLOK_TOKEN=your_token_here
-```
+3. **Configure Environment:**
+   Create a `.env` file in the root directory:
+   ```env
+   STORYBLOK_TOKEN=your_storyblok_public_token
+   ```
 
 ### Development
 
-Start the development server:
+Start the local development server:
 
 ```bash
 npm run dev
 ```
 
-Visit `http://localhost:4321` to view the site.
+Visit `http://localhost:4321` to view the application.
 
-## 📂 Project Structure
+### Build for Production
 
-- `src/components`: Reusable UI components (Storyblok & local)
-- `src/layouts`: Page layouts (`BaseLayout.astro`)
-- `src/pages`: Astro pages and routing (includes dynamic `[...slug].astro`)
-- `src/storyblok`: Storyblok-specific components
-- `src/styles`: Global styles and design system (`global.css`)
-- `docs/`: **📚 Project documentation** (design system, components, workflows)
-
-## 📚 Documentation
-
-Voor uitgebreide documentatie, zie de **`docs/`** folder:
-
-- **[docs/README.md](./docs/README.md)** - Project overview & quick start
-- **[docs/DESIGN_SYSTEM.md](./docs/DESIGN_SYSTEM.md)** - Colors, typography, component patterns
-- **[docs/COMPONENTS.md](./docs/COMPONENTS.md)** - Component library reference
-- **[docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md)** - Development workflows & best practices
-
-## 📦 Build & Deploy
-
-To build the project for production:
+To create a production-ready build:
 
 ```bash
 npm run build
 ```
 
-The output will be in the `dist/` directory.
+The output will be generated in the `dist/` directory, ready for deployment.
+
+---
+
+## 🎨 Design System Usage
+
+This project relies on the **`@aaltjesdagen/ui`** package.
+
+**Importing Components:**
+```astro
+import { Link, Icon, ProgramModal } from "@aaltjesdagen/ui/components";
+```
+
+**Using Utilities:**
+```ts
+import { formatDate, storyblokImage } from "@aaltjesdagen/ui/utils";
+```
+
+**Styling:**
+The design system exposes a pure Tailwind preset. You can use utility classes like `text-primary`, `bg-base`, or our custom plugin classes like `.btn-primary` and `.glass` directly in your markup.
+
+_For full documentation, see [docs/DESIGN_SYSTEM.md](./docs/DESIGN_SYSTEM.md)._
+
+---
+
+## 🤝 Contributing
+
+1. **Fork the repo**
+2. **Create your feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Commit your changes** (`git commit -m 'Add some amazing feature'`)
+4. **Push to the branch** (`git push origin feature/amazing-feature`)
+5. **Open a Pull Request**
+
+---
+
+## 📄 License
+
+&copy; 2024 Stichting Aaltjesdagen. All rights reserved.

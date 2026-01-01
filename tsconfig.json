@@ -3,7 +3,15 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ],
+      "@aaltjesdagen/ui/*": [
+        "packages/design-system/src/*"
+      ],
+      "@aaltjesdagen/ui/css": [
+        "packages/design-system/src/styles/main.css"
+      ]
     }
   }
 }

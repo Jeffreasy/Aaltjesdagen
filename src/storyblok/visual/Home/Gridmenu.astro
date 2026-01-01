@@ -1,7 +1,8 @@
 ---
 import { storyblokEditable } from "@storyblok/astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
-import { storyblokImage } from "../../../utils/images";
+import { storyblokImage } from "@aaltjesdagen/ui/utils";
+import { Link, Icon } from "@aaltjesdagen/ui/components";
 
 const { blok } = Astro.props;
 
@@ -24,111 +25,134 @@ const link = blok.link;
   <div class="container-custom relative z-10">
     <div class="text-center max-w-5xl mx-auto mb-16">
       {/* Decorative badge */}
-      <div class="inline-flex items-center gap-3 bg-gradient-to-r from-accent/10 to-accent/5 dark:from-accent/20 dark:to-accent/15 px-6 py-2 rounded-full mb-8 border border-accent/20 dark:border-accent/30">
+      <div
+        class="inline-flex items-center gap-3 bg-gradient-to-r from-accent/10 to-accent/5 dark:from-accent/20 dark:to-accent/15 px-6 py-2 rounded-full mb-8 border border-accent/20 dark:border-accent/30"
+      >
         <span class="relative flex h-2 w-2">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+          <span
+            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"
+          ></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"
+          ></span>
         </span>
-        <span class="font-bold text-sm uppercase tracking-wider" style="color: var(--color-accent);">Programma Highlights</span>
+        <span class="font-bold text-sm uppercase tracking-wider text-accent"
+          >Programma Highlights</span
+        >
       </div>
 
       {/* Title Section with accent color */}
-      {title && (
-        <h2 class="text-3xl md:text-6xl font-black mb-6 tracking-tight leading-tight drop-shadow-sm" style="color: var(--color-accent);">
-          {title}
-        </h2>
-      )}
+      {
+        title && (
+          <h2 class="text-3xl md:text-6xl font-black mb-6 tracking-tight leading-tight drop-shadow-sm text-accent">
+            {title}
+          </h2>
+        )
+      }
 
       {/* Titlecontent Section */}
-      {titleContent && (
-        <div class="max-w-4xl mx-auto mb-12">
-          <p class="text-lg md:text-2xl leading-relaxed font-medium" style="color: var(--text-secondary);">
-            {titleContent}
-          </p>
-        </div>
-      )}
+      {
+        titleContent && (
+          <div class="max-w-4xl mx-auto mb-12">
+            <p class="text-lg md:text-2xl leading-relaxed font-medium text-sub">
+              {titleContent}
+            </p>
+          </div>
+        )
+      }
 
       {/* Decorative separator */}
       <div class="mt-12 flex justify-center items-center gap-6 mb-16">
-        <div class="h-px w-20 bg-gradient-to-r from-transparent to-accent/30 dark:to-accent/50"></div>
-        <div class="relative">
-          <div class="w-3 h-3 rounded-full bg-gradient-to-br from-accent to-accent-dark animate-pulse"></div>
-          <div class="absolute inset-0 w-3 h-3 rounded-full bg-accent animate-ping opacity-30"></div>
+        <div
+          class="h-px w-20 bg-gradient-to-r from-transparent to-accent/30 dark:to-accent/50"
+        >
         </div>
-        <div class="h-px w-20 bg-gradient-to-l from-transparent to-accent/30 dark:to-accent/50"></div>
+        <div class="relative">
+          <div
+            class="w-3 h-3 rounded-full bg-gradient-to-br from-accent to-accent-dark animate-pulse"
+          >
+          </div>
+          <div
+            class="absolute inset-0 w-3 h-3 rounded-full bg-accent animate-ping opacity-30"
+          >
+          </div>
+        </div>
+        <div
+          class="h-px w-20 bg-gradient-to-l from-transparent to-accent/30 dark:to-accent/50"
+        >
+        </div>
       </div>
     </div>
 
     {/* Main Content Grid */}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
       {/* Foto Card with enhanced styling */}
-      {foto?.filename && (
-        <div class="card-base group flex flex-col overflow-hidden hover:shadow-xl hover:border-accent/30 transition-all duration-300">
-          <div class="relative h-64 overflow-hidden">
-            <img
-              src={storyblokImage(foto.filename, 600, 400)}
-              alt={foto.alt || title || "Gridmenu afbeelding"}
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-              width="600"
-              height="400"
-              loading="lazy"
-            />
-            {/* Image overlay */}
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </div>
-          {content && (
-            <div class="p-6">
-              <div class="leading-relaxed text-base" style="color: var(--text-secondary);">
-                {content}
-              </div>
+      {
+        foto?.filename && (
+          <div class="card-base group flex flex-col overflow-hidden hover:shadow-xl hover:border-accent/30 transition-all duration-300">
+            <div class="relative h-64 overflow-hidden">
+              <img
+                src={storyblokImage(foto.filename, 600, 400)}
+                alt={foto.alt || title || "Gridmenu afbeelding"}
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                width="600"
+                height="400"
+                loading="lazy"
+              />
+              {/* Image overlay */}
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
-          )}
-        </div>
-      )}
+            {content && (
+              <div class="p-6">
+                <div class="leading-relaxed text-base text-sub">{content}</div>
+              </div>
+            )}
+          </div>
+        )
+      }
 
       {/* Content Only Card (if no foto) */}
-      {!foto?.filename && content && (
-        <div class="card-base group flex flex-col p-8 hover:shadow-xl hover:border-accent/30 transition-all duration-300">
-          <div class="leading-relaxed text-base" style="color: var(--text-secondary);">
-            {content}
+      {
+        !foto?.filename && content && (
+          <div class="card-base group flex flex-col p-8 hover:shadow-xl hover:border-accent/30 transition-all duration-300">
+            <div class="leading-relaxed text-base text-sub">{content}</div>
           </div>
-        </div>
-      )}
+        )
+      }
 
       {/* Nested Components (if configured in Storyblok) */}
-      {blok.columns?.map((item: any) => (
-        <div class="flex justify-center">
-          <StoryblokComponent blok={item} />
-        </div>
-      ))}
-      {blok.items?.map((item: any) => (
-        <div class="flex justify-center">
-          <StoryblokComponent blok={item} />
-        </div>
-      ))}
+      {
+        blok.columns?.map((item: any) => (
+          <div class="flex justify-center">
+            <StoryblokComponent blok={item} />
+          </div>
+        ))
+      }
+      {
+        blok.items?.map((item: any) => (
+          <div class="flex justify-center">
+            <StoryblokComponent blok={item} />
+          </div>
+        ))
+      }
     </div>
 
     {/* Link Section with premium button */}
-    {link?.cached_url && (
-      <div class="flex justify-center mt-16">
-        <a href={`/${link.cached_url}`} class="btn-accent group inline-flex items-center gap-2">
-          Bekijk meer
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+    {
+      link?.cached_url && (
+        <div class="flex justify-center mt-16">
+          <Link
+            href={`/${link.cached_url}`}
+            variant="button"
+            class="group hover:!bg-accent hover:!text-white transition-colors"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 5l7 7-7 7"
+            Bekijk meer
+            <Icon
+              name="arrow-right"
+              class="group-hover:translate-x-1 transition-transform duration-300"
             />
-          </svg>
-        </a>
-      </div>
-    )}
+          </Link>
+        </div>
+      )
+    }
   </div>
 </section>

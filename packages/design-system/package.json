@@ -1,0 +1,41 @@
+{
+    "name": "@aaltjesdagen/ui",
+    "version": "0.0.1",
+    "description": "Shared Design System for Aaltjesdagen projects",
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "import": "./src/index.ts"
+        },
+        "./components": {
+            "types": "./src/components/index.ts",
+            "import": "./src/components/index.ts"
+        },
+        "./css": "./src/styles/main.css",
+        "./preset": "./tailwind-preset.js",
+        "./plugin": "./tailwind-plugin.js",
+        "./utils": {
+            "types": "./src/utils/index.ts",
+            "import": "./src/utils/index.ts"
+        }
+    },
+    "files": [
+        "src",
+        "tailwind-preset.js",
+        "tailwind-plugin.js"
+    ],
+    "scripts": {
+        "build": "tsc"
+    },
+    "peerDependencies": {
+        "alpinejs": "^3.0.0",
+        "astro": "^5.0.0",
+        "tailwindcss": "^3.0.0",
+        "@storyblok/astro": "^7.0.0"
+    },
+    "devDependencies": {
+        "typescript": "^5.0.0",
+        "@types/alpinejs": "^3.0.0"
+    }
+}

@@ -1,0 +1,142 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// MIGRATION: Using Design System Prose implementation
+// See docs/reference/PROSE_SYSTEM.md
+---
+
+<BaseLayout
+    title="Huisregels & Voorwaarden - Aaltjesdagen"
+    description="Huisregels en algemene voorwaarden van Stichting Aaltjesdagen"
+>
+    <section class="section-spacing relative min-h-screen">
+        <!-- Background Decor -->
+        <div
+            class="absolute inset-0 pointer-events-none overflow-hidden"
+            aria-hidden="true"
+        >
+            <div class="decorative-orb-primary top-20 right-0 opacity-10"></div>
+            <div class="decorative-orb-accent bottom-40 left-10 opacity-10">
+            </div>
+        </div>
+
+        <div class="container-custom relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <!-- Header -->
+                <div class="text-center mb-12">
+                    <h1 class="heading-page mb-4 text-gradient">
+                        Algemene Voorwaarden
+                    </h1>
+                    <p class="text-lg text-sub font-medium">
+                        Huisregels en reglementen voor bezoekers
+                    </p>
+                </div>
+
+                <!-- Content Card -->
+                <div
+                    class="bg-elevated rounded-3xl p-8 md:p-12 shadow-2xl border border-secondary relative overflow-hidden"
+                >
+                    <!-- Top Gradient Line -->
+                    <div
+                        class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-secondary via-accent to-primary"
+                    >
+                    </div>
+
+                    <article
+                        class="prose prose-lg prose-primary max-w-none dark:prose-invert"
+                    >
+                        <p class="lead">
+                            <strong
+                                >We houden het graag gezellig op ons evenement.</strong
+                            >
+                        </p>
+                        <p>
+                            Bezoekers zijn verplicht zich te houden aan
+                            onderstaande huisregels:
+                        </p>
+
+                        <h2>HUISREGELS</h2>
+                        <ul>
+                            <li>
+                                De Nederlandse wetgeving en de APV van de
+                                gemeente Harderwijk zijn van toepassing op alle
+                                locaties van de Aaltjesdagen.
+                            </li>
+                            <li>
+                                Het gebruik en de verkoop van **lachgas**,
+                                stikstofmonoxide (N2O), zijn niet toegestaan op
+                                en in de directe nabijheid van het
+                                festivalterrein.
+                            </li>
+                            <li>
+                                Fietsen, bromfietsen, scooters of andere
+                                vervoersmiddelen (met uitzondering van
+                                hulpmiddelen) zijn niet toegestaan op het
+                                evenement en dienen te worden geparkeerd in de
+                                aangewezen stalling(en).
+                            </li>
+                            <li>
+                                Het meenemen van **huisdieren** naar het
+                                evenement wordt afgeraden.
+                            </li>
+                            <li>
+                                Aanwijzingen van het personeel en de
+                                beveiligingsmedewerkers dienen ten alle tijden
+                                te worden opgevolgd.
+                            </li>
+                            <li>
+                                Organisatie en/of door de organisator
+                                ingeschakelde bedrijven en (overheids-)diensten
+                                kunnen niet aansprakelijk worden gesteld voor
+                                persoonlijk, lichamelijk noch materieel letsel,
+                                en/of voor vermissing, en/of schade aan goederen
+                                van bezoekers.
+                            </li>
+                            <li>
+                                De organisatie behoudt zich het recht voor om
+                                gemaakte schade, ontstaan door toedoen van de
+                                bezoeker, aan materiële en immateriële zaken
+                                en/of goederen in welke vorm dan ook te verhalen
+                                op de bezoeker.
+                            </li>
+                            <li>
+                                Tijdens het festival kunnen **(film)opnames**
+                                gemaakt worden. Als bezoeker geef je door je
+                                aanwezigheid stilzwijgend toestemming aan de
+                                organisator om deze videobeelden en/of
+                                foto-opnames te verveelvoudigen, openbaar te
+                                maken en/of te exploiteren.
+                            </li>
+                            <li>
+                                In alle gevallen die hier niet expliciet vermeld
+                                zijn, beslist de organisatie.
+                            </li>
+                            <li>
+                                Het betreden van de plaats en het bijwonen van
+                                het evenement zijn geheel op **eigen risico**.
+                            </li>
+                            <li>
+                                Het is tijdens het festival, op het
+                                festivalterrein niet toegestaan om onbemande
+                                luchtvaartuigen (**drones**) in het bezit te
+                                hebben.
+                            </li>
+                            <li>
+                                Zelf meegenomen **voedsel of drank** is niet
+                                toegestaan.
+                            </li>
+                        </ul>
+                    </article>
+
+                    <!-- Bottom decorative element -->
+                    <div
+                        class="mt-12 pt-6 border-t border-secondary flex justify-between items-center text-sm text-tertiary"
+                    >
+                        <p>Laatst bijgewerkt: Januari 2026</p>
+                        <p>Stichting Aaltjesdagen</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</BaseLayout>

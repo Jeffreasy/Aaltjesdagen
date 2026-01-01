@@ -1,0 +1,227 @@
+/* Main Entry Point for @aaltjesdagen/ui */
+
+/* Import Tokens */
+@import './theme.css';
+@import './animations.css';
+
+/* Import Prose System */
+@import './prose/prose-base.css';
+@import './prose/prose-variants.css';
+@import './prose/prose-decorations.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+    /* Global Resets that are safe to share */
+    html {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    body {
+        background-color: var(--bg-base);
+        color: var(--text-secondary);
+        font-family: var(--font-body);
+        transition:
+            background-color 0.3s ease,
+            color 0.3s ease,
+            border-color 0.3s ease,
+            box-shadow 0.3s ease;
+        @apply antialiased min-h-screen selection:bg-teal-500 selection:text-white overflow-x-hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: var(--text-primary);
+        font-family: var(--font-heading);
+        font-weight: 700;
+        line-height: 1.1;
+    }
+
+    *:focus-visible {
+        outline: 3px solid var(--focus-ring);
+        outline-offset: 2px;
+        border-radius: 2px;
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation-duration: 0.3s;
+    }
+}
+
+/* 
+ * The following utilities are explicitly NOT in tailwind-plugin.js 
+ * because they might depend on other things or are just simple Utils 
+ * that don't need to be atomic components.
+ */
+
+@layer components {
+
+    /* Gradient Utilities */
+    .gradient-primary-accent {
+        background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    }
+
+    .gradient-accent-primary {
+        background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
+    }
+
+    .gradient-tri-color {
+        background: linear-gradient(90deg,
+                var(--color-primary) 0%,
+                var(--color-accent) 50%,
+                var(--color-secondary) 100%);
+    }
+
+    /* Decorative Orbs */
+    .decorative-orb {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    .decorative-orb-primary {
+        @apply decorative-orb;
+        width: 24rem;
+        height: 24rem;
+        background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
+        opacity: 0.05;
+        filter: blur(60px);
+    }
+
+    .decorative-orb-accent {
+        @apply decorative-orb;
+        width: 18rem;
+        height: 18rem;
+        background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+        opacity: 0.05;
+        filter: blur(60px);
+    }
+
+    /* Background Utilities */
+    .bg-pattern-grid {
+        background-image: linear-gradient(var(--border-primary) 1px, transparent 1px),
+            linear-gradient(90deg, var(--border-primary) 1px, transparent 1px);
+        background-size: 40px 40px;
+        mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    }
+
+    .bg-gradient-modern {
+        background: linear-gradient(180deg,
+                var(--bg-base) 0%,
+                color-mix(in srgb, var(--bg-base), var(--color-primary) 8%) 50%,
+                var(--bg-base) 100%);
+    }
+
+    .dot-pattern {
+        background-image: radial-gradient(circle,
+                color-mix(in srgb, var(--color-primary), transparent 95%) 1px,
+                transparent 1px);
+        background-size: 24px 24px;
+    }
+
+    /* Container Utilities */
+    .section-container {
+        @apply relative container-custom section-spacing-sm;
+        z-index: var(--z-content);
+    }
+
+    .section-container-lg {
+        @apply relative container-custom section-spacing;
+        z-index: var(--z-content);
+    }
+}
+
+/* Animated Background Implementation */
+@layer base {
+    .bg-animated {
+        position: fixed;
+        inset: 0;
+        z-index: var(--z-background);
+        background: var(--bg-base);
+        min-height: 100vh;
+    }
+
+    .bg-animated::before,
+    .bg-animated::after {
+        content: '';
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        filter: blur(55px);
+        opacity: 0.9;
+        animation: float 20s infinite ease-in-out alternate;
+    }
+
+    .bg-animated::before {
+        top: -15%;
+        left: -10%;
+        background: var(--bg-gradient-animated-1);
+    }
+
+    .bg-animated::after {
+        bottom: -15%;
+        right: -10%;
+        background: var(--bg-gradient-animated-2);
+        animation-delay: -10s;
+    }
+
+    .orb {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        bottom: 25%;
+        left: 50%;
+        border-radius: 50%;
+        filter: blur(55px);
+        opacity: 0.9;
+        background: var(--bg-gradient-animated-3);
+        animation: float-3 30s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translate(0, 0) scale(1);
+        }
+
+        100% {
+            transform: translate(30px, 50px) scale(1.1);
+        }
+    }
+
+    @keyframes float-3 {
+        0% {
+            transform: translate(0, 0) scale(1);
+        }
+
+        50% {
+            transform: translate(-20px, 30px) scale(1.05);
+        }
+
+        100% {
+            transform: translate(0, 0) scale(1);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .bg-animated::before,
+        .bg-animated::after,
+        .orb {
+            animation: none !important;
+        }
+
+        body {
+            transition: none !important;
+        }
+    }
+}
