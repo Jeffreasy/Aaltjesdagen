@@ -196,7 +196,7 @@ const currentPath = Astro.url.pathname;
   }
 
   .nav-mobile-link:hover {
-    color: #50b0ae; /* Teal - Direct value to bypass variable resolution issue */
+    color: var(--color-primary);
   }
 
   .nav-mobile-link--active {
@@ -209,14 +209,14 @@ const currentPath = Astro.url.pathname;
     font-size: 0.75rem;
     line-height: 1rem;
     font-weight: 700;
-    color: rgb(243 146 0 / 0.6);
+    color: var(--text-tertiary);
     opacity: 0;
     transform: translateY(0.25rem);
     transition: all var(--transition-base);
   }
 
   .nav-mobile-link:hover .nav-mobile-link__number {
-    color: #ff7e67; /* Coral - Direct value to bypass variable resolution issue */
+    color: var(--color-accent);
     opacity: 1;
   }
 

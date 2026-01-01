@@ -110,6 +110,42 @@ The project is optimized for Vercel.
 
 ---
 
+## 🧪 Testing & Quality Assurance
+
+We maintain professional code quality standards using a modern testing stack.
+
+### Unit & Component Tests (Vitest)
+For testing individual functions and components logic.
+```bash
+npm run test:unit
+```
+- **Config**: `vitest.config.ts`
+- **Location**: `src/test/unit/`
+
+### End-to-End Tests (Playwright)
+Reliable browser testing to ensure critical flows works in production.
+```bash
+npm run test:e2e
+```
+- **Config**: `playwright.config.ts`
+- **Location**: `src/test/e2e/`
+- **Browsers**: Chromium, Firefox, WebKit
+
+---
+
+## 📊 Analytics
+
+The project uses a professional Vercel Analytics setup.
+
+- **Web Analytics**: Tracks page views and visitors.
+- **Speed Insights**: Tracks Core Web Vitals (Real Experience).
+
+**Configuration**:
+Analytics are configured in `astro.config.mjs` via the Vercel adapter.
+*Note: Dashboard activation is required on Vercel for data collection.*
+
+---
+
 ## 📚 Advanced References
 
 - **[Infrastructure & Logging](./reference/INFRASTRUCTURE.md)**: Logging system, Performance Monitoring, and Service Layer patterns.
