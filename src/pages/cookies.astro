@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { STICHTING } from "@/constants/site";
 
 // MIGRATION: Using Design System Prose implementation
 // See docs/reference/PROSE_SYSTEM.md
@@ -163,7 +164,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                     <div
                         class="mt-12 pt-6 border-t border-secondary flex justify-between items-center text-sm text-tertiary"
                     >
-                        <p>Stichting Aaltjesdagen</p>
+                        <p>{STICHTING.name}</p>
                         <a
                             href="/privacy"
                             class="hover:text-primary transition-colors"

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { STICHTING, DATES } from "@/constants/site";
 
 // MIGRATION: Using Design System Prose implementation
 // See docs/reference/PROSE_SYSTEM.md
@@ -7,7 +8,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 <BaseLayout
     title="Privacyverklaring - Aaltjesdagen"
-    description="Privacy- en cookieverklaring van Stichting Aaltjesdagen"
+    description={`Privacy- en cookieverklaring van ${STICHTING.name}`}
 >
     <section class="section-spacing relative min-h-screen">
         <!-- Background Decor -->
@@ -90,10 +91,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                             het cookie van Google Analytics een ‘first party
                             cookie, dat wil zeggen dat het cookie op uw computer
                             ‘Aaltjesdagen.nl’ in de bestandsnaam heeft en dat de
-                            gegevens officieel eigendom zijn van Stichting
-                            Aaltjesdagen en niet van Google. Dit cookie wordt
-                            niet gebruikt voor advertenties of andere
-                            commerciële doeleinden.
+                            gegevens officieel eigendom zijn van {
+                                STICHTING.name
+                            } en niet van Google. Dit cookie wordt niet gebruikt voor
+                            advertenties of andere commerciële doeleinden.
                         </p>
                         <p>
                             Naast de Telecomwet is ook de Wet Bescherming
@@ -104,9 +105,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                         </p>
                         <ol>
                             <li>
-                                Er is een bewerkersovereenkomst tussen Hayona
-                                (de eigenaar van Stichting Aaltjesdagen) en
-                                Google over de Analytics gegevens.
+                                Er is een bewerkersovereenkomst tussen {
+                                    STICHTING.parentCompany
+                                }
+                                (de eigenaar van {STICHTING.name}) en Google
+                                over de Analytics gegevens.
                             </li>
                             <li>
                                 IP-adressen worden anoniem gemaakt zodat
@@ -114,9 +117,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                                 herleiden zijn.
                             </li>
                             <li>
-                                Het Analytics account van Stichting Aaltjesdagen
-                                is zo ingesteld dat de informatie niet met
-                                anderen gedeeld mag worden.
+                                Het Analytics account van {STICHTING.name}
+                                is zo ingesteld dat de informatie niet met anderen
+                                gedeeld mag worden.
                             </li>
                             <li>
                                 De bezoeker wordt duidelijk geïnformeerd over
@@ -125,15 +128,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                             </li>
                         </ol>
                         <p>
-                            Stichting Aaltjesdagen voldoet hiermee aan alle
-                            wettelijke voorwaarden. Het Analytics cookie blijft
-                            6 maanden geldig.
+                            {STICHTING.name} voldoet hiermee aan alle wettelijke voorwaarden.
+                            Het Analytics cookie blijft 6 maanden geldig.
                         </p>
 
                         <h2>Geen andere cookies</h2>
                         <p>
-                            Op Stichting Aaltjesdagen worden naast het Analytics
-                            cookie geen andere cookies gebruikt.
+                            Op {STICHTING.name} worden naast het Analytics cookie
+                            geen andere cookies gebruikt.
                         </p>
 
                         <h2>Opt-out voor Google Analytics</h2>
@@ -186,22 +188,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                             gebruikt deze informatie om bij te houden hoe u deze
                             website gebruikt, rapporten over de
                             website-activiteit op te stellen voor de eigenaar
-                            van deze website (Hayona BV) en andere diensten aan
-                            te bieden met betrekking tot website-activiteit en
-                            internetgebruik. Google mag deze informatie alleen
-                            aan derden verschaffen indien Google hiertoe
-                            wettelijk wordt verplicht, of voor zover deze derden
-                            de informatie namens Google verwerken. Google zal Uw
-                            IP-adres niet combineren met andere gegevens
-                            waarover Google beschikt. U kunt het gebruik van
-                            cookies weigeren door in Uw browser de daarvoor
-                            geëigende instellingen te kiezen. Wij wijzen u er
-                            echter op dat u in dat geval wellicht niet alle
-                            mogelijkheden van deze website kunt benutten. Door
-                            gebruik te maken van deze website geeft u
-                            toestemming voor het verwerken van de informatie
-                            door Google op de wijze en voor de doeleinden zoals
-                            hiervoor omschreven.
+                            van deze website ({STICHTING.parentCompany}) en
+                            andere diensten aan te bieden met betrekking tot
+                            website-activiteit en internetgebruik. Google mag
+                            deze informatie alleen aan derden verschaffen indien
+                            Google hiertoe wettelijk wordt verplicht, of voor
+                            zover deze derden de informatie namens Google
+                            verwerken. Google zal Uw IP-adres niet combineren
+                            met andere gegevens waarover Google beschikt. U kunt
+                            het gebruik van cookies weigeren door in Uw browser
+                            de daarvoor geëigende instellingen te kiezen. Wij
+                            wijzen u er echter op dat u in dat geval wellicht
+                            niet alle mogelijkheden van deze website kunt
+                            benutten. Door gebruik te maken van deze website
+                            geeft u toestemming voor het verwerken van de
+                            informatie door Google op de wijze en voor de
+                            doeleinden zoals hiervoor omschreven.
                         </p>
                     </article>
 
@@ -209,8 +211,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                     <div
                         class="mt-12 pt-6 border-t border-secondary flex justify-between items-center text-sm text-tertiary"
                     >
-                        <p>Laatst bijgewerkt: Januari 2026</p>
-                        <p>Stichting Aaltjesdagen</p>
+                        <p>Laatst bijgewerkt: {DATES.lastUpdated}</p>
+                        <p>{STICHTING.name}</p>
                     </div>
                 </div>
             </div>

@@ -78,3 +78,55 @@ export const DEVELOPER = {
   name: 'Jeffrey Lavente',
   label: 'Website door',
 } as const;
+
+/**
+ * SEO Configuration
+ * Default metadata for the site
+ */
+export const SEO_CONFIG = {
+  defaultTitle: 'Aaltjesdagen | Harderwijk',
+  titleTemplate: '%s | Aaltjesdagen',
+  defaultDescription: 'De Aaltjesdagen in Harderwijk: Het grootste en gezelligste evenement van de Veluwe! Beleef muziek, cultuur en nautische sfeer.',
+  twitterHandle: '@aaltjesdagen',
+  type: 'website',
+  siteName: 'Aaltjesdagen Harderwijk',
+} as const;
+
+/**
+ * UI Labels & Text
+ * Common interface text re-used across components
+ */
+export const UI_LABELS = {
+  emailPlaceholder: 'Uw email',
+  subscribe: 'Aanmelden voor nieuwsbrief',
+  readMore: 'Lees meer',
+  viewAll: 'Bekijk alles',
+  discover: 'Ontdek',
+  followUs: 'Volg ons',
+  errors: {
+    invalidEmail: 'Voer een geldig e-mailadres in',
+    general: 'Er is iets misgegaan. Probeer het later opnieuw.',
+  },
+  success: {
+    newsletter: 'Bedankt voor het aanmelden!',
+  },
+} as const;
+
+/**
+ * Legal Entity Information
+ * Used in Privacy Policy, Terms, and Cookies pages
+ */
+export const STICHTING = {
+  name: 'Stichting Aaltjesdagen',
+  parentCompany: 'Hayona BV', // Web management / Owner
+  kvk: '', // Add if available
+} as const;
+
+/**
+ * Important Dates
+ * Event dates and document update timestamps
+ */
+export const DATES = {
+  event: 'juni 2026', // Dynamic in future?
+  lastUpdated: 'Januari 2026', // For Privacy/Cookie policies
+} as const;

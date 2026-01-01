@@ -7,16 +7,18 @@ export interface Props {
     type?: "website" | "article";
 }
 
+import { SEO_CONFIG } from "@/constants/site";
+
 const {
-    title = "Aaltjesdagen | Harderwijk",
-    description = "De Aaltjesdagen in Harderwijk: Het grootste en gezelligste evenement van de Veluwe! Beleef muziek, cultuur en nautische sfeer.",
-    image = "/assets/logo.png", // Default fallback image
+    title = SEO_CONFIG.defaultTitle,
+    description = SEO_CONFIG.defaultDescription,
+    image = "/assets/logo.png", // Default fallback image from public
     canonicalURL = new URL(Astro.url.pathname, Astro.site),
-    type = "website",
+    type = SEO_CONFIG.type,
 } = Astro.props;
 
-const siteName = "Aaltjesdagen Harderwijk";
-const twitterHandle = "@aaltjesdagen"; // Replace with actual handle if available
+const siteName = SEO_CONFIG.siteName;
+const twitterHandle = SEO_CONFIG.twitterHandle;
 ---
 
 <!-- Global Metadata -->

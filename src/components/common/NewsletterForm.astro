@@ -14,6 +14,8 @@
  * ```
  */
 
+import { UI_LABELS } from "@/constants/site";
+
 interface Props {
   /** Custom placeholder text (optional) */
   placeholder?: string;
@@ -21,7 +23,8 @@ interface Props {
   class?: string;
 }
 
-const { placeholder = "Uw email", class: className = "" } = Astro.props;
+const { placeholder = UI_LABELS.emailPlaceholder, class: className = "" } =
+  Astro.props;
 ---
 
 <div
@@ -35,7 +38,7 @@ const { placeholder = "Uw email", class: className = "" } = Astro.props;
       // Basic email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!this.email || !emailRegex.test(this.email)) {
-        this.error = 'Voer een geldig e-mailadres in';
+        this.error = '${UI_LABELS.errors.invalidEmail}';
         return;
       }
 
@@ -59,7 +62,7 @@ const { placeholder = "Uw email", class: className = "" } = Astro.props;
         // Reset success message after 5 seconds
         setTimeout(() => { this.success = false; }, 5000);
       } catch (err) {
-        this.error = 'Er is iets misgegaan. Probeer het later opnieuw.';
+        this.error = '${UI_LABELS.errors.general}';
       } finally {
         this.loading = false;
       }
@@ -88,7 +91,7 @@ const { placeholder = "Uw email", class: className = "" } = Astro.props;
       <button
         type="submit"
         class="newsletter-button"
-        aria-label="Aanmelden voor nieuwsbrief"
+        aria-label="${UI_LABELS.subscribe}"
         :disabled="loading"
       >
         <!-- Loading Spinner -->
@@ -153,7 +156,7 @@ const { placeholder = "Uw email", class: className = "" } = Astro.props;
           stroke-width="2"
           d="M5 13l4 4L19 7"></path>
       </svg>
-      <span>Bedankt voor het aanmelden!</span>
+      <span>{UI_LABELS.success.newsletter}</span>
     </div>
 
     <!-- Error Message -->
