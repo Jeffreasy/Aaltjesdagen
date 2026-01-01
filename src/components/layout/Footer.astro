@@ -23,6 +23,8 @@ import {
 import SocialLink from "@/components/common/SocialLink.astro";
 import NewsletterForm from "@/components/common/NewsletterForm.astro";
 import { Link } from "@aaltjesdagen/ui/components";
+import { Image } from "astro:assets";
+import logoImage from "../../assets/logo.png";
 
 const currentYear = new Date().getFullYear();
 ---
@@ -50,11 +52,10 @@ const currentYear = new Date().getFullYear();
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
       <!-- Kolom 1: Logo + Beschrijving -->
       <div class="lg:col-span-1">
-        <img
-          src="/assets/logo.png"
+        <Image
+          src={logoImage}
           alt={`${SITE.name} Logo`}
-          width="150"
-          height="50"
+          width={150}
           class="h-10 w-auto mb-6 brightness-0 dark:invert transition-all duration-300 opacity-90"
         />
         <p class="text-sm leading-relaxed text-[var(--text-secondary)]">
