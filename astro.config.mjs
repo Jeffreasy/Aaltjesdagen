@@ -39,7 +39,7 @@ export default defineConfig({
 
         // Home
         hero: 'storyblok/visual/Home/Hero',
-        Intro: 'storyblok/visual/Home/Intro',
+        Intro: 'storyblok/visual/ADF Muziekfestival/Intro',
         feature: 'storyblok/visual/Home/Feature',
         teaser: 'storyblok/visual/Home/Teaser',
         tussentekst: 'storyblok/visual/Home/Tussentekst',
