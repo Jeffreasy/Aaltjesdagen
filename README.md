@@ -45,7 +45,7 @@ We follow a modular, monorepo-style structure to separate the core application f
 │   ├── 📁 components/      # Application-specific components
 │   ├── 📁 layouts/         # Page layouts (BaseLayout.astro)
 │   ├── 📁 pages/           # File-based routing ([...slug].astro)
-│   └── 📁 storyblok/       # Storyblok visual components (CMS blocks)
+│   └── 📁 storyblok/       # Storyblok CMS Components (Features, Sections, UI)
 ├── 📁 packages/
 │   └── 📁 design-system/   # 🎨 @aaltjesdagen/ui (Shared UI Library)
 │       ├── 📁 components/  # Atomic UI components (Link, Button, Modal)
@@ -138,4 +138,4 @@ _For full documentation, see [docs/DESIGN_SYSTEM.md](./docs/DESIGN_SYSTEM.md)._
 
 ## 📄 License
 
-&copy; 2024 Stichting Aaltjesdagen. All rights reserved.
+&copy; 2026 Stichting Aaltjesdagen. All rights reserved.

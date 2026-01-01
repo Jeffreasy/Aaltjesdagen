@@ -43,27 +43,49 @@ Switch between Light and Dark mode.
 
 These components are bound to specific Storyblok blocks defined in `astro.config.mjs`.
 
-### 🏗️ Structural
+## 🧱 Application Components (Storyblok)
+
+These components are bound to specific Storyblok blocks defined in `astro.config.mjs`.
+
+### 🏗️ Structural (`src/storyblok/structural/`)
 | Component | Storyblok Key | Description |
 |-----------|---------------|-------------|
 | **Page** | `page` | Root layout wrapper for dynamic pages. |
 | **Grid** | `grid` | Flexible grid system for structural layout. |
-| **ProgrammaDag** | `programmaDag{N}` | Complex tabular/list view for event schedules. |
+| **GridMenu** | `Gridmenu` | Navigation blocks. |
+| **AccessibilityGrid** | `BereikbaarheidGrid` | Layout wrapper for accessibility sections. |
 
-### 🏠 Homepage
+### 🖼️ Sections (`src/storyblok/sections/`)
 | Component | Storyblok Key | Description |
 |-----------|---------------|-------------|
 | **Hero** | `hero` | Large visual header with date/location emphasis. |
-| **Feature** | `feature` | Icon-based feature highlights (Glassmorphism). |
-| **Teaser** | `teaser` | Gradient-rich promotional section. |
+| **Intro** | `Intro` | Introduction text with rich media support. |
+| **ImportantInfo** | `BelangrijkOmTeWeten` | Alert/Info section with emphasis. |
 
-### 🚲 Accessibility (Bereikbaarheid)
+### 🧩 UI (`src/storyblok/ui/`)
 | Component | Storyblok Key | Description |
 |-----------|---------------|-------------|
-| **BereikbaarHero** | `BereikbaarHero` | Header specifically for accessibility pages. |
-| **ParkerenAutos** | `Parkeren Auto` | Information card with car emoji branding. |
-| **StallenFietsen** | `Stallen fietsen` | Information card with bicycle branding. |
-| **EhboPosten** | `EHBO-posten` | Critical info card with medical/alert styling. |
+| **Feature** | `feature` | Icon-based feature highlights (Glassmorphism). |
+| **Teaser** | `teaser` | Gradient-rich promotional section. |
+| **SectionText** | `Tussentekst` | Simple prose content block. |
+
+### 📅 Program Features (`src/storyblok/features/program/`)
+| Component | Storyblok Key | Description |
+|-----------|---------------|-------------|
+| **DayProgram** | `ProgrammaDag` | Complex tabular/list view for daily schedules. |
+| **FestivalProgram** | `ProgrammaADF` | Overview of the festival program. |
+
+### 🚲 Accessibility Features (`src/storyblok/features/accessibility/`)
+| Component | Storyblok Key | Description |
+|-----------|---------------|-------------|
+| **Hero** | `BereikbaarHero` | Header specifically for accessibility pages. |
+| **CarParking** | `Parkeren Auto` | Information card with car emoji branding. |
+| **BicycleParking** | `Stallen fietsen` | Information card with bicycle branding. |
+| **FirstAid** | `EHBO-posten` | Critical info card with medical/alert styling. |
+| **PublicTransport** | `OpenbaarVervoer` | Train/Bus information. |
+| **CityAccess** | `In en rondom de binnenstad` | Information about city access limits. |
+| **ParkingSection** | `parkeersectie` | Layout wrapper for parking details. |
+| **AccessibilityInfo** | `toegankelijkheid` | General accessibility information. |
 
 ---
 

@@ -68,11 +68,20 @@ The development server runs on HTTPS (via `mkcert` or similar if configured, or 
 
 **Component Mapping**:
 When adding a new content block for the CMS:
-1. Create the component in `src/storyblok/visual/`.
+1. Create the component in `src/storyblok/sections/` (or `ui/`, `features/` etc).
 2. Register it in `astro.config.mjs` under `storyblok.components`.
 3. Ensure it uses `storyblokEditable(blok)` on the root element.
 
+### 4. Component State (Alpine.js)
+
+We use **Alpine.js** for client-side interactivity ("Islands of Interactivity").
+
+- **Scope**: Keep interaction local (modals, mobile menu, form validation).
+- **Communication**: Use standard DOM events (`@click`, `@custom-event.window`) to communicate between components.
+- **Performance**: Alpine is lightweight. Avoid heavy logic; delegate calculation to the build step.
+
 ---
+
 
 ## 🛠️ Build & Deployment
 
@@ -98,6 +107,12 @@ The project is optimized for Vercel.
 2. **Utilities**: Use `storyblokImage` from the package for optimized image delivery.
 3. **Icons**: Use the `Icon` component or inline SVGs for performance; avoid heavy icon libraries.
 4. **Dates**: Use the `formatDate` utility to ensure Dutch locale consistency.
+
+---
+
+## 📚 Advanced References
+
+- **[Infrastructure & Logging](./reference/INFRASTRUCTURE.md)**: Logging system, Performance Monitoring, and Service Layer patterns.
 
 ---
 

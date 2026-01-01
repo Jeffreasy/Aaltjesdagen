@@ -29,34 +29,35 @@ export default defineConfig({
       },
       enableFallbackComponent: true,
       components: {
-        page: 'storyblok/structural/Page',
-        grid: 'storyblok/structural/Grid',
-        columns: 'storyblok/structural/Grid',
-        gridmenu: 'storyblok/structural/Gridmenu',
-        programmaDag1: 'storyblok/structural/ProgrammaDag',
-        programmaDag2: 'storyblok/structural/ProgrammaDag',
-        programmaDag3: 'storyblok/structural/ProgrammaDag',
+        // Structural (Layouts)
+        Page: 'storyblok/structural/Page',
+        Grid: 'storyblok/structural/Grid',
+        Gridmenu: 'storyblok/structural/GridMenu',
+        BereikbaarheidGrid: 'storyblok/structural/AccessibilityGrid',
 
-        // Home
-        hero: 'storyblok/visual/Home/Hero',
-        Intro: 'storyblok/visual/ADF Muziekfestival/Intro',
-        feature: 'storyblok/visual/Home/Feature',
-        teaser: 'storyblok/visual/Home/Teaser',
-        tussentekst: 'storyblok/visual/Home/Tussentekst',
-        'Belangrijk om te weten': 'storyblok/visual/Home/BelangrijkOmTeWeten',
+        // Generic UI
+        Feature: 'storyblok/ui/Feature',
+        Teaser: 'storyblok/ui/Teaser',
+        Tussentekst: 'storyblok/ui/SectionText',
 
-        // Bereikbaarheid
-        BereikbaarHero: 'storyblok/visual/Bereikbaarheid/BereikbaarHero',
-        'Stallen fietsen': 'storyblok/visual/Bereikbaarheid/StallenFietsen',
-        'Parkeren Auto': 'storyblok/visual/Bereikbaarheid/ParkerenAutos',
-        'Openbaar vervoer': 'storyblok/visual/Bereikbaarheid/OpenbaarVervoer',
-        'In en rondom de binnenstad': 'storyblok/visual/Bereikbaarheid/InEnRondomDeBinnenstad',
-        parkeersectie: 'storyblok/visual/Bereikbaarheid/Parkeersectie',
-        'EHBO-posten': 'storyblok/visual/Bereikbaarheid/EhboPosten',
-        toegankelijkheid: 'storyblok/visual/Bereikbaarheid/Toegankelijkheid',
+        // Sections
+        hero: 'storyblok/sections/Hero',
+        Intro: 'storyblok/sections/Intro',
+        BelangrijkOmTeWeten: 'storyblok/sections/ImportantInfo',
 
-        // ADF Muziekfestival
-        ProgrammaADF: 'storyblok/visual/ADF Muziekfestival/ProgrammaADF',
+        // Features (Domain Specific)
+        ProgrammaDag: 'storyblok/features/program/DayProgram',
+        ProgrammaADF: 'storyblok/features/program/FestivalProgram',
+
+        // Bereikbaarheid (Feature Group)
+        BereikbaarHero: 'storyblok/features/accessibility/Hero',
+        'Stallen fietsen': 'storyblok/features/accessibility/BicycleParking',
+        'Parkeren Auto': 'storyblok/features/accessibility/CarParking',
+        'OpenbaarVervoer': 'storyblok/features/accessibility/PublicTransport',
+        'In en rondom de binnenstad': 'storyblok/features/accessibility/CityAccess',
+        parkeersectie: 'storyblok/features/accessibility/ParkingSection',
+        'EHBO-posten': 'storyblok/features/accessibility/FirstAid',
+        toegankelijkheid: 'storyblok/features/accessibility/AccessibilityInfo',
       },
     }),
     tailwind({
