@@ -17,13 +17,15 @@
     "vite": "^6.0.0"
   },
   "dependencies": {
+    "@aaltjesdagen/ui": "file:packages/design-system",
     "@astrojs/check": "^0.9.6",
     "@astrojs/vercel": "^9.0.2",
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/outfit": "^5.2.8",
     "alpinejs": "^3.15.3",
     "consola": "^3.4.2",
     "sharp": "^0.34.5",
     "swiper": "^12.0.3",
-    "typescript": "^5.9.3",
-    "@aaltjesdagen/ui": "file:packages/design-system"
+    "typescript": "^5.9.3"
   }
 }

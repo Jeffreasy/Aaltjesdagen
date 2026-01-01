@@ -6,47 +6,60 @@ const { blok } = Astro.props;
 // Haal afbeeldingen op uit Storyblok (Multi-Asset veld 'Heroview')
 const storyblokImages = blok.Heroview?.map((img: any) => img.filename) || [];
 
-// Fallback naar lokale afbeeldingen als er niets in Storyblok staat
+// Importeer lokale afbeeldingen expliciet (import.meta.glob gaf build errors)
+import hero1 from "../../../assets/hero/1.jpeg";
+import hero2 from "../../../assets/hero/2.jpg";
+import hero3 from "../../../assets/hero/3.png";
+import hero4 from "../../../assets/hero/4.png";
+import hero5 from "../../../assets/hero/5.jpg";
+import hero6 from "../../../assets/hero/6.jpg";
+import hero7 from "../../../assets/hero/7.jpg";
+import hero8 from "../../../assets/hero/8.jpg";
+import hero9 from "../../../assets/hero/9.jpg";
+import hero10 from "../../../assets/hero/10.jpg";
+import hero11 from "../../../assets/hero/11.jpg";
+import hero12 from "../../../assets/hero/12.jpg";
+import hero13 from "../../../assets/hero/13.jpg";
+import hero14 from "../../../assets/hero/14.jpg";
+
 const localImages = [
-  "/assets/hero/1.jpeg",
-  "/assets/hero/2.jpg",
-  "/assets/hero/3.png",
-  "/assets/hero/4.png",
-  "/assets/hero/5.jpg",
-  "/assets/hero/6.jpg",
-  "/assets/hero/7.jpg",
-  "/assets/hero/8.jpg",
-  "/assets/hero/9.jpg",
-  "/assets/hero/10.jpg",
-  "/assets/hero/11.jpg",
-  "/assets/hero/12.jpg",
-  "/assets/hero/13.jpg",
-  "/assets/hero/14.jpg",
+  hero1, hero2, hero3, hero4, hero5, hero6, hero7, 
+  hero8, hero9, hero10, hero11, hero12, hero13, hero14
 ];
 
 const images = storyblokImages.length > 0 ? storyblokImages : localImages;
 const isStoryblok = storyblokImages.length > 0;
+
+import { Image } from "astro:assets";
 ---
 
 <section {...storyblokEditable(blok)} class="relative h-[70vh] overflow-hidden">
   <div class="swiper mySwiper h-full w-full">
     <div class="swiper-wrapper">
       {
-        images.map((imgUrl: string) => (
+        images.map((img: any, index: number) => (
           <div class="swiper-slide relative overflow-hidden">
-            <img
-              src={
-                isStoryblok
-                  ? `${imgUrl}/m/1600x900/filters:quality(80):format(webp)`
-                  : imgUrl
-              }
-              alt={blok.title || "Aaltjesdagen Header"}
-              class="h-full w-full object-cover transform scale-100 transition-transform duration-[10000ms] ease-out-sine ken-burns"
-              loading="eager"
-            />
+             {/* 
+                Gebruik Astro <Image /> component:
+                - Voor Storyblok: we gebruiken de geoptimaliseerde URL en moeten width/height opgeven.
+                - Voor lokaal: we geven het geïmporteerde ImageMetadata object door (width/height automatisch).
+             */}
+             <Image
+               src={isStoryblok ? `${img}/m/1600x900/filters:quality(80):format(webp)` : img}
+               alt={blok.title || `Aaltjesdagen Sfeerimpressie ${index + 1}`}
+               width={1600}
+               height={900}
+               class="h-full w-full object-cover transform scale-100 transition-transform duration-[10000ms] ease-out-sine ken-burns"
+               loading={index === 0 ? "eager" : "lazy"}
+               fetchpriority={index === 0 ? "high" : "auto"}
+             />
           </div>
         ))
       }
+          </div>
+        ))
+      }
+
     </div>
     
     {/* Premium Gradient Overlay - Stronger Center for Text Visibility */}

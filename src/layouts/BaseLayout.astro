@@ -6,10 +6,9 @@ import BackToTop from "../components/layout/BackToTop.astro";
 import SEO from "../components/layout/SEO.astro";
 import { ClientRouter } from "astro:transitions";
 import { Image } from "astro:assets";
-// Import local logo image for optimization
-// Note: Ensure /public/assets/logo.png exists or use a relative import if it's in src/assets
-// Since the previous code used /assets/logo.png (public folder), we'll stick to that but use format="webp" if possible,
-// OR ideally move it to src/assets. For now we will enable standard Image optimization on the public file (requires width/height).
+import logoImage from "../assets/logo.png";
+import "@fontsource/inter";
+import "@fontsource/outfit";
 
 interface Props {
   title?: string;
@@ -27,15 +26,7 @@ const isStoryblokEnabled = import.meta.env.DEV;
     <ClientRouter />
 
     <!-- Resource Hints for Performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://a.storyblok.com" />
-
-    <!-- Google Fonts - Optimized Loading -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
-      rel="stylesheet"
-    />
 
     <!-- Theme Detection Script (no-flash) -->
     <script is:inline>
@@ -90,10 +81,9 @@ const isStoryblokEnabled = import.meta.env.DEV;
       >
         <a href="/" class="flex items-center gap-3 group">
           <Image
-            src="/assets/logo.png"
+            src={logoImage}
             alt="Aaltjesdagen Logo"
             width={180}
-            height={60}
             loading="eager"
             fetchpriority="high"
             class="h-12 w-auto transition-all duration-300 group-hover:scale-105 brightness-0 dark:invert"
