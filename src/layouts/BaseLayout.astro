@@ -63,14 +63,16 @@ const isStoryblokEnabled = import.meta.env.DEV;
     <!-- Skip to Main Content (Accessibility) -->
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] px-6 py-3 bg-[var(--color-primary)] text-white font-bold rounded shadow-lg outline-none ring-2 ring-white"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 px-6 py-3 bg-[var(--color-primary)] text-white font-bold rounded shadow-lg outline-none ring-2 ring-white"
+      style="z-index: var(--z-max);"
     >
       Ga direct naar de inhoud
     </a>
 
     <!-- Animated Background - PERSISTENT across navigation -->
     <div
-      class="fixed inset-0 z-[-1] bg-animated"
+      class="fixed inset-0 bg-animated"
+      style="z-index: var(--z-background);"
       aria-hidden="true"
       transition:persist
     >
