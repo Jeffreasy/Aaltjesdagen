@@ -10,7 +10,11 @@ const env = loadEnv('', process.cwd(), 'STORYBLOK')
 export default defineConfig({
   site: 'https://www.aaltjesdagen.nl',
   output: 'static',
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    },
+  }),
   build: {
     inlineStylesheets: 'never',  // CRITICAL: Never inline CSS
   },
