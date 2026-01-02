@@ -2,7 +2,9 @@
 
 > The official high-performance frontend for the **Aaltjesdagen Harderwijk** event website. Built for speed, accessibility, and a premium user experience.
 
-![Project Status](https://img.shields.io/badge/Status-Active-success)
+![CI Status](https://github.com/Jeffreasy/Aaltjesdagen/actions/workflows/ci.yml/badge.svg)
+![A11y Check](https://github.com/Jeffreasy/Aaltjesdagen/actions/workflows/a11y.yml/badge.svg)
+![Vercel](https://vercelbadge.vercel.app/api/jeffreasy/aaltjesdagen)
 ![Framework](https://img.shields.io/badge/Built%20With-Astro%205.0-orange?logo=astro)
 ![Styling](https://img.shields.io/badge/Styling-Tailwind%20CSS-blue?logo=tailwindcss)
 ![CMS](https://img.shields.io/badge/CMS-Storyblok-00b3b0?logo=storyblok)
@@ -123,6 +125,44 @@ import { formatDate, storyblokImage } from "@aaltjesdagen/ui/utils";
 The design system exposes a pure Tailwind preset. You can use utility classes like `text-primary`, `bg-base`, or our custom plugin classes like `.btn-primary` and `.glass` directly in your markup.
 
 _For full documentation, see [docs/DESIGN_SYSTEM.md](./docs/DESIGN_SYSTEM.md)._
+
+---
+
+## 🧪 Testing
+
+This project maintains professional quality standards with comprehensive testing:
+
+### Test Suite
+- **Unit Tests**: 26 tests (Vitest)
+  - Logger utilities
+  - Performance monitoring
+  - Date formatting
+- **E2E Tests**: 30+ tests (Playwright)
+  - Navigation flows (Desktop + Mobile)
+  - Accessibility (WCAG AA compliance)
+  - Legal pages
+
+### Commands
+```bash
+# Run all tests
+npm test
+
+# Unit tests only
+npm run test:unit
+
+# E2E tests only
+npm run test:e2e
+
+# CI-optimized (Chromium only)
+npm run test:ci
+```
+
+### Continuous Integration
+GitHub Actions automatically runs:
+- ✅ Unit tests on every push
+- ✅ E2E tests (Chromium) on every push
+- ✅ Full accessibility audit weekly
+- ✅ Build verification before deployment
 
 ---
 
