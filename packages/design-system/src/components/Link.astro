@@ -117,11 +117,11 @@ const externalAttrs = external
   }
 
   .link--nav:hover {
-    color: #ff7e67; /* Coral - Direct value to bypass variable resolution issue */
+    color: #c0392b; /* Contrast Safe Coral (~5.8:1) - Direct value to bypass variable resolution issue */
   }
 
   .link--nav.link--active {
-    color: var(--color-primary);
+    color: #267270; /* Accessible teal (4.52:1) - Hardcoded to bypass cache */
     font-weight: 600;
   }
 

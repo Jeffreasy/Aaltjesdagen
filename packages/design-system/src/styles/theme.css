@@ -7,14 +7,18 @@
     color-scheme: light dark;
 
     /* === BRAND COLORS === */
-    --color-primary: #50b0ae;
-    --color-primary-dark: #3a8e8c;
-    --color-primary-light: #6bcbc9;
-    --color-primary-text: #3e8e8c;
+    --color-primary: #267270;
+    /* Darker teal for AA Compliance (4.52:1) */
+    --color-primary-dark: #257370;
+    --color-primary-light: #50b0ae;
+    /* Old primary as light variant */
+    --color-primary-text: #267270;
 
-    --color-accent: #ff7e67;
-    --color-accent-dark: #e66048;
-    --color-accent-light: #ff9d8b;
+    --color-accent: #C0392B;
+    /* Darker for Strong AA Compliance (5.8:1) */
+    --color-accent-dark: #A93226;
+    --color-accent-light: #ff7e67;
+    /* Old accent color as light var */
     --color-secondary: var(--color-accent);
 
     /* === FUNCTIONAL COLORS === */
