@@ -2,23 +2,41 @@
 /**
  * FilterBar Component
  * 
- * Reusable filter bar with glassmorphism styling for filtering content by location.
- * Eliminates duplication between ProgrammaDag and Grid components.
+ * Universal filter bar with glassmorphism styling for filtering content.
+ * Supports any field name and customizable labels.
  * 
  * @component
  * @example
+ * ```astro
+ * // Generic usage
  * <FilterBar 
- *   locations={['Binnenstad', 'Park']}
+ *   categories={['Tech', 'Design', 'Business']}
+ *   filterField="category"
+ *   allText="All Topics"
+ *   items={articles}
  *   showCount={true}
- *   items={programmas}
- *   gradientVariant="teal"
- *   spacing="sm"
  * />
+ * 
+ * // Aaltjesdagen usage (backward compatible)
+ * <FilterBar 
+ *   categories={['Binnenstad', 'Park']}
+ *   filterField="Locatie"
+ *   allText="Alles"
+ *   items={programmas}
+ *   showCount={true}
+ * />
+ * ```
  */
 
 interface Props {
-  /** Array of location strings for filter buttons */
-  locations: string[];
+  /** Array of category/filter strings */
+  categories: string[];
+  
+  /** Field name to filter on (e.g., 'category', 'location', 'Locatie') */
+  filterField: string;
+  
+  /** Text for "All" button (default: "All") */
+  allText?: string;
   
   /** Whether to show item counts in parentheses */
   showCount?: boolean;
@@ -27,67 +45,75 @@ interface Props {
   items?: any[];
   
   /** Gradient color variant for active filter button */
-  gradientVariant?: 'teal' | 'blue';
+  gradientVariant?: 'primary' | 'accent' | 'secondary';
   
   /** Spacing below filter bar */
   spacing?: 'sm' | 'lg';
+  
+  /** Custom CSS class */
+  class?: string;
 }
 
 const { 
-  locations, 
+  categories, 
+  filterField,
+  allText = 'All',
   showCount = false, 
   items = [], 
-  gradientVariant = 'teal',
-  spacing = 'sm'
+  gradientVariant = 'primary',
+  spacing = 'sm',
+  class: className = ''
 } = Astro.props;
 
 // Calculate total count for "All" button
 const totalCount = items.length;
 
-// Calculate count per location
-const getLocationCount = (location: string) => {
+// Calculate count per category
+const getCategoryCount = (category: string) => {
   if (!items || items.length === 0) return 0;
   return items.filter((item: any) => {
-    const itemLocation = item.Locatie || item.locatie;
-    return itemLocation === location;
+    return item[filterField] === category;
   }).length;
 };
 
-// Gradient class based on variant
-const gradientClass = gradientVariant === 'teal' 
-  ? 'from-primary to-teal-600' 
-  : 'from-primary to-blue-700';
+// Gradient class based on variant (using CSS variables)
+const gradientClasses = {
+  primary: 'from-primary to-primary-dark',
+  accent: 'from-accent to-accent-dark',
+  secondary: 'from-secondary via-accent to-primary',
+};
+const gradientClass = gradientClasses[gradientVariant];
 
 // Spacing class
 const spacingClass = spacing === 'sm' ? 'mb-10' : 'mb-20';
 ---
 
 <div 
-  class:list={['sticky top-20 flex justify-center', spacingClass]}
+  class:list={['sticky top-20 flex justify-center', spacingClass, className]}
   style="z-index: var(--z-sticky);"
 >
   <div class="glass p-3 rounded-2xl shadow-2xl flex flex-wrap justify-center gap-2 max-w-full overflow-x-auto no-scrollbar">
     <!-- "All" filter button -->
     <button
       @click="activeFilter = 'all'"
-      :class={`activeFilter === 'all' ? 'bg-gradient-to-r ${gradientClass} text-white shadow-lg scale-105' : 'hover:bg-white/70 hover:scale-105'`}
+      :class={`activeFilter === 'all' ? 'bg-gradient-to-r ${gradientClass} text-white shadow-lg scale-105' : 'hover:bg-white/70 dark:hover:bg-gray-800/70 hover:scale-105'`}
       style="color: var(--text-primary);"
       class="px-5 py-2 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 whitespace-nowrap"
     >
-      Alles{showCount && totalCount > 0 ? ` (${totalCount})` : ''}
+      {allText}{showCount && totalCount > 0 ? ` (${totalCount})` : ''}
     </button>
 
-    <!-- Location filter buttons -->
-    {locations.map((location: string) => {
-      const count = showCount ? getLocationCount(location) : 0;
+    <!-- Category filter buttons -->
+    {categories.map((category: string) => {
+      const count = showCount ? getCategoryCount(category) : 0;
       return (
         <button
-          @click={`activeFilter = '${location}'`}
-          :class={`activeFilter === '${location}' ? 'bg-gradient-to-r ${gradientClass} text-white shadow-lg scale-105' : 'hover:bg-white/70 hover:scale-105'`}
+          @click={`activeFilter = '${category}'`}
+          :class={`activeFilter === '${category}' ? 'bg-gradient-to-r ${gradientClass} text-white shadow-lg scale-105' : 'hover:bg-white/70 dark:hover:bg-gray-800/70 hover:scale-105'`}
           style="color: var(--text-primary);"
           class="px-5 py-2 rounded-xl text-xs md:text-sm font-bold transition-all duration-300 whitespace-nowrap"
         >
-          {location}{showCount && count > 0 ? ` (${count})` : ''}
+          {category}{showCount && count > 0 ? ` (${count})` : ''}
         </button>
       );
     })}
