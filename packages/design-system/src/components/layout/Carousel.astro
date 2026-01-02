@@ -19,8 +19,6 @@
  * ```
  */
 
-import { Image } from "astro:assets";
-
 export interface CarouselItem {
     src: string;
     alt: string;
@@ -64,7 +62,7 @@ const {
 } = Astro.props;
 
 // Generate unique ID for this carousel instance
-const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
+const carouselId = `carousel-${Math.random().toString(36).substring(2, 11)}`;
 ---
 
 <div
