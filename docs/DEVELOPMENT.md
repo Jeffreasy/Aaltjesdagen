@@ -111,28 +111,31 @@ The project is optimized for Vercel.
 ---
 
 ## 🧪 Testing & Quality Assurance
-### Testing & Quality Assurance
 
-**Unit Tests (Vitest)**
-- `npm run test:unit` - Run unit tests
-- Coverage: Logger, Performance Monitor, Date Utilities
-- Location: `src/test/unit/`
+This project maintains professional quality standards with comprehensive testing.
 
-**E2E Tests (Playwright)**
-- `npm run test:e2e` - Run end-to-end tests
-- Coverage: 
-  - Navigation (Desktop + Mobile)
-  - Accessibility (WCAG AA)
-  - Legal Pages (Privacy, Cookies)
-- Location: `src/test/e2e/`
-
-**Combined**
-- `npm test` - Run all tests (unit + E2E) critical flows works in production.
+**Quick Commands**:
 ```bash
-npm run test:e2e
+npm test           # Run all tests (unit + E2E)
+npm run test:unit  # Unit tests only (Vitest)
+npm run test:e2e   # E2E tests only (Playwright)
+npm run test:ci    # CI-optimized (Chromium only)
 ```
-- **Config**: `playwright.config.ts`
-- **Location**: `src/test/e2e/`
+
+**Test Coverage**:
+- **26 unit tests**: Logger, Performance Monitor, Date Utilities
+- **30+ E2E tests**: Navigation, Legal Pages, Accessibility
+- **WCAG AA Compliant**: Automated accessibility checks
+
+**CI/CD**:
+- ✅ Automated testing on every push (GitHub Actions)
+- ✅ Type checking with `astro check`
+- ✅ Weekly accessibility audits
+- ✅ Test artifacts uploaded for review
+
+**📚 Full Documentation**: See [TESTING.md](./TESTING.md) for complete guide.
+
+---
 
 ---
 
