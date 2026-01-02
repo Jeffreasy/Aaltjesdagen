@@ -7,8 +7,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Jeffreasy/Aaltjesdagen.git",
-        "directory": "packages/design-system"
+        "url": "https://github.com/Jeffreasy/LcareDesign-System.git"
     },
     "keywords": [
         "astro",
