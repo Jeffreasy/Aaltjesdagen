@@ -127,11 +127,11 @@ const externalAttrs = external
   }
 
   .link--nav:hover {
-    color: #c0392b; /* Contrast Safe Coral (~5.8:1) - Direct value to bypass variable resolution issue */
+    color: var(--color-accent);
   }
 
   .link--nav.link--active {
-    color: #267270; /* Accessible teal (4.52:1) - Hardcoded to bypass cache */
+    color: var(--color-primary);
     font-weight: 600;
   }
 
@@ -172,7 +172,7 @@ const externalAttrs = external
   }
 
   .link--footer:hover {
-    color: #50b0ae; /* Teal - Direct value to bypass variable resolution issue */
+    color: var(--color-primary-light);
     transform: translateX(2px);
   }
 
@@ -191,7 +191,7 @@ const externalAttrs = external
   }
 
   .link--inline:hover {
-    color: #3a8e8c; /* Teal dark - Direct value to bypass variable resolution issue */
+    color: var(--color-primary-dark);
     text-decoration-thickness: 2px;
   }
 

@@ -6,26 +6,29 @@
 :root {
     color-scheme: light dark;
 
-    /* === BRAND COLORS === */
-    --color-primary: #267270;
-    /* Darker teal for AA Compliance (4.52:1) */
-    --color-primary-dark: #257370;
-    --color-primary-light: #50b0ae;
-    /* Old primary as light variant */
-    --color-primary-text: #267270;
+    /* === BRAND COLORS (Universal Defaults) === */
+    --color-primary: #2563eb;
+    /* Blue 600 - Universal default */
+    --color-primary-dark: #1d4ed8;
+    /* Blue 700 */
+    --color-primary-light: #60a5fa;
+    /* Blue 400 */
+    --color-primary-text: #2563eb;
 
-    --color-accent: #C0392B;
-    /* Darker for Strong AA Compliance (5.8:1) */
-    --color-accent-dark: #A93226;
-    --color-accent-light: #ff7e67;
-    /* Old accent color as light var */
+    --color-accent: #dc2626;
+    /* Red 600 - Universal default */
+    --color-accent-dark: #b91c1c;
+    /* Red 700 */
+    --color-accent-light: #f87171;
+    /* Red 400 */
     --color-secondary: var(--color-accent);
 
     /* === FUNCTIONAL COLORS === */
     --color-success: #4caf50;
     --color-error: #e57373;
     --color-warning: #ffa726;
-    --focus-ring: rgba(80, 176, 174, 0.4);
+    --focus-ring: rgba(37, 99, 235, 0.4);
+    /* Blue focus ring */
 
     /* === LIGHT MODE PALETTE (Default) === */
     --bg-base: #f5fafa;
@@ -68,9 +71,9 @@
     --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
     --ease-in: cubic-bezier(0.4, 0, 1, 1);
 
-    /* Typography */
-    --font-heading: 'Outfit', sans-serif;
-    --font-body: 'Inter', sans-serif;
+    /* Typography (System Fonts - Universal Default) */
+    --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 
     /* Z-Index */
     --z-background: -1;
@@ -88,6 +91,59 @@
     --z-nav-mobile-toggle: 600;
     --z-nav-mobile-backdrop: 500;
     --z-nav-mobile-panel: 500;
+}
+
+/* === BRAND PRESETS === */
+/* Apply via data-brand attribute: <html data-brand="aaltjesdagen"> */
+
+/* Aaltjesdagen Brand (Original) */
+[data-brand="aaltjesdagen"] {
+    --color-primary: #267270;
+    --color-primary-dark: #257370;
+    --color-primary-light: #50b0ae;
+    --color-primary-text: #267270;
+
+    --color-accent: #C0392B;
+    --color-accent-dark: #A93226;
+    --color-accent-light: #ff7e67;
+
+    --focus-ring: rgba(80, 176, 174, 0.4);
+
+    /* Brand-specific fonts */
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+/* Modern Blue Brand */
+[data-brand="modern-blue"] {
+    --color-primary: #3b82f6;
+    --color-primary-dark: #2563eb;
+    --color-primary-light: #60a5fa;
+
+    --color-accent: #8b5cf6;
+    --color-accent-dark: #7c3aed;
+    --color-accent-light: #a78bfa;
+
+    --focus-ring: rgba(59, 130, 246, 0.4);
+
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Open Sans', sans-serif;
+}
+
+/* Forest Brand */
+[data-brand="forest"] {
+    --color-primary: #059669;
+    --color-primary-dark: #047857;
+    --color-primary-light: #10b981;
+
+    --color-accent: #d97706;
+    --color-accent-dark: #b45309;
+    --color-accent-light: #f59e0b;
+
+    --focus-ring: rgba(5, 150, 105, 0.4);
+
+    --font-heading: 'Merriweather', serif;
+    --font-body: 'Lato', sans-serif;
 }
 
 /* Dark Mode */

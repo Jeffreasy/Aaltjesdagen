@@ -1,42 +1,72 @@
 {
-    "name": "@aaltjesdagen/ui",
-    "version": "2.0.0",
-    "description": "Shared Design System for Aaltjesdagen projects",
+    "name": "@jjalaa/astro-ui",
+    "version": "3.0.0",
+    "description": "Universal Design System for Astro projects",
     "type": "module",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
     "exports": {
         ".": {
-            "types": "./src/index.ts",
-            "import": "./src/index.ts"
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
         },
         "./components": {
             "types": "./src/components/index.ts",
-            "import": "./src/components/index.ts"
+            "default": "./src/components/index.ts"
         },
-        "./css": "./src/styles/main.css",
+        "./utils": {
+            "types": "./dist/utils/index.d.ts",
+            "import": "./dist/utils/index.js",
+            "require": "./dist/utils/index.cjs"
+        },
+        "./utils/storyblok": {
+            "types": "./dist/utils/plugins/storyblok/index.d.ts",
+            "import": "./dist/utils/plugins/storyblok/index.js"
+        },
+        "./css": "./dist/full.css",
+        "./css/base": "./dist/base.css",
+        "./css/theme": "./dist/theme.css",
+        "./css/animations": "./dist/animations.css",
         "./preset": "./tailwind-preset.js",
         "./plugin": "./tailwind-plugin.js",
-        "./utils": {
-            "types": "./src/utils/index.ts",
-            "import": "./src/utils/index.ts"
-        }
+        "./themes": "./tailwind-themes.js"
     },
     "files": [
-        "src",
+        "dist",
+        "src/components",
+        "src/styles/prose",
         "tailwind-preset.js",
-        "tailwind-plugin.js"
+        "tailwind-plugin.js",
+        "tailwind-themes.js"
     ],
     "scripts": {
-        "build": "tsc"
+        "build": "tsup && npm run build:css",
+        "build:css": "node scripts/build-css.cjs",
+        "build:watch": "tsup --watch",
+        "dev": "tsup --watch",
+        "prepublishOnly": "npm run build"
     },
     "peerDependencies": {
-        "alpinejs": "^3.0.0",
         "astro": "^5.0.0",
         "tailwindcss": "^3.0.0",
-        "@storyblok/astro": "^7.0.0",
-        "swiper": "^12.0.0"
+        "alpinejs": "^3.0.0"
+    },
+    "peerDependenciesMeta": {
+        "@storyblok/astro": {
+            "optional": true
+        },
+        "swiper": {
+            "optional": true
+        }
     },
     "devDependencies": {
-        "typescript": "^5.0.0",
-        "@types/alpinejs": "^3.0.0"
+        "@types/alpinejs": "^3.0.0",
+        "autoprefixer": "^10.4.23",
+        "cssnano": "^7.1.2",
+        "postcss": "^8.5.6",
+        "postcss-cli": "^11.0.1",
+        "tsup": "^8.5.1",
+        "typescript": "^5.0.0"
     }
 }

@@ -1,60 +1,46 @@
 /**
  * Date Utility Functions
- * Helpers for formatting dates and times with Dutch locale
+ * Helpers for formatting dates and times with configurable locale
  * 
  * @module utils/dates
  */
 
+import { getConfig } from './config';
 import { logDateFormatting } from './logger';
 
 /**
- * Format date to Dutch locale string
+ * Format date using configured locale
  * 
  * @param date - Date string or Date object
- * @param locale - Locale string (default: 'nl-NL')
- * @returns Formatted date string (e.g., "zaterdag 15 juni")
+ * @returns Formatted date string
  * 
  * @example
  * ```typescript
  * const formatted = formatDate('2024-06-15');
- * // Returns: "zaterdag 15 juni"
+ * // Returns: "Saturday, June 15" (with en-US locale)
+ * // Returns: "zaterdag 15 juni" (with nl-NL locale)
  * ```
  */
-export function formatDate(
-    date: string | Date,
-    locale: string = 'nl-NL'
-): string {
+export function formatDate(date: string | Date): string {
     if (!date) return '';
 
+    const { locale, dateFormat } = getConfig();
     const dateStr = typeof date === 'string' ? date : date.toISOString();
     logDateFormatting(dateStr, locale);
 
-    return new Date(date).toLocaleDateString(locale, {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long'
-    });
+    return new Date(date).toLocaleDateString(locale, dateFormat);
 }
 
 /**
- * Format date with year to Dutch locale string
+ * Format date with year using configured locale
  * 
  * @param date - Date string or Date object
- * @param locale - Locale string (default: 'nl-NL')
- * @returns Formatted date string with year (e.g., "zaterdag 15 juni 2024")
- * 
- * @example
- * ```typescript
- * const formatted = formatDateWithYear('2024-06-15');
- * // Returns: "zaterdag 15 juni 2024"
- * ```
+ * @returns Formatted date string with year
  */
-export function formatDateWithYear(
-    date: string | Date,
-    locale: string = 'nl-NL'
-): string {
+export function formatDateWithYear(date: string | Date): string {
     if (!date) return '';
 
+    const { locale } = getConfig();
     return new Date(date).toLocaleDateString(locale, {
         weekday: 'long',
         day: 'numeric',
@@ -64,28 +50,16 @@ export function formatDateWithYear(
 }
 
 /**
- * Format time to Dutch locale string
+ * Format time using configured locale
  * 
  * @param date - Date string or Date object
- * @param locale - Locale string (default: 'nl-NL')
  * @returns Formatted time string (e.g., "14:30")
- * 
- * @example
- * ```typescript
- * const time = formatTime('2024-06-15T14:30:00');
- * // Returns: "14:30"
- * ```
  */
-export function formatTime(
-    date: string | Date,
-    locale: string = 'nl-NL'
-): string {
+export function formatTime(date: string | Date): string {
     if (!date) return '';
 
-    return new Date(date).toLocaleTimeString(locale, {
-        hour: '2-digit',
-        minute: '2-digit'
-    });
+    const { locale, timeFormat } = getConfig();
+    return new Date(date).toLocaleTimeString(locale, timeFormat);
 }
 
 /**

@@ -1,71 +1,53 @@
 /**
- * Image Utility Functions
- * Helpers for working with Storyblok images and transformations
+ * Generic Image Utilities
+ * Framework-agnostic image optimization helpers
  * 
  * @module utils/images
  */
 
-import { logImageOptimization } from './logger';
-
-/**
- * Generate Storyblok image URL with transformations
- * 
- * @param filename - Storyblok image filename (full URL)
- * @param width - Desired width in pixels (default: 800)
- * @param height - Desired height in pixels (default: 600)
- * @param quality - Image quality 0-100 (default: 80)
- * @param format - Output format (default: 'webp')
- * @returns Transformed image URL
- * 
- * @example
- * ```typescript
- * const url = storyblokImage(img.filename, 1200, 800);
- * // Returns: "https://a.storyblok.com/f/.../image.jpg/m/1200x800/filters:quality(80):format(webp)"
- * ```
- */
-export function storyblokImage(
-    filename: string,
-    width: number = 800,
-    height: number = 600,
-    quality: number = 80,
-    format: 'webp' | 'jpg' | 'png' = 'webp'
-): string {
-    if (!filename) return '';
-
-    // Log image optimization in development mode
-    const urlParts = filename.split('/');
-    const imageName = urlParts[urlParts.length - 1] || 'unknown';
-    logImageOptimization(imageName, format, quality);
-
-    return `${filename}/m/${width}x${height}/filters:quality(${quality}):format(${format})`;
+export interface ImageOptions {
+    quality?: number;
+    format?: 'webp' | 'jpg' | 'png';
 }
 
 /**
- * Generate responsive image srcset for Storyblok images
+ * Generic image URL optimization
+ * Can be overridden per-project for different CDNs
  * 
- * @param filename - Storyblok image filename
- * @param sizes - Array of widths for srcset
- * @param quality - Image quality (default: 80)
- * @returns srcset string
- * 
- * @example
- * ```typescript
- * const srcset = responsiveImageSrcset(img.filename, [400, 800, 1200]);
- * // Returns: "...400w, ...800w, ...1200w"
- * ```
+ * @param baseUrl - Base image URL
+ * @param width - Target width
+ * @param height - Target height
+ * @param options - Transformation options
+ * @returns Optimized URL
  */
-export function responsiveImageSrcset(
-    filename: string,
-    sizes: number[] = [400, 800, 1200, 1600],
-    quality: number = 80
+export function optimizeImageUrl(
+    baseUrl: string,
+    width: number,
+    height: number,
+    options: ImageOptions = {}
 ): string {
-    if (!filename) return '';
+    // Generic implementation - projects can override
+    // This is a passthrough by default
+    return baseUrl;
+}
 
+/**
+ * Generate responsive srcset
+ * 
+ * @param baseUrl - Base image URL
+ * @param sizes - Array of widths
+ * @param options - Image options
+ * @returns srcset string
+ */
+export function generateSrcSet(
+    baseUrl: string,
+    sizes: number[],
+    options: ImageOptions = {}
+): string {
     return sizes
         .map(width => {
-            const height = Math.round(width * 0.75); // Maintain 4:3 aspect ratio
-            const url = storyblokImage(filename, width, height, quality);
-            return `${url} ${width}w`;
+            const height = Math.round(width * 0.75); // 4:3 aspect ratio
+            return `${baseUrl} ${width}w`;
         })
         .join(', ');
 }

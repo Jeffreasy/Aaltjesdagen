@@ -55,6 +55,7 @@ export { default as ThemeToggle } from './core/ThemeToggle.astro';
 export { default as VisuallyHidden } from './core/VisuallyHidden.astro';
 export { default as Button } from './core/Button.astro';
 export { default as SkipLink } from './core/SkipLink.astro';
+export { default as ThemeProvider } from './ThemeProvider.astro';
 
 // ===== SPECIALIZED =====
 export { default as FilterBar } from './specialized/FilterBar.astro';
@@ -113,6 +114,7 @@ export type { Props as ThemeToggleProps } from './core/ThemeToggle.astro';
 export type { Props as VisuallyHiddenProps } from './core/VisuallyHidden.astro';
 export type { Props as ButtonProps } from './core/Button.astro';
 export type { Props as SkipLinkProps } from './core/SkipLink.astro';
+export type { Props as ThemeProviderProps } from './ThemeProvider.astro';
 
 export type { Props as ContentCardProps } from './specialized/ContentCard.astro';
 export type { Props as IconBadgeProps } from './specialized/IconBadge.astro';
