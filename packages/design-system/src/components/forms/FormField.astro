@@ -1,0 +1,68 @@
+---
+/**
+ * FormField Component
+ *
+ * Wrapper component combining Label + Input/Textarea + Error/Hint messages
+ *
+ * @component
+ */
+
+export interface Props {
+    label: string;
+    name: string;
+    error?: string;
+    hint?: string;
+    required?: boolean;
+    class?: string;
+}
+
+const {
+    label,
+    name,
+    error,
+    hint,
+    required = false,
+    class: className = "",
+} = Astro.props;
+---
+
+<div class:list={["space-y-2", className]}>
+    <!-- Label -->
+    <label for={name} class="block text-sm font-semibold text-text-primary">
+        {label}
+        {
+            required && (
+                <span class="text-error ml-0.5" aria-label="required">
+                    *
+                </span>
+            )
+        }
+    </label>
+
+    <!-- Input/Textarea/Select slot -->
+    <slot />
+
+    <!-- Hint text (when no error) -->
+    {hint && !error && <p class="text-sm text-text-tertiary">{hint}</p>}
+
+    <!-- Error message -->
+    {
+        error && (
+            <p class="text-sm text-error flex items-center gap-1" role="alert">
+                <svg
+                    class="h-4 w-4 flex-shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    aria-hidden="true"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clip-rule="evenodd"
+                    />
+                </svg>
+                <span>{error}</span>
+            </p>
+        )
+    }
+</div>

@@ -1,0 +1,342 @@
+---
+/**
+ * Navbar Component
+ *
+ * Responsive navigation header with desktop horizontal navigation
+ * and mobile drawer menu. Integrates with ThemeToggle and Link components.
+ *
+ * @component
+ * @example
+ * ```astro
+ * <Navbar
+ *   items={[
+ *     { name: 'Home', href: '/' },
+ *     { name: 'About', href: '/about' }
+ *   ]}
+ *   sticky
+ *   variant="glass"
+ * >
+ *   <img slot="logo" src="/logo.png" alt="Logo" class="h-8" />
+ * </Navbar>
+ * ```
+ */
+
+import { Link, ThemeToggle } from "../index";
+import Drawer from "./Drawer.astro";
+
+export interface NavItem {
+    name: string;
+    href: string;
+}
+
+export interface Props {
+    /** Navigation items */
+    items: NavItem[];
+    /** Logo image source (optional if using logo slot) */
+    logoSrc?: string;
+    /** Logo alt text */
+    logoAlt?: string;
+    /** Enable sticky positioning */
+    sticky?: boolean;
+    /** Visual variant */
+    variant?: "solid" | "glass" | "transparent";
+    /** Additional CSS classes */
+    class?: string;
+}
+
+const {
+    items,
+    logoSrc,
+    logoAlt = "Logo",
+    sticky = false,
+    variant = "solid",
+    class: className = "",
+} = Astro.props;
+
+// Determine active page for styling
+const currentPath = Astro.url.pathname;
+
+const variantClasses = {
+    solid: "bg-[var(--bg-elevated)] border-b border-[var(--border-primary)]",
+    glass: "bg-[color-mix(in_srgb,var(--bg-elevated),transparent_10%)] backdrop-blur-lg border-b border-[var(--border-primary)]",
+    transparent: "bg-transparent",
+};
+---
+
+<header
+    class:list={[
+        "navbar",
+        sticky && "sticky top-0",
+        variantClasses[variant],
+        className,
+    ]}
+>
+    <div class="container-custom">
+        <div class="navbar-inner">
+            <!-- Logo -->
+            <div class="navbar-logo">
+                {
+                    Astro.slots.has("logo") ? (
+                        <slot name="logo" />
+                    ) : logoSrc ? (
+                        <a href="/">
+                            <img
+                                src={logoSrc}
+                                alt={logoAlt}
+                                class="h-8 w-auto"
+                            />
+                        </a>
+                    ) : (
+                        <a
+                            href="/"
+                            class="font-bold text-xl text-[var(--text-primary)]"
+                        >
+                            Logo
+                        </a>
+                    )
+                }
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="navbar-nav hidden md:flex" aria-label="Main navigation">
+                {
+                    items.map((item) => (
+                        <Link href={item.href} variant="nav">
+                            {item.name}
+                        </Link>
+                    ))
+                }
+                <div class="flex items-center gap-4">
+                    <ThemeToggle />
+                    {Astro.slots.has("actions") && <slot name="actions" />}
+                </div>
+            </nav>
+
+            <!-- Mobile Menu -->
+            <div class="md:hidden flex items-center gap-4">
+                <ThemeToggle />
+                {Astro.slots.has("actions") && <slot name="actions" />}
+
+                <Drawer placement="right" size="20rem">
+                    <button
+                        slot="trigger"
+                        type="button"
+                        class="mobile-menu-btn"
+                        aria-label="Open menu"
+                    >
+                        <div class="hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+
+                    <!-- Mobile Navigation Links -->
+                    <nav class="mobile-nav" aria-label="Mobile navigation">
+                        {
+                            items.map((item, index) => {
+                                const isActive =
+                                    currentPath === item.href ||
+                                    (item.href !== "/" &&
+                                        currentPath.startsWith(item.href));
+                                return (
+                                    <a
+                                        href={item.href}
+                                        class:list={[
+                                            "mobile-nav-link",
+                                            isActive &&
+                                                "mobile-nav-link--active",
+                                        ]}
+                                        aria-current={
+                                            isActive ? "page" : undefined
+                                        }
+                                    >
+                                        <span class="mobile-nav-number">
+                                            0{index + 1}
+                                        </span>
+                                        {item.name}
+                                    </a>
+                                );
+                            })
+                        }
+                    </nav>
+                </Drawer>
+            </div>
+        </div>
+    </div>
+</header>
+
+<style>
+    .navbar {
+        position: relative;
+        z-index: var(--z-header);
+        transition: all var(--transition-base);
+    }
+
+    .sticky {
+        position: sticky;
+    }
+
+    .navbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 4rem;
+        gap: 2rem;
+    }
+
+    .navbar-logo {
+        flex-shrink: 0;
+    }
+
+    .navbar-nav {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        flex: 1;
+        justify-content: flex-end;
+    }
+
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        background: var(--bg-elevated);
+        border: 1px solid var(--border-primary);
+        border-radius: 0.75rem;
+        box-shadow: var(--shadow-sm);
+        cursor: pointer;
+        transition: all var(--transition-base);
+    }
+
+    .mobile-menu-btn:hover {
+        box-shadow: var(--shadow-md);
+        transform: scale(1.05);
+    }
+
+    .mobile-menu-btn:active {
+        transform: scale(0.95);
+    }
+
+    .mobile-menu-btn:focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+    }
+
+    .hamburger-icon {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 1.5rem;
+        height: 1.25rem;
+    }
+
+    .hamburger-icon span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: var(--text-primary);
+        border-radius: 9999px;
+        transition: all var(--transition-base);
+    }
+
+    /* Mobile Navigation Links */
+    .mobile-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .mobile-nav-link {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        transition: all var(--transition-base);
+    }
+
+    .mobile-nav-link:hover {
+        color: var(--color-primary);
+    }
+
+    .mobile-nav-link--active {
+        color: var(--color-primary);
+        padding-left: 1rem;
+        border-left: 4px solid var(--color-secondary);
+    }
+
+    .mobile-nav-number {
+        font-size: 0.75rem;
+        line-height: 1rem;
+        font-weight: 700;
+        color: var(--text-tertiary);
+        opacity: 0;
+        transform: translateY(0.25rem);
+        transition: all var(--transition-base);
+    }
+
+    .mobile-nav-link:hover .mobile-nav-number {
+        color: var(--color-accent);
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+        .navbar,
+        .mobile-menu-btn,
+        .hamburger-icon span,
+        .mobile-nav-link,
+        .mobile-nav-number {
+            transition: none !important;
+        }
+
+        .mobile-menu-btn:hover,
+        .mobile-menu-btn:active {
+            transform: none !important;
+        }
+
+        .mobile-nav-number {
+            transform: none !important;
+        }
+    }
+</style>
+
+<script>
+    // Update active state on client-side navigation
+    function updateMobileNav() {
+        const currentPath = window.location.pathname;
+        const links = document.querySelectorAll(".mobile-nav-link");
+
+        links.forEach((link) => {
+            const href = link.getAttribute("href");
+            if (!href) return;
+
+            const isActive =
+                href === "/"
+                    ? currentPath === "/"
+                    : currentPath === href || currentPath.startsWith(href);
+
+            if (isActive) {
+                link.classList.add("mobile-nav-link--active");
+                link.setAttribute("aria-current", "page");
+            } else {
+                link.classList.remove("mobile-nav-link--active");
+                link.removeAttribute("aria-current");
+            }
+        });
+    }
+
+    // Run on initial load and view transitions
+    updateMobileNav();
+    document.addEventListener("astro:page-load", updateMobileNav);
+</script>

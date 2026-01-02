@@ -1,0 +1,292 @@
+---
+/**
+ * Hero Component
+ *
+ * Hero section with multiple visual variants and responsive typography.
+ * Supports title, subtitle, CTA buttons, and custom backgrounds.
+ *
+ * @component
+ * @example
+ * ```astro
+ * <Hero
+ *   title="Welcome"
+ *   subtitle="Get started today"
+ *   variant="glass"
+ *   showScrollIndicator
+ * >
+ *   <button class="btn-primary">Get Started</button>
+ * </Hero>
+ * ```
+ */
+
+import { ContentCard } from "../index";
+
+export interface Props {
+  /** Hero title */
+  title: string;
+  /** Optional subtitle */
+  subtitle?: string;
+  /** Visual variant */
+  variant?: "simple" | "glass" | "gradient" | "image";
+  /** Background image URL (for variant="image") */
+  imageSrc?: string;
+  /** Hero section height */
+  height?: "sm" | "md" | "lg" | "full";
+  /** Show animated scroll indicator */
+  showScrollIndicator?: boolean;
+  /** Additional CSS classes */
+  class?: string;
+}
+
+const {
+  title,
+  subtitle,
+  variant = "simple",
+  imageSrc,
+  height = "md",
+  showScrollIndicator = false,
+  class: className = "",
+} = Astro.props;
+
+const heightClasses = {
+  sm: "min-h-[50vh]",
+  md: "min-h-[70vh]",
+  lg: "min-h-[90vh]",
+  full: "min-h-screen",
+};
+---
+
+<section
+  class:list={[
+    "hero-section",
+    "relative overflow-hidden flex items-center",
+    heightClasses[height],
+    className,
+  ]}
+>
+  <!-- Background for image variant -->
+  {
+    variant === "image" && imageSrc && (
+      <div class="absolute inset-0 z-0">
+        <img
+          src={imageSrc}
+          alt=""
+          class="w-full h-full object-cover"
+          aria-hidden="true"
+        />
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/80" />
+      </div>
+    )
+  }
+
+  <!-- Background slot for custom backgrounds -->
+  {
+    Astro.slots.has("background") && (
+      <div class="absolute inset-0 z-0">
+        <slot name="background" />
+      </div>
+    )
+  }
+
+  <!-- Content -->
+  <div class="container-custom relative z-10">
+    {
+      variant === "glass" ? (
+        <div class="max-w-5xl mx-auto">
+          <ContentCard variant="glass" padding="lg" maxWidth="full">
+            <div class="accent-bar" />
+            <h1 class="hero-title">{title}</h1>
+            {subtitle && <p class="hero-subtitle">{subtitle}</p>}
+            {Astro.slots.has("default") && (
+              <div class="mt-8 flex flex-wrap gap-4">
+                <slot />
+              </div>
+            )}
+            <div class="hero-decoration" />
+          </ContentCard>
+        </div>
+      ) : (
+        <div
+          class="max-w-5xl mx-auto text-center"
+          x-data="{ showed: false }"
+          x-init="setTimeout(() => showed = true, 300)"
+        >
+          <h1
+            class:list={[
+              "hero-title",
+              variant === "image" && "text-white drop-shadow-lg",
+              "opacity-0 translate-y-8 transition-all duration-1000 ease-out",
+            ]}
+            :class="{ 'opacity-100 translate-y-0': showed }"
+          >
+            {title}
+          </h1>
+          {subtitle && (
+            <p
+              class:list={[
+                "hero-subtitle",
+                variant === "image" && "text-white/90",
+                "opacity-0 translate-y-8 transition-all duration-1000 delay-300 ease-out",
+              ]}
+              :class="{ 'opacity-100 translate-y-0': showed }"
+            >
+              {subtitle}
+            </p>
+          )}
+          {Astro.slots.has("default") && (
+            <div
+              class="mt-8 flex flex-wrap gap-4 justify-center opacity-0 translate-y-8 transition-all duration-1000 delay-500 ease-out"
+              :class="{ 'opacity-100 translate-y-0': showed }"
+            >
+              <slot />
+            </div>
+          )}
+        </div>
+      )
+    }
+  </div>
+
+  <!-- Scroll Indicator -->
+  {
+    showScrollIndicator && (
+      <div
+        class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 animate-bounce-slow cursor-pointer group"
+        onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})"
+      >
+        <span
+          class:list={[
+            "text-sm font-medium tracking-widest uppercase",
+            variant === "image" ? "text-white" : "text-[var(--text-primary)]",
+          ]}
+        >
+          Scroll
+        </span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class:list={[
+            "h-6 w-6",
+            variant === "image" ? "text-white" : "text-[var(--text-primary)]",
+          ]}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+      </div>
+    )
+  }
+</section>
+
+<style>
+  /* Accent bar for glass variant */
+  .accent-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(
+      90deg,
+      var(--color-primary) 0%,
+      var(--color-accent) 50%,
+      var(--color-secondary) 100%
+    );
+  }
+
+  /* Hero title styling */
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero-title {
+      font-size: 3.75rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-title {
+      font-size: 4.5rem;
+    }
+  }
+
+  /* Hero subtitle styling */
+  .hero-subtitle {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .hero-subtitle {
+      font-size: 1.25rem;
+      line-height: 1.8;
+    }
+  }
+
+  /* Decorative element for glass variant */
+  .hero-decoration {
+    position: absolute;
+    bottom: -2rem;
+    right: -2rem;
+    width: 12rem;
+    height: 12rem;
+    background: radial-gradient(
+      circle at center,
+      var(--color-accent),
+      transparent 70%
+    );
+    opacity: 0.08;
+    pointer-events: none;
+    border-radius: 50%;
+    z-index: -1;
+  }
+
+  @media (min-width: 768px) {
+    .hero-decoration {
+      width: 16rem;
+      height: 16rem;
+    }
+  }
+
+  /* Bounce animation for scroll indicator */
+  .animate-bounce-slow {
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(-25%) translateX(-50%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+      transform: translateY(0) translateX(-50%);
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-bounce-slow {
+      animation: none !important;
+    }
+
+    .hero-title,
+    .hero-subtitle {
+      transition: none !important;
+    }
+  }
+</style>

@@ -7,9 +7,8 @@
 // - ContentCard.astro replaces .parking-card styling (~70 lines removed)
 // - Kept component-specific: background animations, decorative footer
 import { storyblokEditable } from "@storyblok/astro";
-import type { BereikbaarheidProps, ParkeersectieBlok } from './types';
-import ContentCard from '../../../components/accessibility/ContentCard.astro';
-import IconBadge from '../../../components/accessibility/IconBadge.astro';
+import type { BereikbaarheidProps, ParkeersectieBlok } from "./types";
+import { ContentCard, IconBadge } from "@aaltjesdagen/ui/components";
 
 interface Props extends BereikbaarheidProps<ParkeersectieBlok> {}
 
@@ -53,32 +52,29 @@ const optimizedImageUrl = imageUrl
   <div class="content-container">
     <!-- Parking Icon Header with enhanced styling -->
     <div class="icon-container">
-      <IconBadge 
-        icon="🅿️" 
-        variant="accent" 
-        size="lg" 
-        rotation={3} 
-        animation="hover-rotate" 
+      <IconBadge
+        icon="🅿️"
+        variant="accent"
+        size="lg"
+        rotation={3}
+        animation="hover-rotate"
       />
     </div>
 
-    <ContentCard variant="elevated" padding="lg" maxWidth="full" hoverEffect={true}>
+    <ContentCard
+      variant="elevated"
+      padding="lg"
+      maxWidth="full"
+      hoverEffect={true}
+    >
       <!-- Title -->
-      {
-        displayTitle && (
-          <h2 class="card-title">
-            {displayTitle}
-          </h2>
-        )
-      }
+      {displayTitle && <h2 class="card-title">{displayTitle}</h2>}
 
       <!-- Body Text / Content -->
       {
         displayBody && (
           <div class="card-body">
-            <p class="body-text">
-              {displayBody}
-            </p>
+            <p class="body-text">{displayBody}</p>
           </div>
         )
       }
@@ -198,7 +194,8 @@ const optimizedImageUrl = imageUrl
   }
 
   @keyframes pulse {
-    0%, 100% {
+    0%,
+    100% {
       opacity: 1;
     }
     50% {

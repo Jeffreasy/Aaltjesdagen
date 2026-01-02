@@ -1,11 +1,11 @@
 ---
 /**
  * ContentCard Component
- * 
+ *
  * Flexible card wrapper with multiple style variants.
  * Supports glassmorphism, elevated styling, and gradient backgrounds.
  * Uses named slots for header, content, and footer.
- * 
+ *
  * @component
  * @example
  * ```astro
@@ -16,20 +16,20 @@
  *     <button>Action</button>
  *   </div>
  * </ContentCard>
- * 
+ *
  * <ContentCard variant="elevated" hoverEffect={true} maxWidth="2xl">
  *   <p>Simple elevated card with hover effect</p>
  * </ContentCard>
  * ```
  */
 
-interface Props {
+export interface Props {
   /** Card visual style variant */
-  variant?: 'default' | 'glass' | 'elevated' | 'gradient';
+  variant?: "default" | "glass" | "elevated" | "gradient";
   /** Internal padding size */
-  padding?: 'sm' | 'md' | 'lg';
+  padding?: "sm" | "md" | "lg";
   /** Maximum width constraint */
-  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
+  maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "full";
   /** Enable hover lift effect */
   hoverEffect?: boolean;
   /** Additional CSS classes */
@@ -37,56 +37,47 @@ interface Props {
 }
 
 const {
-  variant = 'default',
-  padding = 'md',
-  maxWidth = 'full',
+  variant = "default",
+  padding = "md",
+  maxWidth = "full",
   hoverEffect = true,
-  class: className = ''
+  class: className = "",
 } = Astro.props;
 
-// Map padding to CSS values
-const paddingMap = {
-  sm: '1.5rem',
-  md: '2.5rem 2rem',
-  lg: '3.5rem 3rem'
-};
-
-const paddingMobile = {
-  sm: '1rem',
-  md: '1.5rem 1.25rem',
-  lg: '2rem 1.5rem'
-};
-
 // Map maxWidth to CSS values
-const maxWidthMap = {
-  sm: '32rem',    // 512px
-  md: '48rem',    // 768px
-  lg: '64rem',    // 1024px
-  xl: '80rem',    // 1280px
-  '2xl': '96rem', // 1536px
-  full: '100%'
+const maxWidthMap: Record<NonNullable<Props["maxWidth"]>, string> = {
+  sm: "32rem", // 512px
+  md: "48rem", // 768px
+  lg: "64rem", // 1024px
+  xl: "80rem", // 1280px
+  "2xl": "96rem", // 1536px
+  full: "100%",
 };
 ---
 
-<article 
-  class={`content-card content-card--${variant} content-card--padding-${padding} ${hoverEffect ? 'content-card--hover' : ''} ${className}`}
+<article
+  class={`content-card content-card--${variant} content-card--padding-${padding} ${hoverEffect ? "content-card--hover" : ""} ${className}`}
   style={`max-width: ${maxWidthMap[maxWidth]};`}
 >
-  {Astro.slots.has('header') && (
-    <header class="content-card__header">
-      <slot name="header" />
-    </header>
-  )}
-  
+  {
+    Astro.slots.has("header") && (
+      <header class="content-card__header">
+        <slot name="header" />
+      </header>
+    )
+  }
+
   <div class="content-card__body">
     <slot />
   </div>
-  
-  {Astro.slots.has('footer') && (
-    <footer class="content-card__footer">
-      <slot name="footer" />
-    </footer>
-  )}
+
+  {
+    Astro.slots.has("footer") && (
+      <footer class="content-card__footer">
+        <slot name="footer" />
+      </footer>
+    )
+  }
 </article>
 
 <style>
@@ -100,54 +91,54 @@ const maxWidthMap = {
     transition: all var(--transition-slow);
     overflow: hidden;
   }
-  
+
   /* === PADDING VARIANTS === */
   .content-card--padding-sm {
     padding: 1rem;
   }
-  
+
   .content-card--padding-md {
     padding: 1.5rem 1.25rem;
   }
-  
+
   .content-card--padding-lg {
     padding: 2rem 1.5rem;
   }
-  
+
   @media (min-width: 768px) {
     .content-card--padding-sm {
       padding: 1.5rem;
     }
-    
+
     .content-card--padding-md {
       padding: 2.5rem 2rem;
     }
-    
+
     .content-card--padding-lg {
       padding: 3.5rem 3rem;
     }
   }
-  
+
   /* === STYLE VARIANTS === */
-  
+
   /* Default: Solid elevated card */
   .content-card--default {
     background: var(--bg-elevated);
   }
-  
+
   /* Glass: Semi-transparent with backdrop blur */
   .content-card--glass {
     background: color-mix(in srgb, var(--bg-elevated), transparent 10%);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
-  
+
   /* Elevated: Enhanced shadow depth */
   .content-card--elevated {
     background: var(--bg-elevated);
     box-shadow: var(--shadow-xl);
   }
-  
+
   /* Gradient: Subtle gradient background */
   .content-card--gradient {
     background: linear-gradient(
@@ -156,48 +147,48 @@ const maxWidthMap = {
       color-mix(in srgb, var(--bg-elevated), var(--color-primary) 3%) 100%
     );
   }
-  
+
   /* === HOVER EFFECT === */
   .content-card--hover:hover {
     box-shadow: var(--shadow-xl);
     border-color: var(--color-primary);
     transform: translateY(-2px);
   }
-  
+
   .content-card--elevated.content-card--hover:hover {
-    box-shadow: 
+    box-shadow:
       var(--shadow-xl),
       0 0 0 1px var(--color-primary);
   }
-  
+
   /* === CARD SECTIONS === */
   .content-card__header {
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--border-secondary);
   }
-  
+
   .content-card__body {
     flex: 1;
   }
-  
+
   .content-card__footer {
     margin-top: 1.5rem;
     padding-top: 1rem;
     border-top: 1px solid var(--border-secondary);
   }
-  
+
   /* === ACCESSIBILITY === */
   @media (prefers-reduced-motion: reduce) {
     .content-card {
       transition: none !important;
     }
-    
+
     .content-card--hover:hover {
       transform: none !important;
     }
   }
-  
+
   /* === FALLBACK FOR BROWSERS WITHOUT BACKDROP-FILTER SUPPORT === */
   @supports not (backdrop-filter: blur(12px)) {
     .content-card--glass {

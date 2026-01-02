@@ -1,11 +1,17 @@
 ---
 /**
  * ThemeToggle Component
- * 
+ *
  * Interactive theme toggle button with sun/moon icons.
  * Uses Alpine.js for reactivity and localStorage for persistence.
  * Respects system preferences via prefers-color-scheme.
  */
+
+export interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
 ---
 
 <button
@@ -42,7 +48,7 @@
   }"
   @click="toggle()"
   type="button"
-  class="theme-toggle"
+  class:list={["theme-toggle", className]}
   aria-label="Toggle theme"
   title="Toggle theme"
 >

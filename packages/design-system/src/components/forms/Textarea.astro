@@ -1,0 +1,88 @@
+---
+/**
+ * Textarea Component
+ *
+ * Accessible, theme-aware textarea with validation states
+ *
+ * @component
+ */
+
+export interface Props {
+    name: string;
+    id?: string;
+    placeholder?: string;
+    value?: string;
+    rows?: number;
+    required?: boolean;
+    disabled?: boolean;
+    error?: boolean;
+    success?: boolean;
+    fullWidth?: boolean;
+    resize?: boolean;
+    class?: string;
+}
+
+const {
+    name,
+    id = name,
+    placeholder,
+    value,
+    rows = 4,
+    required = false,
+    disabled = false,
+    error = false,
+    success = false,
+    fullWidth = false,
+    resize = true,
+    class: className = "",
+} = Astro.props;
+
+const stateClasses = error
+    ? "border-error focus:ring-error/20"
+    : success
+      ? "border-success focus:ring-success/20"
+      : "border-border-primary focus:ring-primary/20";
+---
+
+<textarea
+    aria-invalid={error ? "true" : "false"}
+    class:list={[
+        "rounded-xl border-2 px-4 py-2.5 font-body text-base transition-all duration-200",
+        "bg-elevated text-text-primary placeholder:text-text-tertiary",
+        "focus:outline-none focus:ring-4",
+        "disabled:opacity-50 disabled:cursor-not-allowed",
+        stateClasses,
+        fullWidth && "w-full",
+        !resize && "resize-none",
+        className,
+    ]}
+    {...Astro.props}>{value}</textarea
+>
+
+<style>
+    /* Remove default browser styling */
+    textarea {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+    /* Custom scrollbar for dark mode */
+    textarea::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    textarea::-webkit-scrollbar-track {
+        background: var(--bg-base);
+        border-radius: 4px;
+    }
+
+    textarea::-webkit-scrollbar-thumb {
+        background: var(--border-primary);
+        border-radius: 4px;
+    }
+
+    textarea::-webkit-scrollbar-thumb:hover {
+        background: var(--color-primary);
+    }
+</style>

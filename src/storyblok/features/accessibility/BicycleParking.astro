@@ -1,15 +1,14 @@
 ---
 /**
  * StallenFietsen Component
- * Migrated to use base components from src/components/accessibility/
- * - IconBadge.astro: Replaces manual icon implementation
- * - ContentCard.astro: Replaces manual card wrapper (partially - sidebar accent is component-specific)
+ * Uses specialized components from @aaltjesdagen/ui design system
+ * - IconBadge: Icon badge with emoji and gradient styling
+ * - ContentCard: Consistent card styling with default variant
  */
 import { storyblokEditable } from "@storyblok/astro";
 import { renderText } from "@aaltjesdagen/ui/utils";
 import type { BereikbaarheidProps, StallenFietsenBlok } from "./types";
-import IconBadge from "../../../components/accessibility/IconBadge.astro";
-import ContentCard from "../../../components/accessibility/ContentCard.astro";
+import { ContentCard, IconBadge } from "@aaltjesdagen/ui/components";
 
 interface Props extends BereikbaarheidProps<StallenFietsenBlok> {}
 

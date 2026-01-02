@@ -7,10 +7,20 @@
  *
  * @component
  */
-import type { LinkProps } from "../types/navigation";
 
-interface Props extends LinkProps {
-  /** Link content (passed via slot) */
+export interface Props {
+  /** URL to link to */
+  href: string;
+  /** Visual style variant */
+  variant?: "nav" | "footer" | "inline" | "button";
+  /** Force active state (overrides automatic detection) */
+  active?: boolean;
+  /** Is this an external link? (adds target="_blank" rel="noopener") */
+  external?: boolean;
+  /** Additional CSS classes */
+  class?: string;
+  /** Aria label for accessibility */
+  ariaLabel?: string;
 }
 
 const {

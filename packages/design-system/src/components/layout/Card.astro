@@ -1,0 +1,62 @@
+---
+/**
+ * Card Component
+ *
+ * Astro wrapper around .card-base class with header/footer slots
+ *
+ * @component
+ */
+
+export interface Props {
+    variant?: "base" | "glass";
+    padding?: "none" | "sm" | "md" | "lg";
+    hoverable?: boolean;
+    class?: string;
+}
+
+const {
+    variant = "base",
+    padding = "md",
+    hoverable = true,
+    class: className = "",
+} = Astro.props;
+
+const paddingClasses = {
+    none: "",
+    sm: "p-4",
+    md: "p-6",
+    lg: "p-8",
+};
+
+const variantClass = variant === "glass" ? "glass" : "card-base";
+---
+
+<div
+    class:list={[
+        variantClass,
+        paddingClasses[padding],
+        !hoverable && "[&:hover]:transform-none [&:hover]:shadow-soft-md",
+        className,
+    ]}
+>
+    <!-- Header slot -->
+    {
+        Astro.slots.has("header") && (
+            <div class="border-b border-border-primary pb-4 mb-4">
+                <slot name="header" />
+            </div>
+        )
+    }
+
+    <!-- Default content -->
+    <slot />
+
+    <!-- Footer slot -->
+    {
+        Astro.slots.has("footer") && (
+            <div class="border-t border-border-primary pt-4 mt-4">
+                <slot name="footer" />
+            </div>
+        )
+    }
+</div>

@@ -1,0 +1,101 @@
+---
+/**
+ * Input Component
+ *
+ * Accessible, theme-aware text input with validation states
+ *
+ * @component
+ */
+
+export interface Props {
+    type?: "text" | "email" | "password" | "number" | "tel" | "url" | "search";
+    name: string;
+    id?: string;
+    placeholder?: string;
+    value?: string;
+    required?: boolean;
+    disabled?: boolean;
+    error?: boolean;
+    success?: boolean;
+    fullWidth?: boolean;
+    size?: "sm" | "md" | "lg";
+    class?: string;
+}
+
+const {
+    type = "text",
+    name,
+    id = name,
+    placeholder,
+    value,
+    required = false,
+    disabled = false,
+    error = false,
+    success = false,
+    fullWidth = false,
+    size = "md",
+    class: className = "",
+} = Astro.props;
+
+const sizeClasses = {
+    sm: "px-3 py-1.5 text-sm",
+    md: "px-4 py-2.5 text-base",
+    lg: "px-5 py-3 text-lg",
+};
+
+const stateClasses = error
+    ? "border-error focus:ring-error/20"
+    : success
+      ? "border-success focus:ring-success/20"
+      : "border-border-primary focus:ring-primary/20";
+---
+
+<input
+    type={type}
+    name={name}
+    id={id}
+    placeholder={placeholder}
+    value={value}
+    required={required}
+    disabled={disabled}
+    aria-invalid={error ? "true" : "false"}
+    class:list={[
+        "rounded-xl border-2 font-body transition-all duration-200",
+        "bg-elevated text-text-primary placeholder:text-text-tertiary",
+        "focus:outline-none focus:ring-4",
+        "disabled:opacity-50 disabled:cursor-not-allowed",
+        sizeClasses[size],
+        stateClasses,
+        fullWidth && "w-full",
+        className,
+    ]}
+/>
+
+<style>
+    /* Remove default browser styling */
+    input {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+    /* Autofill styling */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        -webkit-text-fill-color: var(--text-primary);
+        -webkit-box-shadow: 0 0 0 1000px var(--bg-elevated) inset;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    /* Number input arrows */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+</style>

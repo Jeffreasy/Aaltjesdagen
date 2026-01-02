@@ -1,0 +1,167 @@
+---
+/**
+ * Pagination Component
+ * 
+ * Accessible pagination with Alpine.js integration
+ * 
+ * @component
+ */
+
+export interface Props {
+  currentPage: number;
+  totalPages: number;
+  showFirstLast?: boolean;
+  maxVisible?: number;
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+
+const {
+  currentPage = 1,
+  totalPages,
+  showFirstLast = true,
+  maxVisible = 7,
+  size = 'md',
+  class: className = '',
+} = Astro.props;
+
+const sizeClasses = {
+  sm: 'px-2 py-1 text-sm',
+  md: 'px-3 py-2 text-base',
+  lg: 'px-4 py-2.5 text-lg',
+};
+
+// Generate page numbers to show
+const getPageNumbers = () => {
+  const pages: (number | string)[] = [];
+  
+  if (totalPages <= maxVisible) {
+    // Show all pages
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(i);
+    }
+  } else {
+    // Show limited pages with ellipsis
+    const leftSiblingIndex = Math.max(currentPage - 1, 1);
+    const rightSiblingIndex = Math.min(currentPage + 1, totalPages);
+    
+    const shouldShowLeftDots = leftSiblingIndex > 2;
+    const shouldShowRightDots = rightSiblingIndex < totalPages - 1;
+    
+    if (shouldShowLeftDots && !shouldShowRightDots) {
+      pages.push(1, '...', ...Array.from({ length: 5 }, (_, i) => totalPages - 4 + i));
+    } else if (!shouldShowLeftDots && shouldShowRightDots) {
+      pages.push(...Array.from({ length: 5 }, (_, i) => i + 1), '...', totalPages);
+    } else {
+      pages.push(1, '...', leftSiblingIndex, currentPage, rightSiblingIndex, '...', totalPages);
+    }
+  }
+  
+  return pages;
+};
+
+const pageNumbers = getPageNumbers();
+---
+
+<nav
+  class:list={['flex items-center justify-center gap-1', className]}
+  aria-label="Pagination"
+  role="navigation"
+>
+  {/* First Page */}
+  {showFirstLast && (
+    <button
+      @click="currentPage = 1"
+      :disabled="currentPage === 1"
+      aria-label="Eerste pagina"
+      class:list={[
+        'rounded-lg font-semibold transition-all duration-200',
+        'border-2 border-border-primary',
+        'hover:bg-primary hover:text-white hover:border-primary',
+        'disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent',
+        sizeClasses[size],
+      ]}
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+      </svg>
+    </button>
+  )}
+
+  {/* Previous */}
+  <button
+    @click="currentPage > 1 && currentPage--"
+    :disabled="currentPage === 1"
+    aria-label="Vorige pagina"
+    class:list={[
+      'rounded-lg font-semibold transition-all duration-200',
+      'border-2 border-border-primary',
+      'hover:bg-primary hover:text-white hover:border-primary',
+      'disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent',
+      sizeClasses[size],
+    ]}
+  >
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+    </svg>
+  </button>
+
+  {/* Page Numbers */}
+  {pageNumbers.map((pageNum) =>
+    pageNum === '...' ? (
+      <span class:list={['px-2', sizeClasses[size]]} aria-hidden="true">...</span>
+    ) : (
+      <button
+        @click={`currentPage = ${pageNum}`}
+        :class={`currentPage === ${pageNum} ? 'bg-primary text-white border-primary' : 'border-border-primary hover:bg-primary/10'`}
+        aria-label={`Pagina ${pageNum}`}
+        :aria-current={`currentPage === ${pageNum} ? 'page' : undefined`}
+        class:list={[
+          'rounded-lg font-semibold transition-all duration-200',
+          'border-2',
+          sizeClasses[size],
+        ]}
+      >
+        {pageNum}
+      </button>
+    )
+  )}
+
+  {/* Next */}
+  <button
+    @click={`currentPage < ${totalPages} && currentPage++`}
+    :disabled={`currentPage === ${totalPages}`}
+    aria-label="Volgende pagina"
+    class:list={[
+      'rounded-lg font-semibold transition-all duration-200',
+      'border-2 border-border-primary',
+      'hover:bg-primary hover:text-white hover:border-primary',
+      'disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent',
+      sizeClasses[size],
+    ]}
+  >
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+    </svg>
+  </button>
+
+  {/* Last Page */}
+  {showFirstLast && (
+    <button
+      @click={`currentPage = ${totalPages}`}
+      :disabled={`currentPage === ${totalPages}`}
+      aria-label="Laatste pagina"
+      class:list={[
+        'rounded-lg font-semibold transition-all duration-200',
+        'border-2 border-border-primary',
+        'hover:bg-primary hover:text-white hover:border-primary',
+        'disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent',
+        sizeClasses[size],
+      ]}
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
+      </svg>
+    </button>
+  )}
+</nav>

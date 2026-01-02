@@ -1,0 +1,110 @@
+---
+/**
+ * Table Component
+ *
+ * Accessible, theme-aware table with responsive design
+ *
+ * @component
+ */
+
+export interface Props {
+    variant?: "default" | "striped" | "bordered";
+    size?: "sm" | "md" | "lg";
+    hoverable?: boolean;
+    responsive?: boolean;
+    class?: string;
+}
+
+const {
+    variant = "default",
+    size = "md",
+    hoverable = true,
+    responsive = true,
+    class: className = "",
+} = Astro.props;
+
+const sizeClasses = {
+    sm: "text-sm",
+    md: "text-base",
+    lg: "text-lg",
+};
+---
+
+<div class:list={[responsive && "overflow-x-auto", className]}>
+    <table
+        class:list={[
+            "w-full border-collapse",
+            sizeClasses[size],
+            variant === "bordered" && "border border-border-primary",
+        ]}
+    >
+        <slot />
+    </table>
+</div>
+
+<style>
+    /* Base table styling */
+    table {
+        color: var(--text-primary);
+    }
+
+    /* Table header */
+    table :global(thead) {
+        background: var(--bg-elevated);
+        border-bottom: 2px solid var(--border-primary);
+    }
+
+    table :global(th) {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    /* Table body */
+    table :global(td) {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--border-secondary);
+    }
+
+    /* Striped variant */
+    table.striped :global(tbody tr:nth-child(even)) {
+        background: var(--bg-elevated);
+    }
+
+    /* Hoverable rows */
+    table.hoverable :global(tbody tr:hover) {
+        background: color-mix(in srgb, var(--color-primary), transparent 95%);
+        transition: background var(--transition-base);
+    }
+
+    /* Bordered variant */
+    table.bordered :global(th),
+    table.bordered :global(td) {
+        border: 1px solid var(--border-primary);
+    }
+
+    /* Responsive scrolling */
+    @media (max-width: 768px) {
+        table :global(th),
+        table :global(td) {
+            padding: 0.5rem 0.75rem;
+        }
+    }
+</style>
+
+<script>
+    // Apply classes based on props
+    const tables = document.querySelectorAll("table");
+    tables.forEach((table) => {
+        const variant = table
+            .closest("[data-variant]")
+            ?.getAttribute("data-variant");
+        const hoverable = table
+            .closest("[data-hoverable]")
+            ?.getAttribute("data-hoverable");
+
+        if (variant === "striped") table.classList.add("striped");
+        if (hoverable === "true") table.classList.add("hoverable");
+    });
+</script>

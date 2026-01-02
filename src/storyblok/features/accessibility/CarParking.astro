@@ -1,17 +1,19 @@
 ---
 /**
  * ParkerenAutos Component
- * Migrated to use base components from src/components/accessibility/
- * - IconBadge.astro: Replaces manual icon badge implementation (lines 102-127)
- * - DecorativeUnderline.astro: Replaces title underline (lines 149-161)
- * - ContentCard.astro: Replaces manual glass card wrapper (lines 66-93)
+ * Uses specialized components from @aaltjesdagen/ui design system
+ * - IconBadge: Icon badge with gradient, rotation, hover animation
+ * - DecorativeUnderline: Gradient underline bar
+ * - ContentCard: Glassmorphism card with backdrop-filter, borders, shadows
  */
 import { storyblokEditable } from "@storyblok/astro";
 import { renderText } from "@aaltjesdagen/ui/utils";
 import type { BereikbaarheidProps, ParkerenAutosBlok } from "./types";
-import IconBadge from "../../../components/accessibility/IconBadge.astro";
-import DecorativeUnderline from "../../../components/accessibility/DecorativeUnderline.astro";
-import ContentCard from "../../../components/accessibility/ContentCard.astro";
+import {
+  ContentCard,
+  IconBadge,
+  DecorativeUnderline,
+} from "@aaltjesdagen/ui/components";
 
 interface Props extends BereikbaarheidProps<ParkerenAutosBlok> {}
 

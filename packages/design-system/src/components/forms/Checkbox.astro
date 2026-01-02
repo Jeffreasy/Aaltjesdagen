@@ -1,0 +1,99 @@
+---
+/**
+ * Checkbox Component
+ *
+ * Custom styled checkbox with accessible markup
+ *
+ * @component
+ */
+
+export interface Props {
+    name: string;
+    id?: string;
+    label: string;
+    checked?: boolean;
+    value?: string;
+    disabled?: boolean;
+    error?: boolean;
+    class?: string;
+}
+
+const {
+    name,
+    id = name,
+    label,
+    checked = false,
+    value,
+    disabled = false,
+    error = false,
+    class: className = "",
+} = Astro.props;
+---
+
+<div class:list={["flex items-start gap-3", className]}>
+    <div class="relative flex items-center justify-center">
+        <input
+            type="checkbox"
+            name={name}
+            id={id}
+            checked={checked}
+            value={value}
+            disabled={disabled}
+            aria-invalid={error ? "true" : "false"}
+            class="peer sr-only"
+        />
+        <div
+            class:list={[
+                "flex h-5 w-5 items-center justify-center rounded border-2 transition-all",
+                "peer-focus:ring-4 peer-focus:ring-primary/20",
+                "peer-checked:bg-primary peer-checked:border-primary",
+                "peer-disabled:opacity-50 peer-disabled:cursor-not-allowed",
+                error ? "border-error" : "border-border-primary bg-elevated",
+            ]}
+        >
+            <svg
+                class="h-3.5 w-3.5 text-white opacity-0 peer-checked:opacity-100 transition-opacity"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="3"
+                    d="M5 13l4 4L19 7"></path>
+            </svg>
+        </div>
+    </div>
+
+    <label
+        for={id}
+        class:list={[
+            "text-sm font-medium text-text-primary select-none cursor-pointer",
+            "peer-disabled:opacity-50 peer-disabled:cursor-not-allowed",
+            disabled && "opacity-50 cursor-not-allowed",
+        ]}
+    >
+        {label}
+    </label>
+</div>
+
+<style>
+    /* Enhanced checkbox with smooth transitions */
+    input[type="checkbox"]:checked + div {
+        animation: checkboxPop 0.2s ease-out;
+    }
+
+    @keyframes checkboxPop {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+</style>

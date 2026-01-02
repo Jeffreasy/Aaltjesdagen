@@ -1,0 +1,81 @@
+---
+/**
+ * Tabs Component
+ * 
+ * Tabbed interface with Alpine.js
+ * 
+ * @component
+ */
+
+export interface Tab {
+  id: string;
+  label: string;
+  disabled?: boolean;
+}
+
+export interface Props {
+  tabs: Tab[];
+  defaultTab?: string;
+  variant?: 'line' | 'pills';
+  class?: string;
+}
+
+const {
+  tabs,
+  defaultTab,
+  variant = 'line',
+  class: className = '',
+} = Astro.props;
+
+
+---
+
+<div
+  x-data={`{ activeTab: '${defaultTab || tabs[0]?.id}' }`}
+  class:list={[className]}
+>
+  <!-- Tab List -->
+  <div
+    role="tablist"
+    class:list={[
+      'flex gap-1',
+      variant === 'line'
+        ? 'border-b border-border-primary'
+        : 'bg-elevated p-1 rounded-xl',
+    ]}
+  >
+    {tabs.map((tab) => (
+      <button
+        type="button"
+        role="tab"
+        :aria-selected={`activeTab === '${tab.id}'`}
+        @click={!tab.disabled && `activeTab = '${tab.id}'`}
+        :tabindex={`activeTab === '${tab.id}' ? 0 : -1`}
+        disabled={tab.disabled}
+        class:list={[
+          'px-4 py-2 font-semibold text-sm transition-all',
+          'focus:outline-none focus:ring-2 focus:ring-primary/20 rounded-lg',
+          'disabled:opacity-50 disabled:cursor-not-allowed',
+          variant === 'line'
+            ? [
+                'border-b-2 -mb-px',
+                ':class="activeTab === \'{tab.id}\' ? \'border-primary text-primary\' : \'border-transparent text-text-secondary hover:text-text-primary\'"',
+              ]
+            : [
+                'rounded-lg',
+                ':class="activeTab === \'{tab.id}\' ? \'bg-base shadow-sm text-primary\' : \'text-text-secondary hover:text-text-primary\'"',
+              ],
+        ]}
+      >
+        {tab.label}
+      </button>
+    ))}
+  </div>
+  
+  <!-- Tab Panels -->
+  <div class="mt-6">
+    <!-- Note: Use default slot with data-tab-id attributes on your content -->
+    <!-- Example: <div data-tab-id="tab1" x-show="activeTab === 'tab1'">Content</div> -->
+    <slot />
+  </div>
+</div>

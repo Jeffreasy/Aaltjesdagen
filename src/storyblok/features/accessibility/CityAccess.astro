@@ -7,9 +7,11 @@
 import { storyblokEditable } from "@storyblok/astro";
 import { renderText } from "@aaltjesdagen/ui/utils";
 import type { BereikbaarheidProps, InEnRondomDeBinnenstadBlok } from "./types";
-import ContentCard from "../../../components/accessibility/ContentCard.astro";
-import IconBadge from "../../../components/accessibility/IconBadge.astro";
-import DecorativeUnderline from "../../../components/accessibility/DecorativeUnderline.astro";
+import {
+  ContentCard,
+  IconBadge,
+  DecorativeUnderline,
+} from "@aaltjesdagen/ui/components";
 
 interface Props extends BereikbaarheidProps<InEnRondomDeBinnenstadBlok> {}
 

@@ -1,0 +1,66 @@
+---
+/**
+ * SkipLink Component
+ *
+ * Accessibility component that provides a keyboard-accessible link to skip
+ * repetitive navigation and jump directly to main content.
+ *
+ * WCAG 2.1 Level A requirement for bypass blocks.
+ *
+ * @component
+ * @example
+ * ```astro
+ * <SkipLink />
+ * <SkipLink href="#content" text="Skip to content" />
+ * ```
+ */
+
+export interface Props {
+    /** Target element ID to skip to */
+    href?: string;
+    /** Link text for screen readers */
+    text?: string;
+    /** Additional CSS classes */
+    class?: string;
+}
+
+const {
+    href = "#main-content",
+    text = "Skip to main content",
+    class: className = "",
+} = Astro.props;
+---
+
+<a href={href} class:list={["skip-link", className]}>
+    {text}
+</a>
+
+<style>
+    .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        z-index: var(--z-modal);
+        padding: 0.75rem 1.5rem;
+        background: var(--color-primary);
+        color: white;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 0 0 0.5rem 0.5rem;
+        box-shadow: var(--shadow-lg);
+        transition: top var(--transition-base);
+    }
+
+    .skip-link:focus {
+        top: 0;
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
+    }
+
+    /* Ensure it's always visible when focused, even in reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        .skip-link {
+            transition: none;
+        }
+    }
+</style>
