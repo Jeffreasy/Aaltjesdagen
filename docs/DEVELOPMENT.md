@@ -111,25 +111,28 @@ The project is optimized for Vercel.
 ---
 
 ## 🧪 Testing & Quality Assurance
+### Testing & Quality Assurance
 
-We maintain professional code quality standards using a modern testing stack.
+**Unit Tests (Vitest)**
+- `npm run test:unit` - Run unit tests
+- Coverage: Logger, Performance Monitor, Date Utilities
+- Location: `src/test/unit/`
 
-### Unit & Component Tests (Vitest)
-For testing individual functions and components logic.
-```bash
-npm run test:unit
-```
-- **Config**: `vitest.config.ts`
-- **Location**: `src/test/unit/`
+**E2E Tests (Playwright)**
+- `npm run test:e2e` - Run end-to-end tests
+- Coverage: 
+  - Navigation (Desktop + Mobile)
+  - Accessibility (WCAG AA)
+  - Legal Pages (Privacy, Cookies)
+- Location: `src/test/e2e/`
 
-### End-to-End Tests (Playwright)
-Reliable browser testing to ensure critical flows works in production.
+**Combined**
+- `npm test` - Run all tests (unit + E2E) critical flows works in production.
 ```bash
 npm run test:e2e
 ```
 - **Config**: `playwright.config.ts`
 - **Location**: `src/test/e2e/`
-- **Browsers**: Chromium, Firefox, WebKit
 
 ---
 
