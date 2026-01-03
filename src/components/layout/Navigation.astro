@@ -45,7 +45,6 @@ const currentPath = Astro.url.pathname;
   <!-- Menu Toggle Button (Open Only) -->
   <button
     @click="mobileMenuOpen = true"
-    x-effect="mobileMenuOpen ? document.body.style.overflow = 'hidden' : document.body.style.overflow = ''"
     type="button"
     class="w-12 h-12 flex items-center justify-center rounded-xl bg-elevated border border-primary/10 shadow-sm hover:shadow-md transition-all active:scale-95"
     aria-label="Open menu"
@@ -85,6 +84,7 @@ const currentPath = Astro.url.pathname;
       <div
         class="absolute top-0 right-0 h-full w-full max-w-sm bg-[var(--bg-base)] shadow-2xl flex flex-col border-l border-[var(--border-primary)]"
         x-show="mobileMenuOpen"
+        x-effect="mobileMenuOpen ? document.body.style.overflow = 'hidden' : document.body.style.overflow = ''"
         x-transition:enter="transition transform ease-out duration-300"
         x-transition:enter-start="translate-x-full"
         x-transition:enter-end="translate-x-0"
@@ -267,7 +267,16 @@ const currentPath = Astro.url.pathname;
     });
   }
 
+  // Reset body overflow on page navigation (fix for stuck overflow:hidden)
+  function resetBodyOverflow() {
+    document.body.style.overflow = "";
+  }
+
   // Run on initial load and view transitions
   updateMobileLinks();
   document.addEventListener("astro:page-load", updateMobileLinks);
+
+  // Reset body overflow on every page navigation
+  document.addEventListener("astro:page-load", resetBodyOverflow);
+  document.addEventListener("astro:after-swap", resetBodyOverflow);
 </script>
