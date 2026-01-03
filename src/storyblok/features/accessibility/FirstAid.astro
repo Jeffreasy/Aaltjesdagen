@@ -4,9 +4,9 @@
 // - ContentCard.astro replaces .ehbo-card styling (~20 lines removed)
 // - Kept component-specific: .medical-strip, .alert-indicator
 import { storyblokEditable } from "@storyblok/astro";
-import { renderText } from "@aaltjesdagen/ui/utils";
+import { renderText } from "@laventecare/astro-ui/utils/storyblok";
 import type { BereikbaarheidProps, EhboPostenBlok } from "./types";
-import { ContentCard, IconBadge } from "@aaltjesdagen/ui/components";
+import { ContentCard, IconBadge } from "@laventecare/astro-ui/components";
 
 interface Props extends BereikbaarheidProps<EhboPostenBlok> {}
 

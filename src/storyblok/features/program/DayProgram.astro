@@ -1,8 +1,8 @@
 ---
 import { storyblokEditable } from "@storyblok/astro";
-import { ProgramModal, FilterBar } from "@aaltjesdagen/ui/components";
-import { formatDate } from "@aaltjesdagen/ui/utils";
-import { storyblokImage } from "@aaltjesdagen/ui/utils";
+import { ProgramModal, FilterBar } from "@laventecare/astro-ui/components";
+import { formatDate } from "@laventecare/astro-ui/utils";
+import { storyblokImage } from "@laventecare/astro-ui/utils/storyblok";
 
 const { blok } = Astro.props;
 
@@ -109,10 +109,12 @@ const programsDataJson = JSON.stringify(sortedProgrammas);
     {
       hasFilters && (
         <FilterBar
-          locations={locations}
+          categories={locations}
+          filterField="Locatie"
+          allText="Alles"
           showCount={true}
           items={sortedProgrammas}
-          gradientVariant="teal"
+          gradientVariant="primary"
           spacing="sm"
         />
       )

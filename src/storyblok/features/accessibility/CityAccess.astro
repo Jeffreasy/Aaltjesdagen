@@ -5,13 +5,13 @@
 // - ContentCard.astro wraps container (~20 lines removed)
 // - Kept component-specific: split layout grid, .title-column gradient, sticky positioning
 import { storyblokEditable } from "@storyblok/astro";
-import { renderText } from "@aaltjesdagen/ui/utils";
+import { renderText } from "@laventecare/astro-ui/utils/storyblok";
 import type { BereikbaarheidProps, InEnRondomDeBinnenstadBlok } from "./types";
 import {
   ContentCard,
   IconBadge,
   DecorativeUnderline,
-} from "@aaltjesdagen/ui/components";
+} from "@laventecare/astro-ui/components";
 
 interface Props extends BereikbaarheidProps<InEnRondomDeBinnenstadBlok> {}
 

@@ -1,7 +1,7 @@
 ---
 import { storyblokEditable } from "@storyblok/astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
-import { FilterBar } from "@aaltjesdagen/ui/components";
+import { FilterBar } from "@laventecare/astro-ui/components";
 
 const { blok } = Astro.props;
 
@@ -92,9 +92,11 @@ const hasFilters = locations.length > 0;
     {
       hasFilters && (
         <FilterBar
-          locations={locations}
+          categories={locations}
+          filterField="Locatie"
+          allText="Alles"
           showCount={false}
-          gradientVariant="blue"
+          gradientVariant="primary"
           spacing="lg"
         />
       )

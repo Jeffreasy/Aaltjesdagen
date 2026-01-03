@@ -1,5 +1,6 @@
 ---
-import "@aaltjesdagen/ui/css";
+import "@laventecare/astro-ui/css";
+import { ThemeProvider } from "@laventecare/astro-ui/components";
 import Navigation from "../components/layout/Navigation.astro";
 import Footer from "../components/layout/Footer.astro";
 import BackToTop from "../components/layout/BackToTop.astro";
@@ -20,7 +21,7 @@ const { title, description, image } = Astro.props;
 const isStoryblokEnabled = import.meta.env.DEV;
 ---
 
-<html lang="nl" class="scroll-smooth">
+<html lang="nl" class="scroll-smooth" data-brand="aaltjesdagen">
   <head>
     <SEO title={title} description={description} image={image} />
     <ClientRouter />
@@ -51,100 +52,102 @@ const isStoryblokEnabled = import.meta.env.DEV;
     </script>
   </head>
   <body class="flex flex-col min-h-screen relative">
-    <!-- Skip to Main Content (Accessibility) -->
-    <a
-      href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 px-6 py-3 bg-[var(--color-primary)] text-white font-bold rounded shadow-lg outline-none ring-2 ring-white"
-      style="z-index: var(--z-max);"
-    >
-      Ga direct naar de inhoud
-    </a>
-
-    <!-- Animated Background - PERSISTENT across navigation -->
-    <div
-      class="fixed inset-0 bg-animated"
-      style="z-index: var(--z-background);"
-      aria-hidden="true"
-      transition:persist
-    >
-      <div class="orb" aria-hidden="true"></div>
-    </div>
-
-    <!-- Header - PERSISTENT -->
-    <header
-      class="glass sticky top-0 py-4 shadow-lg border-b border-white/30 dark:border-gray-700/30 relative"
-      style="z-index: var(--z-header);"
-      transition:persist
-    >
-      <div
-        class="container-custom flex flex-row justify-between items-center gap-4"
+    <ThemeProvider locale="nl-NL" brand="aaltjesdagen">
+      <!-- Skip to Main Content (Accessibility) -->
+      <a
+        href="#main-content"
+        class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 px-6 py-3 bg-[var(--color-primary)] text-white font-bold rounded shadow-lg outline-none ring-2 ring-white"
+        style="z-index: var(--z-max);"
       >
-        <a href="/" class="flex items-center gap-3 group">
-          <Image
-            src={logoImage}
-            alt="Aaltjesdagen Logo"
-            width={180}
-            loading="eager"
-            fetchpriority="high"
-            class="h-12 w-auto transition-all duration-300 group-hover:scale-105 brightness-0 dark:invert"
-          />
-        </a>
-        <Navigation />
-      </div>
+        Ga direct naar de inhoud
+      </a>
 
-      <!-- Decorative Gradient Bottom Border -->
+      <!-- Animated Background - PERSISTENT across navigation -->
       <div
-        class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-secondary via-accent to-primary"
+        class="fixed inset-0 bg-animated"
+        style="z-index: var(--z-background);"
         aria-hidden="true"
+        transition:persist
       >
+        <div class="orb" aria-hidden="true"></div>
       </div>
-    </header>
 
-    <!-- Main Content - Animates In/Out -->
-    <main
-      id="main-content"
-      class="flex-grow relative focus:outline-none"
-      tabindex="-1"
-      transition:animate="fade"
-    >
-      <slot />
-    </main>
+      <!-- Header - PERSISTENT -->
+      <header
+        class="glass sticky top-0 py-4 shadow-lg border-b border-white/30 dark:border-gray-700/30 relative"
+        style="z-index: var(--z-header);"
+        transition:persist
+      >
+        <div
+          class="container-custom flex flex-row justify-between items-center gap-4"
+        >
+          <a href="/" class="flex items-center gap-3 group">
+            <Image
+              src={logoImage}
+              alt="Aaltjesdagen Logo"
+              width={180}
+              loading="eager"
+              fetchpriority="high"
+              class="h-12 w-auto transition-all duration-300 group-hover:scale-105 brightness-0 dark:invert"
+            />
+          </a>
+          <Navigation />
+        </div>
 
-    <BackToTop />
-    <!-- Footer is NOT persisted, so it updates per page (good for relevant links) -->
-    <Footer />
+        <!-- Decorative Gradient Bottom Border -->
+        <div
+          class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-secondary via-accent to-primary"
+          aria-hidden="true"
+        >
+        </div>
+      </header>
 
-    {
-      isStoryblokEnabled && (
-        <script
-          is:inline
-          src="https://app.storyblok.com/f/storyblok-v2-latest.js"
-        />
-      )
-    }
+      <!-- Main Content - Animates In/Out -->
+      <main
+        id="main-content"
+        class="flex-grow relative focus:outline-none"
+        tabindex="-1"
+        transition:animate="fade"
+      >
+        <slot />
+      </main>
 
-    <!-- Alpine.js - Bundled (Re-init logic for View Transitions) -->
-    <script>
-      import Alpine from "alpinejs";
+      <BackToTop />
+      <!-- Footer is NOT persisted, so it updates per page (good for relevant links) -->
+      <Footer />
 
-      // Initialize Alpine
-      if (!window.Alpine) {
-        window.Alpine = Alpine;
-        Alpine.start();
+      {
+        isStoryblokEnabled && (
+          <script
+            is:inline
+            src="https://app.storyblok.com/f/storyblok-v2-latest.js"
+          />
+        )
       }
 
-      // Re-init Alpine on page navigation (Astro View Transitions)
-      document.addEventListener("astro:page-load", () => {
-        // Alpine usually persists attached data, but sometimes needs a nudge if DOM is swapped
-        // Since we use bundled Alpine, it stays running.
-        // We typically don't need to restart it, but let's ensure it scans new DOM
-        // Astro's ViewTransitions + Alpine can be tricky.
-        // The best pattern is usually:
-      });
-      // Force Alpine to re-scan the DOM after a swap if necessary
-      document.addEventListener("astro:after-swap", () => {
-        // Alpine automatically observes DOM changes, so mostly this is fine.
-      });
-    </script>
+      <!-- Alpine.js - Bundled (Re-init logic for View Transitions) -->
+      <script>
+        import Alpine from "alpinejs";
+
+        // Initialize Alpine
+        if (!window.Alpine) {
+          window.Alpine = Alpine;
+          Alpine.start();
+        }
+
+        // Re-init Alpine on page navigation (Astro View Transitions)
+        document.addEventListener("astro:page-load", () => {
+          // Alpine usually persists attached data, but sometimes needs a nudge if DOM is swapped
+          // Since we use bundled Alpine, it stays running.
+          // We typically don't need to restart it, but let's ensure it scans new DOM
+          // Astro's ViewTransitions + Alpine can be tricky.
+          // The best pattern is usually:
+        });
+        // Force Alpine to re-scan the DOM after a swap if necessary
+        document.addEventListener("astro:after-swap", () => {
+          // Alpine automatically observes DOM changes, so mostly this is fine.
+        });
+      </script>
+    </ThemeProvider>
   </body>
 </html>
