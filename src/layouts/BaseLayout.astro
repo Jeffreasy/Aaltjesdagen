@@ -1,6 +1,7 @@
 ---
 import "@aaltjesdagen/ui/css";
 import Navigation from "../components/layout/Navigation.astro";
+import MobileMenu from "../components/layout/MobileMenu.astro";
 import Footer from "../components/layout/Footer.astro";
 import BackToTop from "../components/layout/BackToTop.astro";
 import SEO from "../components/layout/SEO.astro";
@@ -113,6 +114,43 @@ const isStoryblokEnabled = import.meta.env.DEV;
     <BackToTop />
     <!-- Footer is NOT persisted, so it updates per page (good for relevant links) -->
     <Footer />
+    
+    <!-- Mobile Menu - Root Level for Z-Index Safety -->
+    <MobileMenu />
+
+    <!-- Alpine.js - Must load BEFORE Storyblok -->
+    <script>
+      import Alpine from "alpinejs";
+
+      // Initialize Alpine but don't start yet
+      if (!window.Alpine) {
+        window.Alpine = Alpine;
+        
+        // Initialize global store for mobile menu state
+        Alpine.store('mobileMenu', {
+          open: false,
+          toggle() {
+            this.open = !this.open;
+            document.body.style.overflow = this.open ? 'hidden' : '';
+            console.log('📱 Mobile menu toggled:', this.open);
+          },
+          close() {
+            this.open = false;
+            document.body.style.overflow = '';
+            console.log('📱 Mobile menu closed');
+          }
+        });
+        
+        // Start Alpine immediately
+        Alpine.start();
+        console.log('✅ Alpine.js started');
+      }
+
+      // Re-init Alpine on page navigation (Astro View Transitions)
+      document.addEventListener("astro:page-load", () => {
+        console.log('🔄 astro:page-load - Alpine should auto-scan');
+      });
+    </script>
 
     {
       isStoryblokEnabled && (
@@ -122,29 +160,5 @@ const isStoryblokEnabled = import.meta.env.DEV;
         />
       )
     }
-
-    <!-- Alpine.js - Bundled (Re-init logic for View Transitions) -->
-    <script>
-      import Alpine from "alpinejs";
-
-      // Initialize Alpine
-      if (!window.Alpine) {
-        window.Alpine = Alpine;
-        Alpine.start();
-      }
-
-      // Re-init Alpine on page navigation (Astro View Transitions)
-      document.addEventListener("astro:page-load", () => {
-        // Alpine usually persists attached data, but sometimes needs a nudge if DOM is swapped
-        // Since we use bundled Alpine, it stays running.
-        // We typically don't need to restart it, but let's ensure it scans new DOM
-        // Astro's ViewTransitions + Alpine can be tricky.
-        // The best pattern is usually:
-      });
-      // Force Alpine to re-scan the DOM after a swap if necessary
-      document.addEventListener("astro:after-swap", () => {
-        // Alpine automatically observes DOM changes, so mostly this is fine.
-      });
-    </script>
   </body>
 </html>

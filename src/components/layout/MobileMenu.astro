@@ -1,0 +1,193 @@
+---
+/**
+ * MobileMenu Component - Aaltjesdagen
+ * Wrapper voor het mobiele menu dat buiten de header leeft
+ * om z-index/stacking context problemen te voorkomen.
+ */
+import { NAVIGATION_ITEMS } from "@/constants/site";
+
+const currentPath = Astro.url.pathname;
+---
+
+<!-- 
+  Mobile Menu Container
+  transition:persist zorgt dat de state (open/dicht) en DOM behouden blijven tijdens navigatie 
+-->
+<div
+  id="mobile-drawer"
+  class="fixed inset-0 z-[99999] invisible md:hidden"
+  role="dialog"
+  aria-modal="true"
+  transition:persist
+>
+  <!-- Backdrop -->
+  <div
+    id="mobile-backdrop"
+    class="absolute inset-0 bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300"
+  >
+  </div>
+
+  <!-- Panel -->
+  <div
+    id="mobile-panel"
+    class="absolute top-0 right-0 h-full w-full max-w-sm bg-[var(--bg-base)] shadow-2xl flex flex-col border-l border-[var(--border-primary)] transform translate-x-full transition-transform duration-300 ease-out"
+  >
+    <!-- Close Button Wrapper -->
+    <button
+      id="mobile-menu-close"
+      class="absolute top-6 right-6 w-12 h-12 flex items-center justify-center rounded-xl bg-elevated border border-primary/10 shadow-sm z-50 hover:bg-primary/5 transition-colors"
+      aria-label="Close menu"
+    >
+      <div class="relative w-6 h-6">
+        <span class="absolute top-1/2 left-0 w-full h-0.5 bg-text-primary -translate-y-1/2 rotate-45 rounded-full"></span>
+        <span class="absolute top-1/2 left-0 w-full h-0.5 bg-text-primary -translate-y-1/2 -rotate-45 rounded-full"></span>
+      </div>
+    </button>
+
+    <!-- Background Decor -->
+    <div class="absolute inset-0 bg-professional-dots opacity-50 pointer-events-none"></div>
+
+    <!-- Scrollable Content -->
+    <div class="relative flex-1 flex flex-col px-8 pt-28 pb-8 overflow-y-auto">
+      <nav class="flex flex-col gap-6">
+        {NAVIGATION_ITEMS.map((item, index) => {
+          const isActive = currentPath === item.href || (item.href !== "/" && currentPath.startsWith(item.href));
+          return (
+            <a
+              href={item.href}
+              class:list={["nav-mobile-link", isActive && "nav-mobile-link--active"]}
+            >
+              <span class="nav-mobile-link__number">0{index + 1}</span>
+              {item.name}
+            </a>
+          );
+        })}
+      </nav>
+
+      <div class="mt-auto pt-8 relative">
+        <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-secondary via-accent to-primary opacity-50"></div>
+        <p class="mt-4 text-sm text-[var(--text-tertiary)] font-medium">Volg ons</p>
+        <div class="flex gap-4 mt-4">
+           <!-- Social Icons (kan later component worden) -->
+           <div class="w-10 h-10 rounded-full bg-elevated flex items-center justify-center shadow-sm text-[var(--text-primary)] border border-primary/10">
+              <span class="sr-only">Facebook</span>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+           </div>
+           <div class="w-10 h-10 rounded-full bg-elevated flex items-center justify-center shadow-sm text-[var(--text-primary)] border border-primary/10">
+              <span class="sr-only">Instagram</span>
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* === STATES & ANIMATIONS === */
+  
+  /* Open State */
+  #mobile-drawer.is-open {
+    visibility: visible;
+  }
+  
+  #mobile-drawer.is-open #mobile-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  #mobile-drawer.is-open #mobile-panel {
+    transform: translateX(0);
+  }
+
+  /* Link Styling */
+  .nav-mobile-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 700;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .nav-mobile-link:hover {
+    color: var(--color-primary);
+  }
+
+  .nav-mobile-link--active {
+    color: var(--color-primary);
+    border-left: 4px solid var(--color-secondary);
+    padding-left: 1rem;
+  }
+
+  .nav-mobile-link__number {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+  }
+</style>
+
+<script>
+  // Global script om de menu logica te centraliseren
+  // Luistert naar events op de document body of direct op ID's
+  
+  function initMobileMenu() {
+    const drawer = document.getElementById('mobile-drawer');
+    const panel = document.getElementById('mobile-panel');
+    const backdrop = document.getElementById('mobile-backdrop');
+    const closeBtn = document.getElementById('mobile-menu-close');
+    
+    // De toggle button zit in Navigation.astro, dus we zoeken hem hier
+    const toggleBtn = document.getElementById('mobile-menu-toggle');
+    
+    if (!drawer || !toggleBtn) return;
+
+    function toggleMenu(show) {
+      if (show) {
+        drawer.classList.add('is-open');
+        toggleBtn.classList.add('is-active');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      } else {
+        drawer.classList.remove('is-open');
+        toggleBtn.classList.remove('is-active');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Toggle Button
+    // Verwijder oude listeners om duplicatie te voorkomen bij page-swaps (hoewel cleanup beter is)
+    // Bij Vanilla JS met astro:page-load is het veilig om gewoon addEventListener te doen 
+    // zolang we weten dat elementen vers zijn (wat ze zijn bij page-swap).
+    
+    // We gebruiken 'onclick' property ipv addEventListener om automatisch oude listeners te overschrijven
+    // Dit is een simpele hack om duplicatie te voorkomen zonder opslag van referenties.
+    toggleBtn.onclick = (e) => {
+        e.stopPropagation();
+        const isOpen = drawer.classList.contains('is-open');
+        toggleMenu(!isOpen);
+    };
+
+    if (closeBtn) closeBtn.onclick = () => toggleMenu(false);
+    if (backdrop) backdrop.onclick = () => toggleMenu(false);
+
+    // Links closing behavior
+    const links = drawer.querySelectorAll('a');
+    links.forEach(link => {
+      link.addEventListener('click', () => toggleMenu(false));
+    });
+
+    // Escape closing
+    document.onkeydown = (e) => {
+      if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+        toggleMenu(false);
+      }
+    };
+  }
+
+  // Init on load and after swaps
+  document.addEventListener('astro:page-load', initMobileMenu);
+</script>
